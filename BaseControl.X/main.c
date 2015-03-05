@@ -12,6 +12,8 @@
 
 _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use pins 9,10 as digital i/o
 
+volatile int step_counter;
+
 /*
  * Timer3 interrupt service routine
  * This function executes every time the micro receives an interrupt
@@ -23,26 +25,37 @@ void _ISR _T3Interrupt(void)
     // Remember to clear the Timer1 interrupt flag when this ISR is entered.
     _T3IF = 0;
 
-    // Place in this ISR whatever code should be executed when the timer
-    // reaches the period (PR3) that you specify
-       if(_RB12 == _RA4){
-            //Change the period & directions - do a 90 deg turn
-//            if( PR3 == 625 ){
-                PR3 = 200;
+    step_counter++;
+
+    if(step_counter == 800){ //start turning 
                 _RB12 = 1;
                 _RA4 = 0;
-        }
-        else{
+    }
+    else if(step_counter == 1600){   //stop turning (1600-800=800 steps turns steppers 360 deg)
             _RA4 = 0;
             _RB12 = 0;
             OC3R = 0;
-            PR3 = 625;
-        }
+    }
+
+
+//       if(_RB12 == _RA4){
+//            //Change the period & directions - do a 90 deg turn
+////            if( PR3 == 625 ){
+//                PR3 = 200;
+//                _RB12 = 1;
+//                _RA4 = 0;
+//        }
+//        else{
+//            _RA4 = 0;
+//            _RB12 = 0;
+//            OC3R = 0;
+//            PR3 = 625;
+//        }
 }
 
 int main(int argc, char** argv) {
 
-   /* Input pin 3 controls output pin 14, Input pin 9 controls output pin 4*/
+    // <editor-fold defaultstate="collapsed" desc="Configuration">
 
    // Configure the digital I/O ports
     TRISA = 0;          //Set A ports to output
@@ -84,23 +97,24 @@ int main(int argc, char** argv) {
     OC3CON2bits.SYNCSEL = 0b01101;  //Select Timer3 as synchronization source
 
  // Configure Timer3 interrupt
-    // Remember to enable the Timer1 interrupt source (IEC0 register) and
-    // set the Timer1 interrupt priority to 4 (IPC0) register
     IPC2bits.T3IP = 4;      //Set Priority
     IEC0bits.T3IE = 1;      //Enable Interrupt
     _T3IF = 0;              //Clear Interrupt flag (IFS0bits.T3IF)
 
+    // </editor-fold>
 
- // Configure inputs
-//    config_ad();
+    // <editor-fold defaultstate="collapsed" desc="Initializations">
+    step_counter = 0;
+    _RB1 = 0;   //Stepper1
+    _RA4 = 0;   //Stepper2
+    OC3R = 0.5*PR3; //Stepper duty cycle
+    // </editor-fold>
 
- // <editor-fold defaultstate="collapsed" desc="while(1)">
+    // <editor-fold defaultstate="collapsed" desc="while(1)">
 
     while(1){
 
-        _RB1 = 0;   //Stepper
-        _RA4 = 0;
-        OC3R = 0.5*PR3;
+
 
     }
         // </editor-fold>
