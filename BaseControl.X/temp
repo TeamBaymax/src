@@ -1,0 +1,115 @@
+/*
+ * File:   main.c
+ * Author: Administrator
+ *
+ * Created on January 22, 2015, 10:33 AM
+ */
+// This program lights an LED on pin 2 for 0.5 seconds, followed by an LED on
+// pin 6 for 0.25 seconds, and repeats. It uses a timer interrupt. It
+// blinks when a switch connected to pin 5 is closed.
+
+#include<p24F16KA301.h>
+
+// Select oscillator
+//_FOSCSEL(FNOSC_LPRC); //method 1
+//_FOSCSEL(FNOSC_LPFRC); //method 2
+_FOSCSEL(FNOSC_FRC); //method 3 and 4 (8 Mhz)
+
+//Method 4----------------------------------------------------------------
+// Timer1 interrupt service routine
+// This function executes every time the micro receives an interrupt
+// originating from Timer1. The micro knows the interrupt is from Timer1
+// when the Timer1 interrupt flag (T1IF) is set.
+void _ISR _T1Interrupt(void)
+{
+    // Remember to clear the Timer1 interrupt flag when this ISR is entered.
+    _T1IF = 0;
+
+    // Place in this ISR whatever code should be executed when the timer
+    // reaches the period (PR1) that you specify
+       if(_RB1 == 1){
+            //Change the period
+            if( PR1 == 62500 ){
+                _RB2 = 1;
+                _RA0 = 0;
+                PR1 = 31250;
+            }
+            else{
+                _RA0 = _RA0 ^ 1;
+                _RB2 = _RB2 ^ 1;
+                PR1 = 62500;
+            }
+        }
+        else{
+            _RA0 = 0;
+            _RB2 = 0;
+        }
+}
+//-------------------------------------------------------------------------
+
+//Method 1 - Delay function 21 kHz.
+void delay(int s){
+    int k = 0;
+    while(k<s)
+        k++;
+}
+
+// Main function
+int main()
+{
+    // Configure the digital I/O ports
+    TRISA = 0;
+    TRISB = 0;
+
+    ANSA = 0;          //disables analog input
+    ANSB = 0x000;
+    _TRISB1 = 1;
+
+    //_RCDIV = 0b100;   //method 2
+
+    // Configure Timer1 using T1CON register
+    _TON = 1;           //enable Timer1
+    _TCS = 0;           //Set source to internal clock
+    _TCKPS = 0b10;      //Select prescale value
+    PR1 = 62500;        //Set timer period to count to 1 second
+    TMR1 = 0;
+
+    // Configure Timer1 interrupt
+    // Remember to enable the Timer1 interrupt source (IEC0 register) and
+    // set the Timer1 interrupt priority to 4 (IPC0) register
+    _T1IP = 4; //Set Priority
+    _T1IE = 1; //Enable Interrupt
+    _T1IF = 0; //Clear Interrupt flag
+
+    // Loop and wait
+    while(1)
+    {
+//        //Method 3---------------------------------------------------
+//        if(_RB1 == 1){
+//               TMR1 = 0;
+//               while(TMR1 <= 31250){
+//                   _RB2 = 1;   //pin 6
+//                    _RA0 = 0;
+//               }
+//               TMR1 = 0;
+//               while(TMR1 <= 62500){
+//                _RA0 = 1;   //pin 2
+//                _RB2 = 0;
+//               }
+//               TMR1 = 0;
+//           }
+//        else{
+//            _RA0 = 0;
+//            _RB2 = 0;
+//        }
+//    TMR1 = 0;
+//
+        //-----------------------------------------------------------------
+
+        //Method 4-----------------------------------------------------------
+            //nothing happens exept in interrupt
+        //-------------------------------------------------------------------
+    }
+
+    return 0;
+}
