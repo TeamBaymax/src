@@ -27,11 +27,11 @@ void _ISR _T3Interrupt(void)
 
     step_counter++;
 
-    if(step_counter == 800){ //start turning 
+    if(step_counter == 200){ //start turning
                 _RB12 = 1;
                 _RA4 = 0;
     }
-    else if(step_counter == 1600){   //stop turning (1600-800=800 steps turns steppers 360 deg)
+    else if(step_counter >= 352){   //stop turning (1600-800=800 steps turns steppers 360 deg)
             _RA4 = 0;
             _RB12 = 0;
             OC3R = 0;
