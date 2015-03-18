@@ -2,12 +2,12 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>I2C_Trial</name>
-            <creation-uuid>d80223f2-3c30-420b-8777-add058b9506d</creation-uuid>
+            <name>PIC_I2C_IR_CAMERA</name>
+            <creation-uuid>d01a56b5-7d75-44b2-ab00-265daa27d6cd</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
-            <header-extensions/>
+            <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
