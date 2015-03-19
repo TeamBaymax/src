@@ -25,17 +25,17 @@ void loop()
   float d = 3;
   stero_vision(d, phi1, x1, phi2, x2, &theta, &r);
   
-  Serial.print("  x1 = ");
+  Serial.print("\t  x1 = ");
   Serial.print(x1,DEC);
-  Serial.print("  y1 = ");
+  Serial.print("\t  y1 = ");
   Serial.print(y1,DEC);
-  Serial.print("  x2 = ");
+  Serial.print("\t  x2 = ");
   Serial.print(x2,DEC);
-  Serial.print("  y2 = ");
+  Serial.print("\t  y2 = ");
   Serial.print(y2,DEC);
-  Serial.print("  R =  ");
+  Serial.print("\t  R =  ");
   Serial.print(r,DEC);
-  Serial.print("  theta = ");
+  Serial.print("\t  theta = ");
   Serial.println(theta*180.0/PI,DEC);
 } 
 
@@ -66,16 +66,15 @@ void stero_vision(float d, float phi1, float x1, float phi2, float x2, float* th
 {
   // linearly interpolate gamma1 and gamma2
   float gamma1, gamma2;
-  gamma1 = (x1-512.0)/1024.0 * 33.0/180.0*PI;
-  gamma2 = (x2-512.0)/1024.0 * 33.0/180.0*PI;
+  gamma1 = (x1-512.0)/1023.0 * 33.0/360.0*2.0*PI;
+  gamma2 = (512.0-x2)/1023.0 * 33.0/360.0*2.0*PI;
   
   // calculate distance from camera to features r1 and r2
-  float r1 = sin(PI/2.0-(phi2-gamma2))/(sin(PI-(PI/2.0-(phi1+gamma1) + (PI/2.0-(phi2-gamma2))))/d);
-  float r2 = sin(PI/2.0-(phi1+gamma1))/(sin(PI-(PI/2.0-(phi1+gamma1) + (PI/2.0-(phi2-gamma2))))/d);
+  float r1 = sin(PI/2.0-phi2-gamma2)/(sin(phi1+gamma1+phi2+gamma2)/d);
+  float r2 = sin(PI/2.0-(phi1+gamma1))/(sin(phi1+gamma1+phi2+gamma2)/d);
   
   // find r and theta
-  *r = pow(pow(r1,2.0) + pow((d/2.0),2.0) - 2.0*r1*d/2.0*cos(PI/2.0-(phi1+gamma1)),0.5);
+  *r = pow(pow(r1,2.0)+pow(d/2.0,2.0)-2.0*r1*(d/2.0)*cos(PI/2.0-phi1-gamma1),1/2.0);
   float rad = *r;
-  *theta = acos(pow(r1,2.0)-pow(rad,2.0)-pow((d/2.0),2.0)/(-2.0*rad*d/2.0)) - PI;
-  
+  *theta = PI/2.0 - asin(r1*(sin(PI/2-phi1-gamma1)/rad)); 
 }
