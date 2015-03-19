@@ -4,6 +4,7 @@ byte r1Value;
 byte r2Value;
 int camera_number;
 int x1, x2, y1, y2;
+float r1, r2;
 
 void setup() 
 { 
@@ -36,7 +37,11 @@ void loop()
   Serial.print("\t  R =  ");
   Serial.print(r,DEC);
   Serial.print("\t  theta = ");
-  Serial.println(theta*180.0/PI,DEC);
+  Serial.print(theta*180.0/PI,DEC);
+  Serial.print("\t  r1 =  ");
+  Serial.print(r1,DEC);
+  Serial.print("\t  r2 = ");
+  Serial.println(r2,DEC);
 } 
 
 
@@ -70,11 +75,15 @@ void stero_vision(float d, float phi1, float x1, float phi2, float x2, float* th
   gamma2 = (512.0-x2)/1023.0 * 33.0/360.0*2.0*PI;
   
   // calculate distance from camera to features r1 and r2
-  float r1 = sin(PI/2.0-phi2-gamma2)/(sin(phi1+gamma1+phi2+gamma2)/d);
-  float r2 = sin(PI/2.0-(phi1+gamma1))/(sin(phi1+gamma1+phi2+gamma2)/d);
+  r1 = sin(PI/2.0-phi2-gamma2)/(sin(phi1+gamma1+phi2+gamma2)/d);
+  r2 = sin(PI/2.0-(phi1+gamma1))/(sin(phi1+gamma1+phi2+gamma2)/d);
   
   // find r and theta
   *r = pow(pow(r1,2.0)+pow(d/2.0,2.0)-2.0*r1*(d/2.0)*cos(PI/2.0-phi1-gamma1),1/2.0);
   float rad = *r;
-  *theta = PI/2.0 - asin(r1*(sin(PI/2-phi1-gamma1)/rad)); 
+  *theta = asin(r1*(sin(PI/2.0-phi1-gamma1)/rad)) - PI/2.0; //stuck always positive, due to range of asin()
 }
+
+
+
+  
