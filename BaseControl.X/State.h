@@ -11,8 +11,9 @@
 typedef enum{
     start, align0, forward0, reverse0,  //begin
     at_center,                          //oriented
-    //add collector states here         //collecting
+    align1, forward1, reverse1,          //collecting
     scan, align2, shoot,                //scoring
+    end, finish                         //end states - end: gets out of dispensing zone, finish: stop
 } State;
 
 #endif	/* STATE_H */

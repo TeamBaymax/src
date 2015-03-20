@@ -16,119 +16,32 @@ _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use 
 // <editor-fold defaultstate="collapsed" desc="Parameters">
 const float wheel_dia = 2.5;
 State current_state;
+volatile int step_counter, step_max; //step max == 152 for 90 deg turn
+volatile int angle_count;
 
-
+//Functions
+float getError(float set_point, float measured_value);
+unsigned int getDirection(float set_point, float measured_value);
+void startDrive(unsigned int direction);
+void startTurn(unsigned int direction);
+void stop();
+void straight(float distance, unsigned int direction);
+void turn(float angle, unsigned int direction);
+void Start();
+void Align();
+void Forward0();
+void Reverse0();
+void atCenter();
+void Align1();
+void Reverse1();
+void Forward1();
+void Scan();
+void Align2();
+void Shoot();
+void End();
+void Finish();
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="PID Funtions and Global Variables">
-
-//This is the PID definition, Kp, Ki and Kd are proportional, integral and differential gains
-    //float PID_Out = Kp * actual_error + Ki * SUM(previous_errors) + Kd * (actual_error - last_error);
-    //Define the error
-    //float actual_error = set_point - measured_value;
-
-//Variables
-float Kp, Ki, Kd ;
-float actual_error, error_previous, P, I, D, iMin, iMax;
-
-float PID_Controller(float set_point, float measured_value){
-error_previous = actual_error;  //error_previous holds the previous error
-actual_error = set_point - measured_value;
-// PID
-P  = actual_error;   //Current error
-I += error_previous;  //Sum of previous errors
-D  = actual_error - error_previous;  //Difference with previous error
-
-// windup
-if(I < iMin){ I = iMin; }
-else if(I > iMax){ I = iMax; }
-
-return Kp*P + Ki*I + Kd*D;
-}
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc="Navigation Functions and Global Variables">
-
-// Variables:
-volatile int step_counter, step_max;
-    //step max == 152 for 90 deg turn
-
-/*
- * Straight line - distance [inches], direction forward = 0, reverse = 1
- */
-void straight(float distance, unsigned int direction){  //inches
-    if(direction == 0){         //drive forward
-         _RB12 = 0;
-         _RA4 = 0;
-
-    }
-    else{                       //drive reverse
-        _RB12 = 1;
-        _RA4 = 1;
-    }
-    step_counter = 0;
-
-    //200 steps = wheel_dia*pi inches;
-    step_max = 200.0/(3.14159265*wheel_dia) * distance;
-    T3CONbits.TON = 1;           //enable Timer3
-}
-
-/*
- * Turn, angle [degrees], direction left = 0, right = 1;
- */
-void turn(float angle, unsigned int direction){
-
-    if(direction == 0){         //turn left
-         _RB12 = 0;
-         _RA4 = 1;
-
-    }
-    else{                       //turn right
-        _RB12 = 1;
-        _RA4 = 0;
-    }
-    step_counter = 0;
-
-    //steps = 200/(pi*wheel_dia) * 7.85/2 * angle * pi/180; minus 5 fudgefactor
-    step_max = 152.0/90.0 * angle;
-    T3CONbits.TON = 1;           //enable Timer3
-}
-
-
-/*
- * Timer3 interrupt service routine
- * This function executes every time the micro receives an interrupt
- * originating from Timer3. The micro knows the interrupt is from Timer3
- * when the Timer3 interrupt flag (T3IF) is set.
- */
-void _ISR _T3Interrupt(void)
-{
-    // Remember to clear the Timer1 interrupt flag when this ISR is entered.
-    _T3IF = 0;
-
-    step_counter++;
-
-    if(step_counter >= step_max){   //stop moving
-            _RA4 = 0;
-            _RB12 = 0;
-            T3CONbits.TON = 0;           //disable Timer3
-    }
-
-
-
-    //Milestone 4 code
-//    if(step_counter == 200){ //start turning
-//                _RB12 = 1;
-//                _RA4 = 0;
-//    }
-//    else if(step_counter >= 352){   //stop turning 152 steps = 90 deg
-//            _RA4 = 0;
-//            _RB12 = 0;
-//            OC3R = 0;
-//    }
-
-}
-// </editor-fold>
 
 int main(int argc, char** argv) {
 
@@ -182,10 +95,10 @@ int main(int argc, char** argv) {
 
     // <editor-fold defaultstate="collapsed" desc="Initializations">
     current_state = start;
-    
-    Kp = 1;
-    Ki = 0;
-    Kd = 0;
+
+//    Kp = 1;
+//    Ki = 0;
+//    Kd = 0;
     actual_error = 0;
     error_previous = 0;
     P = 0;
@@ -193,10 +106,10 @@ int main(int argc, char** argv) {
     D = 0;
     iMin = 0;
     iMax = 10;               //Change this!
-    
+
     step_counter = 0;
     step_max = 0;
-    
+
     _RB1 = 0;   //Stepper1
     _RA4 = 0;   //Stepper2
     OC3R = 0.5*PR3; //Stepper duty cycle
@@ -209,35 +122,40 @@ int main(int argc, char** argv) {
     while(1){
 
         if(current_state == start){
-            
+            Start();
         }
         else if(current_state == align0){
-            
+            Align0();
         }
         else if(current_state == forward0){
-            
+            Forward0();
         }
         else if(current_state == reverse0){
-            
+            Reverse0();
         }
         else if(current_state == at_center){
-            
+            atCenter();
         }
 
             //add collector states here
-        
+
         else if(current_state == scan){
-            
+            Scan();
         }
         else if(current_state == align2){
-            
-        }   
+            Align2();
+        }
         else if(current_state == shoot){
-            
-        }        
+            Shoot();
+        }
+        else if(current_state == end){
+            End()
+        }
+        else if(current_state == finish){
+            Finish()
+        }
 
-   
-    
+
 
 
     }
@@ -245,13 +163,183 @@ int main(int argc, char** argv) {
     return (0);
 }
 
+// <editor-fold defaultstate="collapsed" desc="Controlling Functions">
+
+float getError(float set_point, float measured_value){
+    return set_point - measured_value;
+}
+
+unsigned int getDirection(float set_point, float measured_value){
+    if(getError(set_point, measured_value) > 0)
+        return 0;
+    else return 1;
+}
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Navigation Functions">
+
+void startDrive(unsigned int direction){
+    if(direction == 0){         //drive forward
+         _RB12 = 0;
+         _RA4 = 0;
+
+    }
+    else{                       //drive reverse
+        _RB12 = 1;
+        _RA4 = 1;
+    }
+    T3CONbits.TON = 1;           //enable Timer3
+}
+
+void startTurn(unsigned int direction){
+    if(direction == 0){         //turn right
+         _RB12 = 0;
+         _RA4 = 1;
+
+    }
+    else{                       //turn left
+        _RB12 = 1;
+        _RA4 = 0;
+    }
+    T3CONbits.TON = 1;           //enable Timer3
+}
+
+void stop(){
+    T3CONbits.TON = 0;           //disable Timer3
+    _RA4 = 0;
+    _RB12 = 0;
+}
+
+// Straight line - distance [inches], direction forward = 0, reverse = 1
+void straight(float distance, unsigned int direction){  //inches
+    if(direction == 0){         //drive forward
+         _RB12 = 0;
+         _RA4 = 0;
+
+    }
+    else{                       //drive reverse
+        _RB12 = 1;
+        _RA4 = 1;
+    }
+    step_counter = 0;
+
+    //200 steps = wheel_dia*pi inches;
+    step_max = 200.0/(3.14159265*wheel_dia) * distance;
+    T3CONbits.TON = 1;           //enable Timer3
+}
+
+// Turn, angle [degrees], direction right = 0, left = 1;
+void turn(float angle, unsigned int direction){
+
+    if(direction == 0){         //turn right
+         _RB12 = 0;
+         _RA4 = 1;
+
+    }
+    else{                       //turn left
+        _RB12 = 1;
+        _RA4 = 0;
+    }
+    step_counter = 0;
+
+    //steps = 200/(pi*wheel_dia) * 7.85/2 * angle * pi/180; minus 5 fudgefactor
+    step_max = 152.0/90.0 * angle;
+    T3CONbits.TON = 1;           //enable Timer3
+}
+
+
+/*
+ * Timer3 interrupt service routine
+ * This function executes every time the micro receives an interrupt
+ * originating from Timer3. The micro knows the interrupt is from Timer3
+ * when the Timer3 interrupt flag (T3IF) is set.
+ */
+void _ISR _T3Interrupt(void)
+{
+    // Remember to clear the Timer1 interrupt flag when this ISR is entered.
+    _T3IF = 0;
+
+    step_counter++;
+
+    if(step_counter >= step_max){   //stop moving
+            _RA4 = 0;
+            _RB12 = 0;
+            T3CONbits.TON = 0;           //disable Timer3
+    }
+
+
+
+    //Milestone 4 code
+//    if(step_counter == 200){ //start turning
+//                _RB12 = 1;
+//                _RA4 = 0;
+//    }
+//    else if(step_counter >= 352){   //stop turning 152 steps = 90 deg
+//            _RA4 = 0;
+//            _RB12 = 0;
+//            OC3R = 0;
+//    }
+
+}
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="State Functions">
+
+void Start(){
+    PR3 = 125;                  //Set timer period so freq is 500 Hz (fast)
+    startTurn(0);
+    while(isThereALight() == 0);    //Doesn't see any light
+    stop();
+    PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
+
+    current_state = align0;
+}
+void Align(){
+    startTurn(getDirection(0, ));
+    while(abs(getError()) > 0.1);     //do we want this to be 0 exactly?
+    stop();
+    
+    if(current_state == align0) current_state = forward0;
+    if(current_state == align1) current_state = forward1;
+    if(current_state == align2) current_state = shoot; 
+}
+void Drive(){
+    startDrive(getDirection());
+    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
+    stop();
+
+   // if(current_state == forward0) {current_state = align0;}
+   // if(current_state == forward1) {current_state = reverse1;}
+}
+void Forward0(){
+    startDrive(getDirection());
+    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
+    stop();
+
+    if(current_state == forward0) {current_state = align0;}
+    if(current_state == forward1) {current_state = reverse1;}
+}
+void Reverse0(){
+
+}
+void atCenter();
+void Align1();
+void Reverse1();
+void Forward1();
+void Scan();
+void Align2();
+void Shoot();
+void End();
+void Finish();
+
+// </editor-fold>
 
  /* References:
   *
   * Data Sheet: http://ww1.microchip.com/downloads/en/DeviceDoc/39995d.pdf
   *
   * Family Reference Manual: http://www.microchip.com/TechDoc.aspx?type=ReferenceManuals
-  * 
+  *
   * Tips and Tricks: https://docs.google.com/document/d/1YN8Au7-waxfx1F3gALHjsmbpb9-qOa-AEzvvl6XvJO0/edit
   *
   *

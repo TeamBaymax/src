@@ -84,20 +84,20 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x404           0x606  (1542)
-.const                       0x604                 0x4             0x6  (6)
-.text                        0x608               0x2ea           0x45f  (1119)
-.dinit                       0x8f2                 0x8             0xc  (12)
+.const                       0x604                0x10            0x18  (24)
+.text                        0x614               0x2d6           0x441  (1089)
+.dinit                       0x8ea                 0x8             0xc  (12)
 
-                     Total program memory used (bytes):          0xa77  (2679) 16%
+                     Total program memory used (bytes):          0xa6b  (2667) 16%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x2e  (46)
+.nbss                        0x800                   0            0x22  (34)
 
-                        Total data memory used (bytes):           0x2e  (46) 2%
+                        Total data memory used (bytes):           0x22  (34) 1%
 
 
 Dynamic Memory Usage
@@ -105,42 +105,36 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x82e                               0x7d2  (2002)
+stack                        0x822                               0x7de  (2014)
 
-                        Maximum dynamic memory (bytes):          0x7d2  (2002)
+                        Maximum dynamic memory (bytes):          0x7de  (2014)
 
 
 External Symbols in Data Memory (by address):
 
                     0x0800                  _current_state
-                    0x0802                  _Kp
-                    0x0806                  _Ki
-                    0x080a                  _Kd
-                    0x080e                  _actual_error
-                    0x0812                  _error_previous
-                    0x0816                  _P
-                    0x081a                  _I
-                    0x081e                  _D
-                    0x0822                  _iMin
-                    0x0826                  _iMax
-                    0x082a                  _step_counter
-                    0x082c                  _step_max
+                    0x0802                  _actual_error
+                    0x0806                  _error_previous
+                    0x080a                  _P
+                    0x080e                  _I
+                    0x0812                  _D
+                    0x0816                  _iMin
+                    0x081a                  _iMax
+                    0x081e                  _step_counter
+                    0x0820                  _step_max
 
 External Symbols in Data Memory (by name):
 
-                    0x081e                  _D
-                    0x081a                  _I
-                    0x080a                  _Kd
-                    0x0806                  _Ki
-                    0x0802                  _Kp
-                    0x0816                  _P
-                    0x080e                  _actual_error
+                    0x0812                  _D
+                    0x080e                  _I
+                    0x080a                  _P
+                    0x0802                  _actual_error
                     0x0800                  _current_state
-                    0x0812                  _error_previous
-                    0x0826                  _iMax
-                    0x0822                  _iMin
-                    0x082a                  _step_counter
-                    0x082c                  _step_max
+                    0x0806                  _error_previous
+                    0x081a                  _iMax
+                    0x0816                  _iMin
+                    0x081e                  _step_counter
+                    0x0820                  _step_max
 
 External Symbols in Program Memory (by address):
 
@@ -170,17 +164,23 @@ External Symbols in Program Memory (by address):
                   0x000570                  __fcompare
                   0x0005a6                  ___floatundisf
                   0x000604                  _wheel_dia
-                  0x000608                  _PID_Controller
-                  0x0006ee                  _straight
-                  0x000738                  _turn
-                  0x00076c                  __T3Interrupt
-                  0x000794                  _main
+                  0x000608                  _Kp
+                  0x00060c                  _Ki
+                  0x000610                  _Kd
+                  0x000614                  _PID_Controller
+                  0x0006fa                  _straight
+                  0x000744                  _turn
+                  0x000778                  __T3Interrupt
+                  0x0007a0                  _main
 
 External Symbols in Program Memory (by name):
 
-                  0x000608                  _PID_Controller
+                  0x000610                  _Kd
+                  0x00060c                  _Ki
+                  0x000608                  _Kp
+                  0x000614                  _PID_Controller
                   0x00029a                  __DefaultInterrupt
-                  0x00076c                  __T3Interrupt
+                  0x000778                  __T3Interrupt
                   0x0002a0                  ___addsf3
                   0x00035a                  ___divsf3
                   0x0003de                  ___eqsf2
@@ -205,9 +205,9 @@ External Symbols in Program Memory (by name):
                   0x0004d8                  __funpack2
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000794                  _main
-                  0x0006ee                  _straight
-                  0x000738                  _turn
+                  0x0007a0                  _main
+                  0x0006fa                  _straight
+                  0x000744                  _turn
                   0x000604                  _wheel_dia
 
 Memory Configuration
@@ -361,9 +361,9 @@ __FDS
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1a3 build/default/production/main.o
 
-.debug_line       0x000000        0x3b9
+.debug_line       0x000000        0x3a1
  *(.debug_line)
- .debug_line      0x000000        0x3b9 build/default/production/main.o
+ .debug_line      0x000000        0x3a1 build/default/production/main.o
 
 .debug_frame      0x000000         0x64
  *(.debug_frame)
@@ -410,7 +410,7 @@ __FDS
                   0x00001e          0x4 LONG 0x29a DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x29a DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000022          0x4 LONG 0x29a DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x76c DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x778 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x29a DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x29a DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x29a DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -538,7 +538,7 @@ __FDS
                   0x00011e          0x4 LONG 0x29a DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x29a DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000122          0x4 LONG 0x29a DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x76c DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x778 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x29a DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x29a DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x29a DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1308,33 +1308,33 @@ __c30_signature
  __c30_signature
                   0x000258          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
 
-.nbss               0x0800         0x2e
- .nbss              0x0800         0x2e build/default/production/main.o
+.nbss               0x0800         0x22
+ .nbss              0x0800         0x22 build/default/production/main.o
                     0x0800                  _current_state
-                    0x0802                  _Kp
-                    0x0806                  _Ki
-                    0x080a                  _Kd
-                    0x080e                  _actual_error
-                    0x0812                  _error_previous
-                    0x0816                  _P
-                    0x081a                  _I
-                    0x081e                  _D
-                    0x0822                  _iMin
-                    0x0826                  _iMax
-                    0x082a                  _step_counter
-                    0x082c                  _step_max
+                    0x0802                  _actual_error
+                    0x0806                  _error_previous
+                    0x080a                  _P
+                    0x080e                  _I
+                    0x0812                  _D
+                    0x0816                  _iMin
+                    0x081a                  _iMax
+                    0x081e                  _step_counter
+                    0x0820                  _step_max
 
-.const              0x8604          0x4 load address 0x000604  
- .const             0x8604          0x4 build/default/production/main.o
+.const              0x8604         0x10 load address 0x000604  
+ .const             0x8604         0x10 build/default/production/main.o
                     0x8604                  _wheel_dia
+                    0x8608                  _Kp
+                    0x860c                  _Ki
+                    0x8610                  _Kd
 
-.text             0x000608        0x2ea
- .text            0x000608        0x2ea build/default/production/main.o
-                  0x000608                  _PID_Controller
-                  0x0006ee                  _straight
-                  0x000738                  _turn
-                  0x00076c                  __T3Interrupt
-                  0x000794                  _main
+.text             0x000614        0x2d6
+ .text            0x000614        0x2d6 build/default/production/main.o
+                  0x000614                  _PID_Controller
+                  0x0006fa                  _straight
+                  0x000744                  _turn
+                  0x000778                  __T3Interrupt
+                  0x0007a0                  _main
 
-.dinit            0x0008f2          0x8
- .dinit           0x0008f2          0x8 data_init
+.dinit            0x0008ea          0x8
+ .dinit           0x0008ea          0x8 data_init
