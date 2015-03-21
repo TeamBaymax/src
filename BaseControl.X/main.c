@@ -96,17 +96,6 @@ int main(int argc, char** argv) {
     // <editor-fold defaultstate="collapsed" desc="Initializations">
     current_state = start;
 
-//    Kp = 1;
-//    Ki = 0;
-//    Kd = 0;
-    actual_error = 0;
-    error_previous = 0;
-    P = 0;
-    I = 0;
-    D = 0;
-    iMin = 0;
-    iMax = 10;               //Change this!
-
     step_counter = 0;
     step_max = 0;
 
