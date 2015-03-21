@@ -15,7 +15,7 @@
 
 #include <math.h>
 #include "infrared.h"
-#define PI = 3.14159265359
+#define PI 3.14159265359
 #define X1_OFFSET 567 // These are the values when the robot is looking directly at
 #define X2_OFFSET 514 // a light in the corner from the center of the ring
 #define Y1_OFFSET 458
@@ -78,6 +78,7 @@ char see_beacon(float* theta, float* r)
           flag = 's';
         }
     }
+    return flag;
 }
 
 void stereo_vision(float x1, float x2, float* theta, float* r)
@@ -92,7 +93,7 @@ void stereo_vision(float x1, float x2, float* theta, float* r)
       float r2 = sin(PI/2.0-(PHI1+gamma1))/(sin(PHI1+gamma1+PHI2+gamma2)/D);
 
       // find r and theta
-      *r = pow(pow(r1,2.0)+pow(d/2.0,2.0)-2.0*r1*(d/2.0)*cos(PI/2.0-PHI1-gamma1),1/2.0);
+      *r = pow(pow(r1,2.0)+pow(D/2.0,2.0)-2.0*r1*(D/2.0)*cos(PI/2.0-PHI1-gamma1),1/2.0);
       float rad = *r;
       *theta = asin(r1*(sin(PI/2.0-PHI1-gamma1)/rad)) - PI/2.0; //stuck always negative, due to range of asin()
       if(r1>r2)

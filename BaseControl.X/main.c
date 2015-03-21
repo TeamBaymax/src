@@ -16,9 +16,8 @@ _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use 
 
 // <editor-fold defaultstate="collapsed" desc="Parameters">
 const float wheel_dia = 2.5;            //inches
-const float r_window = 0.5*PI/180.0;    //radians
+const float r_window = 0.5*PI/180.;     //radians 
 const float theta_window = 4.0;         //inches
-//const float PI = 3.14159;
 
 State current_state;
 volatile int step_counter, step_max; //step max == 152 for 90 deg turn
@@ -29,7 +28,7 @@ float theta, r;
 void config();
 void initialize();
 
-void updateBeacon(float* theta, float* r){char temp = see_beacon(theta, r);}
+void updateBeacon(){char temp = see_beacon(&theta, &r);}
 
 float getError(float set_point, float measured_value);
 unsigned int getDirection(float set_point, float measured_value);
@@ -41,6 +40,7 @@ void turn(float angle, unsigned int direction);
 
 void Start();
 void Align();
+void cornerDrive();
 void Drive(float set_point);
 void Forward0();
 void Reverse0();
@@ -299,17 +299,17 @@ void _ISR _T3Interrupt(void)
 void Start(){
     PR3 = 125;                  //Set timer period so freq is 500 Hz (fast)
     startTurn(0);
-    while(see_beacon(theta, r) == '0');    //Doesn't see any light
+    while(see_beacon(&theta, &r) == '0');    //Doesn't see any light
     stop();
     PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
 
     current_state = align0;
 }
 void Align(){
-    updateBeacon(theta, r);
+    updateBeacon();
     startTurn(getDirection(0, theta));
     while(abs(getError(0, theta)) > theta_window)
-        {updateBeacon(theta, r);}
+        {updateBeacon();}
     stop();
     
     if(current_state == align0) current_state = forward0;
@@ -318,18 +318,22 @@ void Align(){
 }
 void cornerDrive(){
     float set_point = 0;
-    updateBeacon(theta, r);
+    updateBeacon();
     startDrive(getDirection(set_point, r));
     while(_RB13 == 0 || _RB14 ==0) {
-        if(see_beacon == 'm'){
+        if(see_beacon(&theta, &r) == 'm'){
             //stop();
             Align();
             startDrive(getDirection(set_point, r));
         }
         else if(_RB13 != _RB14){
+            int dir = _RB14;
             startDrive(1);
-            delay(100);
-            Align();
+            DelayuSec(1000000);
+            startTurn(dir);    //then don't align
+            DelayuSec(1000000);
+//            Align();
+            updateBeacon();
             startDrive(getDirection(set_point,r));
         }
     }
@@ -337,26 +341,24 @@ void cornerDrive(){
 
     if(current_state == forward0) {current_state = reverse0;}    
 }
+void Drive(float set_point){
+    updateBeacon();
+    startDrive(getDirection(set_point, r));
+    while(abs(getError(set_point, r)) > r_window) {
+        if(see_beacon(&theta, &r) == 'm'){
+            //stop();
+            Align();
+            startDrive(getDirection(set_point, r));
+        }
+        else if(see_beacon(&theta, &r) == '0'){
+            //check bumpers
+        }
+    }
+    stop();
 
-
-//void Drive(float set_point){
-//    updateBeacon(theta, r);
-//    startDrive(getDirection(set_point, r));
-//    while(abs(getError(set_point, r)) > r_window) {
-//        if(see_beacon == 'm'){
-//            //stop();
-//            Align();
-//            startDrive(getDirection(set_point, r));
-//        }
-//        else if(see_beacon == '0'){
-//            //check bumpers
-//        }
-//    }
-//    stop();
-//
-//    if(current_state == forward0) {current_state = reverse0;}
-//    //    if(current_state == forward1) {current_state = reverse1;}
-//}
+    if(current_state == forward0) {current_state = reverse0;}
+    //    if(current_state == forward1) {current_state = reverse1;}
+}
 //void Forward0(){
 //    startDrive(getDirection());
 //    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?

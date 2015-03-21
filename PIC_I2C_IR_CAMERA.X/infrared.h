@@ -8,8 +8,8 @@
 #ifndef INFRARED_H
 #define	INFRARED_H
 
-#include <i2c1_helper.h>
-#include <i2c2_helper.h>
+#include "i2c1_helper.h"
+#include "i2c2_helper.h"
 
 char IR1sensorAddress = 0xB0;
 char IR2sensorAddress = 0xB0;
