@@ -14,12 +14,23 @@
 _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use pins 9,10 as digital i/o
 
 // <editor-fold defaultstate="collapsed" desc="Parameters">
-const float wheel_dia = 2.5;
+const float wheel_dia = 2.5;            //inches
+const float r_window = 0.5*PI/180.0;    //radians
+const float theta_window = 4.0;         //inches
+const float PI = 3.14159;
+
 State current_state;
 volatile int step_counter, step_max; //step max == 152 for 90 deg turn
 volatile int angle_count;
+float theta, r;
 
 //Functions
+void config();
+void initialize();
+
+char seeBeacon(float* theta, float* r); // =0 nothing, =m mono, =s stereo
+void updateBeacon(float* theta, float* r){char temp = seeBeacon(theta, r);}
+
 float getError(float set_point, float measured_value);
 unsigned int getDirection(float set_point, float measured_value);
 void startDrive(unsigned int direction);
@@ -27,8 +38,10 @@ void startTurn(unsigned int direction);
 void stop();
 void straight(float distance, unsigned int direction);
 void turn(float angle, unsigned int direction);
+
 void Start();
 void Align();
+void Drive(float set_point);
 void Forward0();
 void Reverse0();
 void atCenter();
@@ -42,69 +55,25 @@ void End();
 void Finish();
 // </editor-fold>
 
-
 int main(int argc, char** argv) {
 
-    // <editor-fold defaultstate="collapsed" desc="Configuration">
+    config();
+    initialize();
 
-   // Configure the digital I/O ports
-    TRISA = 0;          //Set A ports to output
-    TRISB = 0;          //Set B ports to output
+    //Beginning States
+    Start();
+    Align();
+    cornerDrive();
 
-    ANSA = 0;          //disables analog input
-    ANSB = 0x000;      //disable analog input
-
- // Configure Timer1 using T1CON register
-    _TON = 1;           //enable Timer1
-    _TCS = 0;           //Set source to internal clock
-    _TCKPS = 0b01;      //Select prescale value - 1/8
-    PR1 = 5000;         //Set timer period so freq is 100 Hz
-    TMR1 = 0;
- // Timer 2
-    T2CONbits.TON = 1;           //enable Timer2
-    T2CONbits.TCS = 0;           //Set source to internal clock
-    T2CONbits.TCKPS = 0b01;      //Select prescale value - 1/8
-    PR2 = 5000;                  //Set timer period so freq is 100 Hz
-    TMR2 = 0;
- // Timer 3
-    T3CONbits.TON = 1;           //enable Timer3
-    T3CONbits.TCS = 0;           //Set source to internal clock
-    T3CONbits.TCKPS = 0b10;      //Select prescale value - 1/64
-    PR3 = 625;                  //Set timer period so freq is 100 Hz
-    TMR3 = 0;
-
- // Configure Output Compare
-    OC1CON1bits.OCTSEL = 0b100;     //Select Timer1 to be timer source
-    OC1CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
-    OC1CON2bits.SYNCSEL = 0b01011;  //Select Timer1 as synchronization source
- // Output 2
-    OC2CON1bits.OCTSEL = 0b000;     //Select Timer2 to be timer source
-    OC2CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
-    OC2CON2bits.SYNCSEL = 0b01100;  //Select Timer2 as synchronization source
- // Output 3 - Stepper Motors
-    OC3CON1bits.OCTSEL = 0b001;     //Select Timer3 to be timer source
-    OC3CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
-    OC3CON2bits.SYNCSEL = 0b01101;  //Select Timer3 as synchronization source
-
- // Configure Timer3 interrupt
-    IPC2bits.T3IP = 4;      //Set Priority
-    IEC0bits.T3IE = 1;      //Enable Interrupt
-    _T3IF = 0;              //Clear Interrupt flag (IFS0bits.T3IF)
-
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Initializations">
-    current_state = start;
-
-    step_counter = 0;
-    step_max = 0;
-
-    _RB1 = 0;   //Stepper1
-    _RA4 = 0;   //Stepper2
-    OC3R = 0.5*PR3; //Stepper duty cycle
-    T3CONbits.TON = 0;           //disable Timer3
-
-    // </editor-fold>
+        else if(current_state == forward0){
+            Forward0();
+        }
+        else if(current_state == reverse0){
+            Reverse0();
+        }
+        else if(current_state == at_center){
+            atCenter();
+        }
 
     // <editor-fold defaultstate="collapsed" desc="while(1)">
 
@@ -114,7 +83,7 @@ int main(int argc, char** argv) {
             Start();
         }
         else if(current_state == align0){
-            Align0();
+            Drive();
         }
         else if(current_state == forward0){
             Forward0();
@@ -152,6 +121,67 @@ int main(int argc, char** argv) {
     return (0);
 }
 
+void config(){
+
+   // Configure the digital I/O ports
+    TRISA = 0;          //Set A ports to output
+    TRISB = 0;          //Set B ports to output
+
+    ANSA = 0;          //disables analog input
+    ANSB = 0x000;      //disable analog input
+
+    _TRISB13 = 1;       //digital input bumper 1
+    _TRISB14 = 1;       //digital input bumper 2
+
+ // Configure Timer1 using T1CON register
+    _TON = 1;           //enable Timer1
+    _TCS = 0;           //Set source to internal clock
+    _TCKPS = 0b01;      //Select prescale value - 1/8
+    PR1 = 5000;         //Set timer period so freq is 100 Hz
+    TMR1 = 0;
+ // Timer 2
+    T2CONbits.TON = 1;           //enable Timer2
+    T2CONbits.TCS = 0;           //Set source to internal clock
+    T2CONbits.TCKPS = 0b01;      //Select prescale value - 1/8
+    PR2 = 5000;                  //Set timer period so freq is 100 Hz
+    TMR2 = 0;
+ // Timer 3
+    T3CONbits.TON = 1;           //enable Timer3
+    T3CONbits.TCS = 0;           //Set source to internal clock
+    T3CONbits.TCKPS = 0b10;      //Select prescale value - 1/64
+    PR3 = 625;                  //Set timer period so freq is 100 Hz
+    TMR3 = 0;
+
+ // Configure Output Compare
+    OC1CON1bits.OCTSEL = 0b100;     //Select Timer1 to be timer source
+    OC1CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
+    OC1CON2bits.SYNCSEL = 0b01011;  //Select Timer1 as synchronization source
+ // Output 2
+    OC2CON1bits.OCTSEL = 0b000;     //Select Timer2 to be timer source
+    OC2CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
+    OC2CON2bits.SYNCSEL = 0b01100;  //Select Timer2 as synchronization source
+ // Output 3 - Stepper Motors
+    OC3CON1bits.OCTSEL = 0b001;     //Select Timer3 to be timer source
+    OC3CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
+    OC3CON2bits.SYNCSEL = 0b01101;  //Select Timer3 as synchronization source
+
+ // Configure Timer3 interrupt
+    IPC2bits.T3IP = 4;      //Set Priority
+    IEC0bits.T3IE = 1;      //Enable Interrupt
+    _T3IF = 0;              //Clear Interrupt flag (IFS0bits.T3IF)
+}
+void initialize(){
+    current_state = start;
+
+    step_counter = 0;
+    step_max = 0;
+
+    _RB1 = 0;   //Stepper1
+    _RA4 = 0;   //Stepper2
+    OC3R = 0.5*PR3; //Stepper duty cycle
+    T3CONbits.TON = 0;           //disable Timer3
+}
+
 // <editor-fold defaultstate="collapsed" desc="Controlling Functions">
 
 float getError(float set_point, float measured_value){
@@ -160,8 +190,8 @@ float getError(float set_point, float measured_value){
 
 unsigned int getDirection(float set_point, float measured_value){
     if(getError(set_point, measured_value) > 0)
-        return 0;
-    else return 1;
+        return 0;   //forward or right
+    else return 1;  //backward or left
 }
 // </editor-fold>
 
@@ -277,41 +307,78 @@ void _ISR _T3Interrupt(void)
 void Start(){
     PR3 = 125;                  //Set timer period so freq is 500 Hz (fast)
     startTurn(0);
-    while(isThereALight() == 0);    //Doesn't see any light
+    while(seeBeacon(theta, r) == '0');    //Doesn't see any light
     stop();
     PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
 
     current_state = align0;
 }
 void Align(){
-    startTurn(getDirection(0, ));
-    while(abs(getError()) > 0.1);     //do we want this to be 0 exactly?
+    updateBeacon(theta, r);
+    startTurn(getDirection(0, theta));
+    while(abs(getError(0, theta)) > theta_window)
+        {updateBeacon(theta, r);}
     stop();
     
     if(current_state == align0) current_state = forward0;
     if(current_state == align1) current_state = forward1;
     if(current_state == align2) current_state = shoot; 
 }
-void Drive(){
-    startDrive(getDirection());
-    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
+void cornerDrive(){
+    float set_point = 0;
+    updateBeacon(theta, r);
+    startDrive(getDirection(set_point, r));
+    while(_RB13 == 0 || _RB14 ==0) {
+        if(seeBeacon == 'm'){
+            //stop();
+            Align();
+            startDrive(getDirection(set_point, r));
+        }
+        else if(_RB13 != _RB14){
+            startDrive(1);
+            delay(100);
+            Align();
+            startDrive(getDirection(set_point,r));
+        }
+    }
     stop();
 
-   // if(current_state == forward0) {current_state = align0;}
-   // if(current_state == forward1) {current_state = reverse1;}
+    if(current_state == forward0) {current_state = reverse0;}    
 }
-void Forward0(){
-    startDrive(getDirection());
-    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
+
+
+void Drive(float set_point){
+    updateBeacon(theta, r);
+    startDrive(getDirection(set_point, r));
+    while(abs(getError(set_point, r)) > r_window) {
+        if(seeBeacon == 'm'){
+            //stop();
+            Align();
+            startDrive(getDirection(set_point, r));
+        }
+        else if(seeBeacon == '0'){
+            //check bumpers
+        }
+    }
     stop();
 
-    if(current_state == forward0) {current_state = align0;}
-    if(current_state == forward1) {current_state = reverse1;}
+    if(current_state == forward0) {current_state = reverse0;}
+    //    if(current_state == forward1) {current_state = reverse1;}
 }
-void Reverse0(){
-
+//void Forward0(){
+//    startDrive(getDirection());
+//    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
+//    stop();
+//
+//    if(current_state == forward0) {current_state = align0;}
+//    if(current_state == forward1) {current_state = reverse1;}
+//}
+//void Reverse0(){
+//
+//}
+void atCenter(){
+    
 }
-void atCenter();
 void Align1();
 void Reverse1();
 void Forward1();
