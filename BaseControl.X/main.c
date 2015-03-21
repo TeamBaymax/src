@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <p24F16KA301.h>
 #include "State.h"
+#include "../PIC_I2C_IR_CAMERA.X/vision.h"
 
 _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use pins 9,10 as digital i/o
 
@@ -17,7 +18,7 @@ _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use 
 const float wheel_dia = 2.5;            //inches
 const float r_window = 0.5*PI/180.0;    //radians
 const float theta_window = 4.0;         //inches
-const float PI = 3.14159;
+//const float PI = 3.14159;
 
 State current_state;
 volatile int step_counter, step_max; //step max == 152 for 90 deg turn
@@ -28,8 +29,7 @@ float theta, r;
 void config();
 void initialize();
 
-char seeBeacon(float* theta, float* r); // =0 nothing, =m mono, =s stereo
-void updateBeacon(float* theta, float* r){char temp = seeBeacon(theta, r);}
+void updateBeacon(float* theta, float* r){char temp = see_beacon(theta, r);}
 
 float getError(float set_point, float measured_value);
 unsigned int getDirection(float set_point, float measured_value);
@@ -65,53 +65,45 @@ int main(int argc, char** argv) {
     Align();
     cornerDrive();
 
-        else if(current_state == forward0){
-            Forward0();
-        }
-        else if(current_state == reverse0){
-            Reverse0();
-        }
-        else if(current_state == at_center){
-            atCenter();
-        }
+
 
     // <editor-fold defaultstate="collapsed" desc="while(1)">
 
     while(1){
 
-        if(current_state == start){
-            Start();
-        }
-        else if(current_state == align0){
-            Drive();
-        }
-        else if(current_state == forward0){
-            Forward0();
-        }
-        else if(current_state == reverse0){
-            Reverse0();
-        }
-        else if(current_state == at_center){
-            atCenter();
-        }
+//        if(current_state == start){
+//            Start();
+//        }
+//        else if(current_state == align0){
+//            Drive();
+//        }
+//        else if(current_state == forward0){
+//            Forward0();
+//        }
+//        else if(current_state == reverse0){
+//            Reverse0();
+//        }
+//        else if(current_state == at_center){
+//            atCenter();
+//        }
 
             //add collector states here
 
-        else if(current_state == scan){
-            Scan();
-        }
-        else if(current_state == align2){
-            Align2();
-        }
-        else if(current_state == shoot){
-            Shoot();
-        }
-        else if(current_state == end){
-            End()
-        }
-        else if(current_state == finish){
-            Finish()
-        }
+//        else if(current_state == scan){
+//            Scan();
+//        }
+//        else if(current_state == align2){
+//            Align2();
+//        }
+//        else if(current_state == shoot){
+//            Shoot();
+//        }
+//        else if(current_state == end){
+//            End()
+//        }
+//        else if(current_state == finish){
+//            Finish()
+//        }
 
 
 
@@ -307,7 +299,7 @@ void _ISR _T3Interrupt(void)
 void Start(){
     PR3 = 125;                  //Set timer period so freq is 500 Hz (fast)
     startTurn(0);
-    while(seeBeacon(theta, r) == '0');    //Doesn't see any light
+    while(see_beacon(theta, r) == '0');    //Doesn't see any light
     stop();
     PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
 
@@ -329,7 +321,7 @@ void cornerDrive(){
     updateBeacon(theta, r);
     startDrive(getDirection(set_point, r));
     while(_RB13 == 0 || _RB14 ==0) {
-        if(seeBeacon == 'm'){
+        if(see_beacon == 'm'){
             //stop();
             Align();
             startDrive(getDirection(set_point, r));
@@ -347,24 +339,24 @@ void cornerDrive(){
 }
 
 
-void Drive(float set_point){
-    updateBeacon(theta, r);
-    startDrive(getDirection(set_point, r));
-    while(abs(getError(set_point, r)) > r_window) {
-        if(seeBeacon == 'm'){
-            //stop();
-            Align();
-            startDrive(getDirection(set_point, r));
-        }
-        else if(seeBeacon == '0'){
-            //check bumpers
-        }
-    }
-    stop();
-
-    if(current_state == forward0) {current_state = reverse0;}
-    //    if(current_state == forward1) {current_state = reverse1;}
-}
+//void Drive(float set_point){
+//    updateBeacon(theta, r);
+//    startDrive(getDirection(set_point, r));
+//    while(abs(getError(set_point, r)) > r_window) {
+//        if(see_beacon == 'm'){
+//            //stop();
+//            Align();
+//            startDrive(getDirection(set_point, r));
+//        }
+//        else if(see_beacon == '0'){
+//            //check bumpers
+//        }
+//    }
+//    stop();
+//
+//    if(current_state == forward0) {current_state = reverse0;}
+//    //    if(current_state == forward1) {current_state = reverse1;}
+//}
 //void Forward0(){
 //    startDrive(getDirection());
 //    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?

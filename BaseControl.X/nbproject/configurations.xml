@@ -5,6 +5,11 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>State.h</itemPath>
+      <itemPath>../PIC_I2C_IR_CAMERA.X/delay.h</itemPath>
+      <itemPath>../PIC_I2C_IR_CAMERA.X/i2c1_helper.h</itemPath>
+      <itemPath>../PIC_I2C_IR_CAMERA.X/i2c2_helper.h</itemPath>
+      <itemPath>../PIC_I2C_IR_CAMERA.X/infrared.h</itemPath>
+      <itemPath>../PIC_I2C_IR_CAMERA.X/vision.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,6 +27,9 @@
     </logicalFolder>
     <itemPath>temp</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../PIC_I2C_IR_CAMERA.X</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
