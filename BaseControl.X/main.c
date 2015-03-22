@@ -1,3 +1,6 @@
+// Start(); works but it is glitchy - mono_vision(...)
+// Left stepper motor won't ever change directions
+
 /*
  * File:   main.c
  * Author: Emily Lazalde
@@ -12,10 +15,12 @@
 #include "State.h"
 #include "../PIC_I2C_IR_CAMERA.X/vision.h"
 
+#define CENTER 33.5
+#define WHEEL_DIA 2.5
+
 _FOSCSEL(FNOSC_FRC & SOSCSRC_DIG);    // 8 MHz Oscillator, Clear SOSCSRC to use pins 9,10 as digital i/o
 
 // <editor-fold defaultstate="collapsed" desc="Parameters">
-const float wheel_dia = 2.5;            //inches
 const float r_window = 0.5*PI/180.;     //radians 
 const float theta_window = 4.0;         //inches
 
@@ -23,13 +28,15 @@ State current_state;
 volatile int step_counter, step_max; //step max == 152 for 90 deg turn
 volatile int angle_count;
 float theta, r;
-
-//Functions
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Function Declarations">
+//Configuration
 void config();
 void initialize();
 
 void updateBeacon(){char temp = see_beacon(&theta, &r);}
 
+//Navigation and Control
 float getError(float set_point, float measured_value);
 unsigned int getDirection(float set_point, float measured_value);
 void startDrive(unsigned int direction);
@@ -38,9 +45,13 @@ void stop();
 void straight(float distance, unsigned int direction);
 void turn(float angle, unsigned int direction);
 
+//Beginning State Machine Functions
 void Start();
 void Align();
 void cornerDrive();
+void toCenter();
+
+//Main State Machine Functions
 void Drive(float set_point);
 void Forward0();
 void Reverse0();
@@ -59,17 +70,25 @@ int main(int argc, char** argv) {
 
     config();
     initialize();
+    vision_setup();
+
+ 
 
     //Beginning States
     Start();
-    Align();
-    cornerDrive();
-
-
+//    startTurn(0);
+//    Align();
+//    cornerDrive();
+//    toCenter();
 
     // <editor-fold defaultstate="collapsed" desc="while(1)">
 
     while(1){
+
+//        startTurn(0);
+//        DelayuSec(5000000000);
+//        stop();
+//        DelayuSec(5000000000);
 
 //        if(current_state == start){
 //            Start();
@@ -122,8 +141,8 @@ void config(){
     ANSA = 0;          //disables analog input
     ANSB = 0x000;      //disable analog input
 
-    _TRISB13 = 1;       //digital input bumper 1
-    _TRISB14 = 1;       //digital input bumper 2
+    _TRISB13 = 1;       //digital input bumper 1 LEFT
+    _TRISB14 = 1;       //digital input bumper 2 RIGHT
 
  // Configure Timer1 using T1CON register
     _TON = 1;           //enable Timer1
@@ -164,12 +183,14 @@ void config(){
 }
 void initialize(){
     current_state = start;
+    r = 0;
+    theta = 0;
 
     step_counter = 0;
-    step_max = 0;
+    step_max = 100000;
 
-    _RB1 = 0;   //Stepper1
-    _RA4 = 0;   //Stepper2
+    _RA2= 0;   //Stepper1
+    _RA1 = 0;   //Stepper2
     OC3R = 0.5*PR3; //Stepper duty cycle
     T3CONbits.TON = 0;           //disable Timer3
 }
@@ -191,51 +212,53 @@ unsigned int getDirection(float set_point, float measured_value){
 
 void startDrive(unsigned int direction){
     if(direction == 0){         //drive forward
-         _RB12 = 0;
-         _RA4 = 0;
+         _RA2 = 0;
+         _RA1 = 0;
 
     }
     else{                       //drive reverse
-        _RB12 = 1;
-        _RA4 = 1;
+        _RA2 = 1;
+        _RA1 = 1;
     }
+
     T3CONbits.TON = 1;           //enable Timer3
 }
 
 void startTurn(unsigned int direction){
     if(direction == 0){         //turn right
-         _RB12 = 0;
-         _RA4 = 1;
+         _RA2 = 0;
+         _RA1 = 1;
 
     }
     else{                       //turn left
-        _RB12 = 1;
-        _RA4 = 0;
+        _RA2 = 1;
+        _RA1 = 0;
     }
+
     T3CONbits.TON = 1;           //enable Timer3
 }
 
 void stop(){
     T3CONbits.TON = 0;           //disable Timer3
-    _RA4 = 0;
-    _RB12 = 0;
+    _RA1 = 0;
+    _RA2 = 0;
 }
 
 // Straight line - distance [inches], direction forward = 0, reverse = 1
 void straight(float distance, unsigned int direction){  //inches
     if(direction == 0){         //drive forward
-         _RB12 = 0;
-         _RA4 = 0;
+         _RA2 = 0;
+         _RA1 = 0;
 
     }
     else{                       //drive reverse
-        _RB12 = 1;
-        _RA4 = 1;
+        _RA2 = 1;
+        _RA1 = 1;
     }
     step_counter = 0;
 
-    //200 steps = wheel_dia*pi inches;
-    step_max = 200.0/(3.14159265*wheel_dia) * distance;
+    //200 steps = WHEEL_DIA*pi inches;
+    step_max = 200.0/(3.14159265*WHEEL_DIA) * distance;
     T3CONbits.TON = 1;           //enable Timer3
 }
 
@@ -243,17 +266,17 @@ void straight(float distance, unsigned int direction){  //inches
 void turn(float angle, unsigned int direction){
 
     if(direction == 0){         //turn right
-         _RB12 = 0;
-         _RA4 = 1;
+         _RA2 = 0;
+         _RA1 = 1;
 
     }
     else{                       //turn left
-        _RB12 = 1;
-        _RA4 = 0;
+        _RA2 = 1;
+        _RA1 = 0;
     }
     step_counter = 0;
 
-    //steps = 200/(pi*wheel_dia) * 7.85/2 * angle * pi/180; minus 5 fudgefactor
+    //steps = 200/(pi*WHEEL_DIA) * 7.85/2 * angle * pi/180; minus 5 fudgefactor
     step_max = 152.0/90.0 * angle;
     T3CONbits.TON = 1;           //enable Timer3
 }
@@ -265,29 +288,28 @@ void turn(float angle, unsigned int direction){
  * originating from Timer3. The micro knows the interrupt is from Timer3
  * when the Timer3 interrupt flag (T3IF) is set.
  */
-void _ISR _T3Interrupt(void)
-{
+void _ISR _T3Interrupt(void){
     // Remember to clear the Timer1 interrupt flag when this ISR is entered.
     _T3IF = 0;
 
     step_counter++;
 
-    if(step_counter >= step_max){   //stop moving
-            _RA4 = 0;
-            _RB12 = 0;
-            T3CONbits.TON = 0;           //disable Timer3
-    }
+//    if(step_counter >= step_max){   //stop moving
+//            _RA1 = 0;
+//            _RA2 = 0;
+//            T3CONbits.TON = 0;           //disable Timer3
+//    }
 
 
 
     //Milestone 4 code
 //    if(step_counter == 200){ //start turning
-//                _RB12 = 1;
-//                _RA4 = 0;
+//                _RA2 = 1;
+//                _RA1 = 0;
 //    }
 //    else if(step_counter >= 352){   //stop turning 152 steps = 90 deg
-//            _RA4 = 0;
-//            _RB12 = 0;
+//            _RA1 = 0;
+//            _RA2 = 0;
 //            OC3R = 0;
 //    }
 
@@ -297,19 +319,21 @@ void _ISR _T3Interrupt(void)
 // <editor-fold defaultstate="collapsed" desc="State Functions">
 
 void Start(){
-    PR3 = 125;                  //Set timer period so freq is 500 Hz (fast)
+//    PR3 = 625;                  //Set timer period so freq is 500 Hz (fast)
     startTurn(0);
-    while(see_beacon(&theta, &r) == '0');    //Doesn't see any light
+//    while(1);
+    while(see_beacon(&theta, &r) == '0'){}    //Doesn't see any light
     stop();
-    PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
+//    PR3 = 625;                  //Set timer period so freq is 100 Hz (slow)
 
     current_state = align0;
 }
 void Align(){
     updateBeacon();
+    theta = PI/2.0;
     startTurn(getDirection(0, theta));
     while(abs(getError(0, theta)) > theta_window)
-        {updateBeacon();}
+        //{updateBeacon();}
     stop();
     
     if(current_state == align0) current_state = forward0;
@@ -341,24 +365,44 @@ void cornerDrive(){
 
     if(current_state == forward0) {current_state = reverse0;}    
 }
-void Drive(float set_point){
-    updateBeacon();
-    startDrive(getDirection(set_point, r));
-    while(abs(getError(set_point, r)) > r_window) {
+void toCenter(){
+    startDrive(1);
+    while(see_beacon(&theta, &r) == '0'){}
+    startDrive(getDirection(CENTER, r));
+    while(abs(getError(CENTER, r)) > r_window) {
         if(see_beacon(&theta, &r) == 'm'){
             //stop();
             Align();
-            startDrive(getDirection(set_point, r));
-        }
-        else if(see_beacon(&theta, &r) == '0'){
-            //check bumpers
+            startDrive(getDirection(CENTER, r));
         }
     }
     stop();
 
-    if(current_state == forward0) {current_state = reverse0;}
-    //    if(current_state == forward1) {current_state = reverse1;}
+    current_state = at_center;
 }
+
+
+
+
+//void Drive(float set_point){
+//    updateBeacon();
+//    if(current_state == reverse0){startDrive(1);}
+//    else{startDrive(getDirection(set_point, r));}
+//    while(abs(getError(set_point, r)) > r_window) {
+//        if(see_beacon(&theta, &r) == 'm'){
+//            //stop();
+//            Align();
+//            startDrive(getDirection(set_point, r));
+//        }
+//        else if(see_beacon(&theta, &r) == '0'){
+//            //check bumpers
+//        }
+//    }
+//    stop();
+//
+//    if(current_state == forward0) {current_state = reverse0;}
+//    //    if(current_state == forward1) {current_state = reverse1;}
+//}
 //void Forward0(){
 //    startDrive(getDirection());
 //    while(abs(getError) > 0.1);     //do we want this to be 0 exactly?
@@ -370,17 +414,15 @@ void Drive(float set_point){
 //void Reverse0(){
 //
 //}
-void atCenter(){
-    
-}
-void Align1();
-void Reverse1();
-void Forward1();
-void Scan();
-void Align2();
-void Shoot();
-void End();
-void Finish();
+//void atCenter();
+//void Align1();
+//void Reverse1();
+//void Forward1();
+//void Scan();
+//void Align2();
+//void Shoot();
+//void End();
+//void Finish();
 
 // </editor-fold>
 

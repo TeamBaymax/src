@@ -63,7 +63,7 @@ char see_beacon(float* theta, float* r)
     // check results
     if(x1 >= 1023 && x2>=1023) // unable to see anything
     {
-        flag = 0;
+        flag = '0';
     }
     else
     {

@@ -120,11 +120,11 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.const                       0xd90                 0xc            0x12  (18)
-.text                        0xd9c               0xe12          0x151b  (5403)
-.dinit                      0x1bae                0x16            0x21  (33)
+.const                       0xd90                 0x8             0xc  (12)
+.text                        0xd98               0xdf8          0x14f4  (5364)
+.dinit                      0x1b90                0x16            0x21  (33)
 
-                     Total program memory used (bytes):         0x26a6  (9894) 61%
+                     Total program memory used (bytes):         0x2679  (9849) 61%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -182,8 +182,8 @@ External Symbols in Program Memory (by address):
                   0x00036a                  _asinf
                   0x00036e                  _cosf
                   0x000372                  ___divsf3
-                  0x0003f6                  ___gesf2
                   0x0003f6                  ___gtsf2
+                  0x0003f6                  ___gesf2
                   0x0003fa                  ___fixsfsi
                   0x00043c                  ___fixunssfsi
                   0x000472                  ___floatsisf
@@ -205,8 +205,8 @@ External Symbols in Program Memory (by address):
                   0x000a8c                  __fchop
                   0x000ada                  __fcompare
                   0x000b10                  ___lesf2
-                  0x000b10                  ___ltsf2
                   0x000b10                  ___eqsf2
+                  0x000b10                  ___ltsf2
                   0x000b14                  ___floatdisf
                   0x000b34                  ___floatundisf
                   0x000b92                  _fmodf
@@ -214,74 +214,71 @@ External Symbols in Program Memory (by address):
                   0x000c34                  _ldexpf
                   0x000c78                  _logf
                   0x000d26                  _sqrtf
-                  0x000d90                  _wheel_dia
-                  0x000d94                  _r_window
-                  0x000d98                  _theta_window
-                  0x000d9c                  _DelayuSec
-                  0x000db4                  _i2c1_init
-                  0x000dd0                  _i2c1_start
-                  0x000e02                  _i2c1_restart
-                  0x000e2e                  _reset_i2c1_bus
-                  0x000e60                  _send_i2c1_byte
-                  0x000ebe                  _i2c1_read
-                  0x000eee                  _i2c1_read_ack
-                  0x000f24                  _I2C1write
-                  0x000f40                  _I2C1write2bytes
-                  0x000f66                  _I2C1write4bytes
-                  0x000fa0                  _I2C1requestFrom
-                  0x000ff4                  _i2c2_init
-                  0x001018                  _i2c2_start
-                  0x00104a                  _i2c2_restart
-                  0x001076                  _reset_i2c2_bus
-                  0x0010a8                  _send_i2c2_byte
-                  0x001106                  _i2c2_read
-                  0x001136                  _i2c2_read_ack
-                  0x00116c                  _I2C2write
-                  0x001188                  _I2C2write2bytes
-                  0x0011ae                  _I2C2write4bytes
-                  0x0011e8                  _I2C2requestFrom
-                  0x00123c                  _ir1_init
-                  0x0012a2                  _ir1_request
-                  0x0012fa                  _ir2_init
-                  0x001360                  _ir2_request
-                  0x0013b8                  _vision_setup
-                  0x0013ca                  _see_beacon
-                  0x00145c                  _stereo_vision
-                  0x00165c                  _mono_vision
-                  0x001794                  _updateBeacon
-                  0x0017a4                  _main
-                  0x0017b6                  _config
-                  0x001874                  _initialize
-                  0x0018aa                  _getError
-                  0x0018c2                  _getDirection
-                  0x0018f8                  _startDrive
-                  0x001912                  _startTurn
-                  0x00192c                  _stop
-                  0x001938                  _straight
-                  0x001982                  _turn
-                  0x0019b6                  __T3Interrupt
-                  0x0019de                  _Start
-                  0x001a06                  _Align
-                  0x001a7e                  _cornerDrive
-                  0x001b1c                  _Drive
-                  0x001ba8                  _atCenter
+                  0x000d90                  _r_window
+                  0x000d94                  _theta_window
+                  0x000d98                  _DelayuSec
+                  0x000db0                  _i2c1_init
+                  0x000dcc                  _i2c1_start
+                  0x000dfe                  _i2c1_restart
+                  0x000e2a                  _reset_i2c1_bus
+                  0x000e5c                  _send_i2c1_byte
+                  0x000eba                  _i2c1_read
+                  0x000eea                  _i2c1_read_ack
+                  0x000f20                  _I2C1write
+                  0x000f3c                  _I2C1write2bytes
+                  0x000f62                  _I2C1write4bytes
+                  0x000f9c                  _I2C1requestFrom
+                  0x000ff0                  _i2c2_init
+                  0x001014                  _i2c2_start
+                  0x001046                  _i2c2_restart
+                  0x001072                  _reset_i2c2_bus
+                  0x0010a4                  _send_i2c2_byte
+                  0x001102                  _i2c2_read
+                  0x001132                  _i2c2_read_ack
+                  0x001168                  _I2C2write
+                  0x001184                  _I2C2write2bytes
+                  0x0011aa                  _I2C2write4bytes
+                  0x0011e4                  _I2C2requestFrom
+                  0x001238                  _ir1_init
+                  0x00129e                  _ir1_request
+                  0x0012f6                  _ir2_init
+                  0x00135c                  _ir2_request
+                  0x0013b4                  _vision_setup
+                  0x0013c6                  _see_beacon
+                  0x001458                  _stereo_vision
+                  0x001658                  _mono_vision
+                  0x001790                  _updateBeacon
+                  0x0017a0                  _main
+                  0x0017b0                  _config
+                  0x00186e                  _initialize
+                  0x0018b0                  _getError
+                  0x0018c8                  _getDirection
+                  0x0018fe                  _startDrive
+                  0x001918                  _startTurn
+                  0x001932                  _stop
+                  0x00193e                  _straight
+                  0x001972                  _turn
+                  0x0019a6                  __T3Interrupt
+                  0x0019c0                  _Start
+                  0x0019e0                  _Align
+                  0x001a5e                  _cornerDrive
+                  0x001afc                  _toCenter
 
 External Symbols in Program Memory (by name):
 
-                  0x001a06                  _Align
-                  0x000d9c                  _DelayuSec
-                  0x001b1c                  _Drive
-                  0x000fa0                  _I2C1requestFrom
-                  0x000f24                  _I2C1write
-                  0x000f40                  _I2C1write2bytes
-                  0x000f66                  _I2C1write4bytes
-                  0x0011e8                  _I2C2requestFrom
-                  0x00116c                  _I2C2write
-                  0x001188                  _I2C2write2bytes
-                  0x0011ae                  _I2C2write4bytes
-                  0x0019de                  _Start
+                  0x0019e0                  _Align
+                  0x000d98                  _DelayuSec
+                  0x000f9c                  _I2C1requestFrom
+                  0x000f20                  _I2C1write
+                  0x000f3c                  _I2C1write2bytes
+                  0x000f62                  _I2C1write4bytes
+                  0x0011e4                  _I2C2requestFrom
+                  0x001168                  _I2C2write
+                  0x001184                  _I2C2write2bytes
+                  0x0011aa                  _I2C2write4bytes
+                  0x0019c0                  _Start
                   0x0002aa                  __DefaultInterrupt
-                  0x0019b6                  __T3Interrupt
+                  0x0019a6                  __T3Interrupt
                   0x0002b0                  ___addsf3
                   0x000372                  ___divsf3
                   0x000b10                  ___eqsf2
@@ -314,53 +311,52 @@ External Symbols in Program Memory (by name):
                   0x000200                  __resetPRI
                   0x000750                  __sincosf
                   0x00036a                  _asinf
-                  0x001ba8                  _atCenter
-                  0x0017b6                  _config
-                  0x001a7e                  _cornerDrive
+                  0x0017b0                  _config
+                  0x001a5e                  _cornerDrive
                   0x00036e                  _cosf
                   0x0009c8                  _expf
                   0x000b92                  _fmodf
-                  0x0018c2                  _getDirection
-                  0x0018aa                  _getError
-                  0x000db4                  _i2c1_init
-                  0x000ebe                  _i2c1_read
-                  0x000eee                  _i2c1_read_ack
-                  0x000e02                  _i2c1_restart
-                  0x000dd0                  _i2c1_start
-                  0x000ff4                  _i2c2_init
-                  0x001106                  _i2c2_read
-                  0x001136                  _i2c2_read_ack
-                  0x00104a                  _i2c2_restart
-                  0x001018                  _i2c2_start
-                  0x001874                  _initialize
-                  0x00123c                  _ir1_init
-                  0x0012a2                  _ir1_request
-                  0x0012fa                  _ir2_init
-                  0x001360                  _ir2_request
+                  0x0018c8                  _getDirection
+                  0x0018b0                  _getError
+                  0x000db0                  _i2c1_init
+                  0x000eba                  _i2c1_read
+                  0x000eea                  _i2c1_read_ack
+                  0x000dfe                  _i2c1_restart
+                  0x000dcc                  _i2c1_start
+                  0x000ff0                  _i2c2_init
+                  0x001102                  _i2c2_read
+                  0x001132                  _i2c2_read_ack
+                  0x001046                  _i2c2_restart
+                  0x001014                  _i2c2_start
+                  0x00186e                  _initialize
+                  0x001238                  _ir1_init
+                  0x00129e                  _ir1_request
+                  0x0012f6                  _ir2_init
+                  0x00135c                  _ir2_request
                   0x000c34                  _ldexpf
                   0x000c78                  _logf
-                  0x0017a4                  _main
-                  0x00165c                  _mono_vision
+                  0x0017a0                  _main
+                  0x001658                  _mono_vision
                   0x00058a                  _powf
-                  0x000d94                  _r_window
-                  0x000e2e                  _reset_i2c1_bus
-                  0x001076                  _reset_i2c2_bus
-                  0x0013ca                  _see_beacon
-                  0x000e60                  _send_i2c1_byte
-                  0x0010a8                  _send_i2c2_byte
+                  0x000d90                  _r_window
+                  0x000e2a                  _reset_i2c1_bus
+                  0x001072                  _reset_i2c2_bus
+                  0x0013c6                  _see_beacon
+                  0x000e5c                  _send_i2c1_byte
+                  0x0010a4                  _send_i2c2_byte
                   0x000822                  _sinf
                   0x000d26                  _sqrtf
-                  0x0018f8                  _startDrive
-                  0x001912                  _startTurn
-                  0x00145c                  _stereo_vision
-                  0x00192c                  _stop
-                  0x001938                  _straight
+                  0x0018fe                  _startDrive
+                  0x001918                  _startTurn
+                  0x001458                  _stereo_vision
+                  0x001932                  _stop
+                  0x00193e                  _straight
                   0x000826                  _tanf
-                  0x000d98                  _theta_window
-                  0x001982                  _turn
-                  0x001794                  _updateBeacon
-                  0x0013b8                  _vision_setup
-                  0x000d90                  _wheel_dia
+                  0x000d94                  _theta_window
+                  0x001afc                  _toCenter
+                  0x001972                  _turn
+                  0x001790                  _updateBeacon
+                  0x0013b4                  _vision_setup
 
 Memory Configuration
 
@@ -541,26 +537,26 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x2e95
+.debug_info       0x000000       0x2e4f
  *(.debug_info)
- .debug_info      0x000000       0x2e95 build/default/production/main.o
+ .debug_info      0x000000       0x2e4f build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x2a8
+.debug_abbrev     0x000000        0x2b7
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x2a8 build/default/production/main.o
+ .debug_abbrev    0x000000        0x2b7 build/default/production/main.o
 
-.debug_line       0x000000       0x1318
+.debug_line       0x000000       0x12d7
  *(.debug_line)
- .debug_line      0x000000       0x1318 build/default/production/main.o
+ .debug_line      0x000000       0x12d7 build/default/production/main.o
 
-.debug_frame      0x000000        0x314
+.debug_frame      0x000000        0x304
  *(.debug_frame)
- .debug_frame     0x000000        0x314 build/default/production/main.o
+ .debug_frame     0x000000        0x304 build/default/production/main.o
 
-.debug_str        0x000000        0x27f
+.debug_str        0x000000        0x275
  *(.debug_str)
- .debug_str       0x000000        0x27f build/default/production/main.o
+ .debug_str       0x000000        0x275 build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -569,10 +565,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x3a5
+                  0x000000        0x38d
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x3a5 build/default/production/main.o
+                  0x000000        0x38d build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -599,7 +595,7 @@ __FDS
                   0x00001e          0x4 LONG 0x2aa DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2aa DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000022          0x4 LONG 0x2aa DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x19b6 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x19a6 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x2aa DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x2aa DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x2aa DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -727,7 +723,7 @@ __FDS
                   0x00011e          0x4 LONG 0x2aa DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2aa DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000122          0x4 LONG 0x2aa DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x19b6 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x19a6 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x2aa DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x2aa DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x2aa DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1552,62 +1548,60 @@ __c30_signature
  .nbss              0x0812          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0812                  _errno
 
-.const              0x8d90          0xc load address 0x000d90  
- .const             0x8d90          0xc build/default/production/main.o
-                    0x8d90                  _wheel_dia
-                    0x8d94                  _r_window
-                    0x8d98                  _theta_window
+.const              0x8d90          0x8 load address 0x000d90  
+ .const             0x8d90          0x8 build/default/production/main.o
+                    0x8d90                  _r_window
+                    0x8d94                  _theta_window
 
-.text             0x000d9c        0xe12
- .text            0x000d9c        0xe12 build/default/production/main.o
-                  0x000d9c                  _DelayuSec
-                  0x000db4                  _i2c1_init
-                  0x000dd0                  _i2c1_start
-                  0x000e02                  _i2c1_restart
-                  0x000e2e                  _reset_i2c1_bus
-                  0x000e60                  _send_i2c1_byte
-                  0x000ebe                  _i2c1_read
-                  0x000eee                  _i2c1_read_ack
-                  0x000f24                  _I2C1write
-                  0x000f40                  _I2C1write2bytes
-                  0x000f66                  _I2C1write4bytes
-                  0x000fa0                  _I2C1requestFrom
-                  0x000ff4                  _i2c2_init
-                  0x001018                  _i2c2_start
-                  0x00104a                  _i2c2_restart
-                  0x001076                  _reset_i2c2_bus
-                  0x0010a8                  _send_i2c2_byte
-                  0x001106                  _i2c2_read
-                  0x001136                  _i2c2_read_ack
-                  0x00116c                  _I2C2write
-                  0x001188                  _I2C2write2bytes
-                  0x0011ae                  _I2C2write4bytes
-                  0x0011e8                  _I2C2requestFrom
-                  0x00123c                  _ir1_init
-                  0x0012a2                  _ir1_request
-                  0x0012fa                  _ir2_init
-                  0x001360                  _ir2_request
-                  0x0013b8                  _vision_setup
-                  0x0013ca                  _see_beacon
-                  0x00145c                  _stereo_vision
-                  0x00165c                  _mono_vision
-                  0x001794                  _updateBeacon
-                  0x0017a4                  _main
-                  0x0017b6                  _config
-                  0x001874                  _initialize
-                  0x0018aa                  _getError
-                  0x0018c2                  _getDirection
-                  0x0018f8                  _startDrive
-                  0x001912                  _startTurn
-                  0x00192c                  _stop
-                  0x001938                  _straight
-                  0x001982                  _turn
-                  0x0019b6                  __T3Interrupt
-                  0x0019de                  _Start
-                  0x001a06                  _Align
-                  0x001a7e                  _cornerDrive
-                  0x001b1c                  _Drive
-                  0x001ba8                  _atCenter
+.text             0x000d98        0xdf8
+ .text            0x000d98        0xdf8 build/default/production/main.o
+                  0x000d98                  _DelayuSec
+                  0x000db0                  _i2c1_init
+                  0x000dcc                  _i2c1_start
+                  0x000dfe                  _i2c1_restart
+                  0x000e2a                  _reset_i2c1_bus
+                  0x000e5c                  _send_i2c1_byte
+                  0x000eba                  _i2c1_read
+                  0x000eea                  _i2c1_read_ack
+                  0x000f20                  _I2C1write
+                  0x000f3c                  _I2C1write2bytes
+                  0x000f62                  _I2C1write4bytes
+                  0x000f9c                  _I2C1requestFrom
+                  0x000ff0                  _i2c2_init
+                  0x001014                  _i2c2_start
+                  0x001046                  _i2c2_restart
+                  0x001072                  _reset_i2c2_bus
+                  0x0010a4                  _send_i2c2_byte
+                  0x001102                  _i2c2_read
+                  0x001132                  _i2c2_read_ack
+                  0x001168                  _I2C2write
+                  0x001184                  _I2C2write2bytes
+                  0x0011aa                  _I2C2write4bytes
+                  0x0011e4                  _I2C2requestFrom
+                  0x001238                  _ir1_init
+                  0x00129e                  _ir1_request
+                  0x0012f6                  _ir2_init
+                  0x00135c                  _ir2_request
+                  0x0013b4                  _vision_setup
+                  0x0013c6                  _see_beacon
+                  0x001458                  _stereo_vision
+                  0x001658                  _mono_vision
+                  0x001790                  _updateBeacon
+                  0x0017a0                  _main
+                  0x0017b0                  _config
+                  0x00186e                  _initialize
+                  0x0018b0                  _getError
+                  0x0018c8                  _getDirection
+                  0x0018fe                  _startDrive
+                  0x001918                  _startTurn
+                  0x001932                  _stop
+                  0x00193e                  _straight
+                  0x001972                  _turn
+                  0x0019a6                  __T3Interrupt
+                  0x0019c0                  _Start
+                  0x0019e0                  _Align
+                  0x001a5e                  _cornerDrive
+                  0x001afc                  _toCenter
 
-.dinit            0x001bae         0x16
- .dinit           0x001bae         0x16 data_init
+.dinit            0x001b90         0x16
+ .dinit           0x001b90         0x16 data_init
