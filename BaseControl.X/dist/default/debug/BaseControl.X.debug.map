@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p24F16KA301 \
   -o \
-  dist/default/production/BaseControl.X.production.elf \
+  dist/default/debug/BaseControl.X.debug.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib/PIC24E \
@@ -21,9 +21,17 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib/dsPIC33F \
   -Lc:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
+  build/default/debug/main.o \
+  -TC:\Users\ECESTU~1\AppData\Local\Temp\tmp00002348.00 \
+  -TC:\Users\ECESTU~1\AppData\Local\Temp\tmp00002348.01 \
+  -TC:\Users\ECESTU~1\AppData\Local\Temp\tmp00002348.02 \
+  -TC:\Users\ECESTU~1\AppData\Local\Temp\tmp00002348.03 \
+  -TC:\Users\ECESTU~1\AppData\Local\Temp\tmp00002348.04 \
   --defsym=__MPLAB_BUILD=1 \
-  -Tp24F16KA301.gld.00 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_PK3=1 \
+  -Tp24F16KA301.gld.05 \
   --stack=16 \
   --check-sections \
   --data-init \
@@ -35,7 +43,7 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/BaseControl.X.production.map \
+  -Map=dist/default/debug/BaseControl.X.debug.map \
   --report-mem \
   -start-group \
   --library=pic30-elf \
@@ -50,19 +58,19 @@ c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(addsf3.eo)
-                              build/default/production/main.o (___subsf3)
+                              build/default/debug/main.o (___subsf3)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(asinf.eo)
-                              build/default/production/main.o (_asinf)
+                              build/default/debug/main.o (_asinf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(cosf.eo)
-                              build/default/production/main.o (_cosf)
+                              build/default/debug/main.o (_cosf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(divsf3.eo)
-                              build/default/production/main.o (___divsf3)
+                              build/default/debug/main.o (___divsf3)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fgtge.eo)
-                              build/default/production/main.o (___gtsf2)
+                              build/default/debug/main.o (___gtsf2)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
-                              build/default/production/main.o (___fixunssfsi)
+                              build/default/debug/main.o (___fixunssfsi)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
-                              build/default/production/main.o (___floatunsisf)
+                              build/default/debug/main.o (___floatunsisf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fpack.eo)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(addsf3.eo) (__fpack)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(funpack.eo)
@@ -72,15 +80,15 @@ c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(funpack
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(futil.eo)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(addsf3.eo) (__fPropagateNaN)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
-                              build/default/production/main.o (___mulsf3)
+                              build/default/debug/main.o (___mulsf3)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(powf.eo)
-                              build/default/production/main.o (_powf)
+                              build/default/debug/main.o (_powf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sincosf.eo)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(cosf.eo) (__sincosf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sinf.eo)
-                              build/default/production/main.o (_sinf)
+                              build/default/debug/main.o (_sinf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(tanf.eo)
-                              build/default/production/main.o (_tanf)
+                              build/default/debug/main.o (_tanf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(_frexpf.eo)
                               c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(powf.eo) (__frexpf)
 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(asinacosf.eo)
@@ -121,21 +129,26 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
 .const                       0xd90                 0x8             0xc  (12)
-.text                        0xd98               0xb78          0x1134  (4404)
-.dinit                      0x1910                0x18            0x24  (36)
+.text                        0xd98               0xb2e          0x10c5  (4293)
+.dinit                      0x18c6                0x18            0x24  (36)
 
-                     Total program memory used (bytes):         0x22bc  (8892) 55%
+                     Total program memory used (bytes):         0x224d  (8781) 54%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x10  (16)
-.ndata                       0x810                   0             0x4  (4)
-.nbss                        0x814                   0             0x2  (2)
+reserve_data_0x800           0x800                0x20            0x20  (32)
+reserve_data_0x820           0x820                 0x2             0x2  (2)
+reserve_data_0x822           0x822                 0x2             0x2  (2)
+reserve_data_0x824           0x824                 0x2             0x2  (2)
+reserve_data_0x826           0x826                0x2a            0x2a  (42)
+.nbss                        0x850                   0            0x10  (16)
+.ndata                       0x860                   0             0x4  (4)
+.nbss                        0x864                   0             0x2  (2)
 
-                        Total data memory used (bytes):           0x16  (22) 1%
+                        Total data memory used (bytes):           0x66  (102) 4%
 
 
 Dynamic Memory Usage
@@ -143,34 +156,34 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x816                               0x7ea  (2026)
+stack                        0x866                               0x79a  (1946)
 
-                        Maximum dynamic memory (bytes):          0x7ea  (2026)
+                        Maximum dynamic memory (bytes):          0x79a  (1946)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _current_state
-                    0x0802                  _step_counter
-                    0x0804                  _step_max
-                    0x0806                  _angle_count
-                    0x0808                  _theta
-                    0x080c                  _r
-                    0x0810                  _IR1sensorAddress
-                    0x0811                  _IR2sensorAddress
-                    0x0812                  _arduinoAddress
+                    0x0850                  _current_state
+                    0x0852                  _step_counter
+                    0x0854                  _step_max
+                    0x0856                  _angle_count
+                    0x0858                  _theta
+                    0x085c                  _r
+                    0x0860                  _IR1sensorAddress
+                    0x0861                  _IR2sensorAddress
+                    0x0862                  _arduinoAddress
 
 External Symbols in Data Memory (by name):
 
-                    0x0810                  _IR1sensorAddress
-                    0x0811                  _IR2sensorAddress
-                    0x0806                  _angle_count
-                    0x0812                  _arduinoAddress
-                    0x0800                  _current_state
-                    0x080c                  _r
-                    0x0802                  _step_counter
-                    0x0804                  _step_max
-                    0x0808                  _theta
+                    0x0860                  _IR1sensorAddress
+                    0x0861                  _IR2sensorAddress
+                    0x0856                  _angle_count
+                    0x0862                  _arduinoAddress
+                    0x0850                  _current_state
+                    0x085c                  _r
+                    0x0852                  _step_counter
+                    0x0854                  _step_max
+                    0x0858                  _theta
 
 External Symbols in Program Memory (by address):
 
@@ -205,8 +218,8 @@ External Symbols in Program Memory (by address):
                   0x000a44                  __fchop
                   0x000a92                  __fcompare
                   0x000ac8                  ___eqsf2
-                  0x000ac8                  ___lesf2
                   0x000ac8                  ___ltsf2
+                  0x000ac8                  ___lesf2
                   0x000acc                  ___fixsfsi
                   0x000b0e                  ___floatsisf
                   0x000b14                  ___floatundisf
@@ -247,14 +260,11 @@ External Symbols in Program Memory (by address):
                   0x00135c                  _ir2_request
                   0x0013b4                  _vision_setup
                   0x0013ec                  _see_beacon
-                  0x0014f2                  _stereo_vision
-                  0x0016f2                  _mono_vision
-                  0x00182a                  _main
-                  0x001834                  _config
-                  0x00188e                  _initialize
-                  0x0018d0                  _startDrive
-                  0x0018ea                  _startTurn
-                  0x001904                  _stop
+                  0x0014e4                  _stereo_vision
+                  0x0016e4                  _mono_vision
+                  0x00181c                  _main
+                  0x00182a                  _config
+                  0x001884                  _initialize
 
 External Symbols in Program Memory (by name):
 
@@ -300,7 +310,7 @@ External Symbols in Program Memory (by name):
                   0x000200                  __resetPRI
                   0x000708                  __sincosf
                   0x00036a                  _asinf
-                  0x001834                  _config
+                  0x00182a                  _config
                   0x00036e                  _cosf
                   0x000980                  _expf
                   0x000b72                  _fmodf
@@ -314,15 +324,15 @@ External Symbols in Program Memory (by name):
                   0x001132                  _i2c2_read_ack
                   0x001046                  _i2c2_restart
                   0x001014                  _i2c2_start
-                  0x00188e                  _initialize
+                  0x001884                  _initialize
                   0x001238                  _ir1_init
                   0x00129e                  _ir1_request
                   0x0012f6                  _ir2_init
                   0x00135c                  _ir2_request
                   0x000c14                  _ldexpf
                   0x000c58                  _logf
-                  0x00182a                  _main
-                  0x0016f2                  _mono_vision
+                  0x00181c                  _main
+                  0x0016e4                  _mono_vision
                   0x000542                  _powf
                   0x000d90                  _r_window
                   0x000e2a                  _reset_i2c1_bus
@@ -332,10 +342,7 @@ External Symbols in Program Memory (by name):
                   0x0010a4                  _send_i2c2_byte
                   0x0007da                  _sinf
                   0x000d06                  _sqrtf
-                  0x0018d0                  _startDrive
-                  0x0018ea                  _startTurn
-                  0x0014f2                  _stereo_vision
-                  0x001904                  _stop
+                  0x0014e4                  _stereo_vision
                   0x0007de                  _tanf
                   0x000d94                  _theta_window
                   0x0013b4                  _vision_setup
@@ -362,8 +369,36 @@ FDS              0xf80010           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
+LOAD build/default/debug/main.o
+
+reserve_data_0x800
+                    0x0800         0x20
+                    0x0820                  . = 0x20
+ *fill*             0x0800         0x2000
+
+reserve_data_0x820
+                    0x0820          0x2
+                    0x0822                  . = 0x2
+ *fill*             0x0820          0x200
+
+reserve_data_0x822
+                    0x0822          0x2
+                    0x0824                  . = 0x2
+ *fill*             0x0822          0x200
+
+reserve_data_0x824
+                    0x0824          0x2
+                    0x0826                  . = 0x2
+ *fill*             0x0824          0x200
+
+reserve_data_0x826
+                    0x0826         0x2a
+                    0x0850                  . = 0x2a
+ *fill*             0x0826         0x2a00
                     0x0001                  __MPLAB_BUILD = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_PK3 = 0x1
 LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib/PIC24F\libpPIC24Fxxx-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
@@ -499,7 +534,7 @@ __FGS
 
 __FOSCSEL         0xf80006          0x2
  *(__FOSCSEL.sec*)
- __FOSCSEL.sec    0xf80006          0x2 build/default/production/main.o
+ __FOSCSEL.sec    0xf80006          0x2 build/default/debug/main.o
 
 __FOSC
  *(__FOSC.sec*)
@@ -519,26 +554,26 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x2369
+.debug_info       0x000000       0x233d
  *(.debug_info)
- .debug_info      0x000000       0x2369 build/default/production/main.o
+ .debug_info      0x000000       0x233d build/default/debug/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x229
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x229 build/default/production/main.o
+ .debug_abbrev    0x000000        0x229 build/default/debug/main.o
 
-.debug_line       0x000000        0xfe6
+.debug_line       0x000000        0xefa
  *(.debug_line)
- .debug_line      0x000000        0xfe6 build/default/production/main.o
+ .debug_line      0x000000        0xefa build/default/debug/main.o
 
-.debug_frame      0x000000        0x264
+.debug_frame      0x000000        0x234
  *(.debug_frame)
- .debug_frame     0x000000        0x264 build/default/production/main.o
+ .debug_frame     0x000000        0x234 build/default/debug/main.o
 
-.debug_str        0x000000        0x14f
+.debug_str        0x000000        0x145
  *(.debug_str)
- .debug_str       0x000000        0x14f build/default/production/main.o
+ .debug_str       0x000000        0x145 build/default/debug/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -547,10 +582,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x319
+                  0x000000        0x2f3
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x319 build/default/production/main.o
+                  0x000000        0x2f3 build/default/debug/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -558,7 +593,7 @@ __FDS
 .debug_aranges    0x000000         0x18
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/debug/main.o
 
 .ivt              0x000004         0xfc
                   0x000004          0x4 LONG 0x2aa DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
@@ -1429,7 +1464,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.
 LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libc-elf.a
 END GROUP
-OUTPUT(dist/default/production/BaseControl.X.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/BaseControl.X.debug.elf elf32-pic30)
 LOAD jump_table
 LOAD default_isr
 LOAD data_init
@@ -1437,12 +1472,12 @@ LOAD data_init
 .debug_pubtypes
                   0x000018        0x21c
  .debug_pubtypes
-                  0x000018        0x21c build/default/production/main.o
+                  0x000018        0x21c build/default/debug/main.o
 
 __c30_signature
                   0x000234         0xd2
  __c30_signature
-                  0x000234          0x6 build/default/production/main.o
+                  0x000234          0x6 build/default/debug/main.o
  __c30_signature
                   0x00023a          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
@@ -1512,32 +1547,32 @@ __c30_signature
  __c30_signature
                   0x000300          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
 
-.nbss               0x0800         0x10
- .nbss              0x0800         0x10 build/default/production/main.o
-                    0x0800                  _current_state
-                    0x0802                  _step_counter
-                    0x0804                  _step_max
-                    0x0806                  _angle_count
-                    0x0808                  _theta
-                    0x080c                  _r
+.nbss               0x0850         0x10
+ .nbss              0x0850         0x10 build/default/debug/main.o
+                    0x0850                  _current_state
+                    0x0852                  _step_counter
+                    0x0854                  _step_max
+                    0x0856                  _angle_count
+                    0x0858                  _theta
+                    0x085c                  _r
 
-.ndata              0x0810          0x4
- .ndata             0x0810          0x4 build/default/production/main.o
-                    0x0810                  _IR1sensorAddress
-                    0x0811                  _IR2sensorAddress
-                    0x0812                  _arduinoAddress
+.ndata              0x0860          0x4
+ .ndata             0x0860          0x4 build/default/debug/main.o
+                    0x0860                  _IR1sensorAddress
+                    0x0861                  _IR2sensorAddress
+                    0x0862                  _arduinoAddress
 
-.nbss               0x0814          0x2
- .nbss              0x0814          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
-                    0x0814                  _errno
+.nbss               0x0864          0x2
+ .nbss              0x0864          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
+                    0x0864                  _errno
 
 .const              0x8d90          0x8 load address 0x000d90  
- .const             0x8d90          0x8 build/default/production/main.o
+ .const             0x8d90          0x8 build/default/debug/main.o
                     0x8d90                  _r_window
                     0x8d94                  _theta_window
 
-.text             0x000d98        0xb78
- .text            0x000d98        0xb78 build/default/production/main.o
+.text             0x000d98        0xb2e
+ .text            0x000d98        0xb2e build/default/debug/main.o
                   0x000d98                  _DelayuSec
                   0x000db0                  _i2c1_init
                   0x000dcc                  _i2c1_start
@@ -1567,14 +1602,11 @@ __c30_signature
                   0x00135c                  _ir2_request
                   0x0013b4                  _vision_setup
                   0x0013ec                  _see_beacon
-                  0x0014f2                  _stereo_vision
-                  0x0016f2                  _mono_vision
-                  0x00182a                  _main
-                  0x001834                  _config
-                  0x00188e                  _initialize
-                  0x0018d0                  _startDrive
-                  0x0018ea                  _startTurn
-                  0x001904                  _stop
+                  0x0014e4                  _stereo_vision
+                  0x0016e4                  _mono_vision
+                  0x00181c                  _main
+                  0x00182a                  _config
+                  0x001884                  _initialize
 
-.dinit            0x001910         0x18
- .dinit           0x001910         0x18 data_init
+.dinit            0x0018c6         0x18
+ .dinit           0x0018c6         0x18 data_init
