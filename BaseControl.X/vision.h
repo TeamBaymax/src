@@ -31,6 +31,7 @@
 
 
 char arduinoAddress = 0x04<<1;
+int x1, x2, y1, y2;
 
 /**
  * vision_setup a function that initializes the i2c communication with the ir
@@ -76,8 +77,6 @@ void vision_setup()
  */
 char see_beacon(float* theta, float* r)
 {
-    // request new values from cameras
-    int x1,y1,x2,y2;
     x1 = y1 = x2 = y2 = 0;
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);
@@ -85,19 +84,15 @@ char see_beacon(float* theta, float* r)
     if(x1 == 0 || x2 == 0) // i2c froze
     {
         vision_setup();
+        *theta = PI/2.0;
+        *r = 30;
+        return 0b0;
     }
 
 
 
     if(DEBUG) {
-        char* xptr1 = &x1;
-        char* yptr1 = &y1;
 
-        char* xptr2 = &x2;
-        char* yptr2 = &y2;
-
-        I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
-        I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
     }
 
     char flag;
@@ -139,11 +134,23 @@ void stereo_vision(float x1, float x2, float* theta, float* r)
       *r = pow(pow(r1,2.0)+pow(D/2.0,2.0)-2.0*r1*(D/2.0)*cos(PI/2.0-PHI1-gamma1),1/2.0);
       float rad = *r;
       *theta = asin(r1*(sin(PI/2.0-PHI1-gamma1)/rad)) - PI/2.0; //stuck always negative, due to range of asin()
+      float th = *theta;
       if(r1>r2)
       {
-        float th = *theta;
         *theta = -th;
-  }
+      }
+
+      int theta_int = (int)th;
+      int r_int = (int)rad;
+
+      char* xptr1 = &theta_int;
+      char* yptr1 = &r_int;
+
+      I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
+
+
+
+
 
 }
 

@@ -68,17 +68,17 @@ void loop()
 
 void receiveEvent(int n)
 {
-  switch(camera_number) {
-    case 1:
+  //switch(camera_number) {
+    //case 1:
       x1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
       y1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      camera_number = 2;
-      break;
-    case 2:
-      x2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      y2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      camera_number =1;
-      break;
+      //camera_number = 2;
+      //break;
+    //case 2:
+      //x2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
+      //y2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
+      //camera_number =1;
+      //break;
   } 
 }
 // function that executes whenever data is received from master 
