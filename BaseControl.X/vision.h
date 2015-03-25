@@ -30,7 +30,6 @@
 #define DEBUG 1
 
 
-char arduinoAddress = 0x04<<1;
 int x1, x2, y1, y2;
 
 /**
@@ -89,8 +88,6 @@ char see_beacon(float* theta, float* r)
         return 0b0;
     }
 
-
-
     if(DEBUG) {
 
     }
@@ -143,14 +140,7 @@ void stereo_vision(float x1, float x2, float* theta, float* r)
       int theta_int = (int)th;
       int r_int = (int)rad;
 
-      char* xptr1 = &theta_int;
-      char* yptr1 = &r_int;
-
-      I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
-
-
-
-
+      debug_2_ints(theta_int, r_int);
 
 }
 

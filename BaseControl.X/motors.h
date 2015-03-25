@@ -16,19 +16,19 @@
 #define REVERSE 1
 
 
-void initialize(){
-    current_state = start;
-    r = 0;
-    theta = 0;
-
-    step_counter = 0;
-    step_max = 100000;
+/*void initialize(){
+//    current_state = start;
+//    r = 0;
+//    theta = 0;
+//
+//    step_counter = 0;
+//    step_max = 100000;
 
     _RA2= 0;   //Stepper1
     _RA1 = 0;   //Stepper2
     OC3R = 0.5*PR3; //Stepper duty cycle
     T3CONbits.TON = 0;           //disable Timer3
-}
+}*/
 
 void startDrive(unsigned int direction){
     if(direction == 0){         //drive forward

@@ -11,6 +11,7 @@
       <itemPath>infrared.h</itemPath>
       <itemPath>vision.h</itemPath>
       <itemPath>motors.h</itemPath>
+      <itemPath>i2c_debug.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -42,8 +43,8 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.24</languageToolchainVersion>
-        <platform>3</platform>
+        <languageToolchainVersion>1.23</languageToolchainVersion>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
