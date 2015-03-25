@@ -19,7 +19,7 @@ void setup()
  Wire.begin(0x04);                // join i2c bus with address #2 
  camera_number = 1;
  Wire.onRequest(requestEvent); // register event 
- Wire.onReceive(receiveEvent);
+ Wire.onReceive(receivefloatEvent);
  Serial.begin(115200);           // start serial for output 
 } 
 volatile char c[2] = {0, 0};
@@ -63,24 +63,35 @@ void loop()
     Serial.print("\t  r2 = ");
     Serial.println(r2,DEC);
   }
-} 
-
-
-void receiveEvent(int n)
-{
-  //switch(camera_number) {
-    //case 1:
-      x1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      y1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //camera_number = 2;
-      //break;
-    //case 2:
-      //x2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //y2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //camera_number =1;
-      //break;
-  } 
 }
+
+void receive2intsEvent(int n)
+{
+      int int1, int2;
+      int1 = Wire.read();
+      int1 = (int1 | Wire.read() << 8) & 0b1111111111;
+      int2 = Wire.read();
+      int2 = (y1 | Wire.read() << 8) & 0b1111111111;
+      
+    Serial.print("int1 = ");
+    Serial.print(int1);
+    Serial.print("\t int1 = ");
+    Serial.println(int1);
+}
+
+void receivefloatEvent(int n)
+{
+      float float1 = 0;
+      char* floatptr = (char*)&float1;
+      floatptr[3] = Wire.read();
+      floatptr[2] = Wire.read();
+      floatptr[1] |= Wire.read();
+      floatptr[0] |= Wire.read();
+      
+    Serial.print("float1 = ");
+    Serial.println(float1);
+}
+
 // function that executes whenever data is received from master 
 // this function is registered as an event, see setup() 
 void requestEvent() 

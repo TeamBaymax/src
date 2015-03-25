@@ -1,0 +1,28 @@
+/* 
+ * File:   i2c_debug.h
+ * Author: gary
+ *
+ * Created on March 24, 2015, 5:09 PM
+ */
+
+#ifndef I2C_DEBUG_H
+#define	I2C_DEBUG_H
+
+char arduinoAddress = 0x04<<1;
+
+void debug_2_ints(int val1, int val2)
+{
+    char* ptr1 = &val1;
+    char* ptr2 = &val2;
+
+    I2C1write4bytes(arduinoAddress, ptr1[1], ptr1[0], ptr2[1], ptr2[0]);
+}
+
+void debug_float(float val)
+{
+    char* ptr1 = &val;
+    I2C1write4bytes(arduinoAddress, ptr1[3], ptr1[2], ptr1[1], ptr1[0]);
+}
+
+#endif	/* I2C_DEBUG_H */
+
