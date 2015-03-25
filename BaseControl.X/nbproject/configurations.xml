@@ -10,7 +10,7 @@
       <itemPath>i2c2_helper.h</itemPath>
       <itemPath>infrared.h</itemPath>
       <itemPath>vision.h</itemPath>
-      <itemPath>motors.h</itemPath>
+      <itemPath>i2c_debug.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

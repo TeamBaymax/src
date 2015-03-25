@@ -35,6 +35,8 @@ void ir1_request(char* xptr, char* yptr)
     char s = data[3];
     xptr[0] = (s & 0x30) >> 4;
     yptr[0] = (s & 0xC0) >> 6;
+
+    //I2Cwrite(arduinoAddress, (s & 0x30));
 }
 
 void ir2_init()
@@ -58,6 +60,8 @@ void ir2_request(char* xptr, char* yptr)
     char s = data[3];
     xptr[0] = (s & 0x30) >> 4;
     yptr[0] = (s & 0xC0) >> 6;
+
+    //I2Cwrite(arduinoAddress, (s & 0x30));
 }
 
 #endif	/* INFRARED_H */

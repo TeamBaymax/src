@@ -9,11 +9,13 @@
 byte r1Value;
 byte r2Value;
 int camera_number;
-int x1, x2, y1, y2;
+int x1, x2, y1, y2, rint, thetaint;
 float r1, r2;
+byte flag;
 
 void setup() 
 { 
+  flag = 1;
   r1Value = 0;
   r2Value = 0;
  Wire.begin(0x04);                // join i2c bus with address #2 
@@ -27,58 +29,69 @@ void loop()
 { 
   float r = 0;
   float theta = 0;
-  float phi1 = (PI/2.0-acos(2.5/31.5));
-  float phi2 = (PI/2.0-acos(2.5/31.5));
+  float phi1 = 0.0794;
+  float phi2 = 0.0794;
   float d = 5;
-  if(x1 >= 1023 && x2>=1023) // unable to see anything
+  if(flag)
   {
-    Serial.println("unable to see");
-  }
-  else
-  {
-    if(x1 >= 1023 || x2>=1023) // only able to see with one eye
+    if(x1 >= 1023 && x2>=1023) // unable to see anything
     {
-      mono_vision(d, phi1, x1, phi2, x2, &theta, &r);
+      Serial.println("unable to see");
     }
     else
     {
-      stereo_vision(d, phi1, x1, phi2, x2, &theta, &r);
+      if(x1 >= 1023 || x2>=1023) // only able to see with one eye
+      {
+        mono_vision(d, phi1, x1, phi2, x2, &theta, &r);
+      }
+      else
+      {
+        stereo_vision(d, phi1, x1, phi2, x2, &theta, &r);
+      }
+      
+      
+      Serial.print("\t  x1 = ");
+      Serial.print(x1,DEC);
+      Serial.print("\t  y1 = ");
+      Serial.print(y1,DEC);
+      Serial.print("\t  x2 = ");
+      Serial.print(x2,DEC);
+      Serial.print("\t  y2 = ");
+      Serial.print(y2,DEC);
+      Serial.print("\t  rint =  ");
+      Serial.print(rint,DEC);
+      Serial.print("\t  thetaint = ");
+      Serial.print(thetaint,DEC);
+      Serial.print("\t  R =  ");
+      Serial.print(r,DEC);
+      Serial.print("\t  theta = ");
+      Serial.println(theta*180.0/PI,DEC);
+      flag = 0;
+  
     }
-    
-    
-    Serial.print("\t  x1 = ");
-    Serial.print(x1,DEC);
-    Serial.print("\t  y1 = ");
-    Serial.print(y1,DEC);
-    Serial.print("\t  x2 = ");
-    Serial.print(x2,DEC);
-    Serial.print("\t  y2 = ");
-    Serial.print(y2,DEC);
-    Serial.print("\t  R =  ");
-    Serial.print(r,DEC);
-    Serial.print("\t  theta = ");
-    Serial.print(theta*180.0/PI,DEC);
-    Serial.print("\t  r1 =  ");
-    Serial.print(r1,DEC);
-    Serial.print("\t  r2 = ");
-    Serial.println(r2,DEC);
-  }
-} 
+  } 
+}
 
 
 void receiveEvent(int n)
 {
-  //switch(camera_number) {
-    //case 1:
-      x1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      y1 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //camera_number = 2;
-      //break;
-    //case 2:
-      //x2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //y2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
-      //camera_number =1;
-      //break;
+  flag = 1;
+  switch(camera_number) {
+    case 1:
+      x1 = (Wire.read()<<8 | Wire.read()) & 0b1111111111;
+      y1 = (Wire.read()<<8 | Wire.read()) & 0b1111111111;
+      camera_number = 2;
+      break;
+    case 2:
+      x2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
+      y2 = (Wire.read() | Wire.read() << 8) & 0b1111111111;
+      camera_number =3;
+      break;
+    case 3:
+      thetaint = (Wire.read() | Wire.read() << 8) & 0b11111111111;
+      rint = (Wire.read() | Wire.read() << 8) & 0b11111111111;
+      camera_number =1;
+      break;
   } 
 }
 // function that executes whenever data is received from master 
