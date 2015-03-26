@@ -37,13 +37,7 @@ void loop()
   float d = 5;
   if(flag)
   {
-<<<<<<< HEAD:Arduino_Debug_no_float/Arduino_Debug_no_float.ino
-//    if(x1 >= 1023 && x2>=1023) // unable to see anything
-//    {
-//      Serial.println("unable to see");
-//    }
-//    else
-//    {
+
       if(x1 >= 1023 || x2>=1023) // only able to see with one eye
       {
         mono_vision(d, phi1, x1, phi2, x2, &theta, &r);
@@ -65,48 +59,13 @@ void loop()
       Serial.print("\t  r_rec =  ");
       Serial.print(r_rec,DEC);
       Serial.print("\t  theta_rec = ");
-      Serial.println(theta_rec*180/PI,DEC);
+      Serial.println(theta_rec,DEC);
 //      Serial.print("\t  R_calc =  ");
 //      Serial.print(r,DEC);
 //      Serial.print("\t  theta_calc = ");
 //      Serial.println(theta*180.0/PI,DEC);
       flag = 0;
-  
-    //}
-  } 
-=======
-    Serial.println("unable to see");
-  }
-  else
-  {
-    if(x1 >= 1023 || x2>=1023) // only able to see with one eye
-    {
-      mono_vision(d, phi1, x1, phi2, x2, &theta, &r);
-    }
-    else
-    {
-      stereo_vision(d, phi1, x1, phi2, x2, &theta, &r);
-    }
-    
-    
-    Serial.print("\t  x1 = ");
-    Serial.print(x1,DEC);
-    Serial.print("\t  y1 = ");
-    Serial.print(y1,DEC);
-    Serial.print("\t  x2 = ");
-    Serial.print(x2,DEC);
-    Serial.print("\t  y2 = ");
-    Serial.print(y2,DEC);
-    Serial.print("\t  R =  ");
-    Serial.print(r,DEC);
-    Serial.print("\t  theta = ");
-    Serial.print(theta*180.0/PI,DEC);
-    Serial.print("\t  r1 =  ");
-    Serial.print(r1,DEC);
-    Serial.print("\t  r2 = ");
-    Serial.println(r2,DEC);
-  }
->>>>>>> master:Arduino_Debug/Arduino_Debug.ino
+    } 
 }
 
 void receive2intsEvent(int n)
@@ -125,7 +84,6 @@ void receive2intsEvent(int n)
 
 void receivefloatEvent(int n)
 {
-<<<<<<< HEAD:Arduino_Debug_no_float/Arduino_Debug_no_float.ino
   flag = 1;
   char* floatptr1 = (char*)&r_rec;
   char* floatptr2 = (char*)&theta_rec;
@@ -160,17 +118,6 @@ void receivefloatEvent(int n)
       break;
       
   } 
-=======
-      float float1 = 0;
-      char* floatptr = (char*)&float1;
-      floatptr[3] = Wire.read();
-      floatptr[2] = Wire.read();
-      floatptr[1] |= Wire.read();
-      floatptr[0] |= Wire.read();
-      
-    Serial.print("float1 = ");
-    Serial.println(float1);
->>>>>>> master:Arduino_Debug/Arduino_Debug.ino
 }
 
 // function that executes whenever data is received from master 

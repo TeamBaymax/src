@@ -116,18 +116,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb56          0x1101  (4353)
-<<<<<<< HEAD
-.text                        0xd56               0xc70          0x12a8  (4776)
-.dinit                      0x19c6                0x18            0x24  (36)
+.text                        0xd56               0xc66          0x1299  (4761)
+.dinit                      0x19bc                0x18            0x24  (36)
 
-                     Total program memory used (bytes):         0x23cd  (9165) 56%
-=======
-.const                       0xd56                 0x8             0xc  (12)
-.text                        0xd5e               0xca6          0x12f9  (4857)
-.dinit                      0x1a04                0x18            0x24  (36)
-
-                     Total program memory used (bytes):         0x242a  (9258) 57%
->>>>>>> master
+                     Total program memory used (bytes):         0x23be  (9150) 56%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -195,10 +187,9 @@ External Symbols in Program Memory (by address):
                   0x00036a                  _asinf
                   0x00036e                  _cosf
                   0x000372                  ___divsf3
-<<<<<<< HEAD
-                  0x0003f6                  ___ltsf2
-                  0x0003f6                  ___lesf2
                   0x0003f6                  ___eqsf2
+                  0x0003f6                  ___lesf2
+                  0x0003f6                  ___ltsf2
                   0x0003fa                  ___gtsf2
                   0x0003fa                  ___gesf2
                   0x0003fe                  ___floatsisf
@@ -265,9 +256,8 @@ External Symbols in Program Memory (by address):
                   0x001820                  _turn
                   0x00183c                  _debug_2_ints
                   0x001874                  _debug_float
-                  0x0018a0                  _setup
-                  0x0018a8                  __T1Interrupt
-                  0x0018c8                  _main
+                  0x0018a0                  __T1Interrupt
+                  0x0018c0                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -280,100 +270,8 @@ External Symbols in Program Memory (by name):
                   0x001126                  _I2C2write
                   0x001142                  _I2C2write2bytes
                   0x001168                  _I2C2write4bytes
-=======
-                  0x0003f6                  ___gtsf2
-                  0x0003f6                  ___gesf2
-                  0x0003fa                  ___fixsfsi
-                  0x00043c                  ___floatsisf
-                  0x000442                  __fpack
-                  0x00048e                  __funpack
-                  0x0004b8                  __funpack2
-                  0x0004c8                  __fPropagateNaN
-                  0x0004da                  __fbopExit
-                  0x0004e2                  __fbopReturnNaN
-                  0x0004e8                  ___mulsf3
-                  0x000550                  _powf
-                  0x000716                  __sincosf
-                  0x0007e8                  _sinf
-                  0x0007ec                  _tanf
-                  0x0008a6                  __frexpf
-                  0x0008c0                  __asinacosf
-                  0x00098e                  _expf
-                  0x000a52                  __fchop
-                  0x000aa0                  __fcompare
-                  0x000ad6                  ___eqsf2
-                  0x000ad6                  ___lesf2
-                  0x000ad6                  ___ltsf2
-                  0x000ada                  ___floatdisf
-                  0x000afa                  ___floatundisf
-                  0x000b58                  _fmodf
-                  0x000b5c                  __fmodrem
-                  0x000bfa                  _ldexpf
-                  0x000c3e                  _logf
-                  0x000cec                  _sqrtf
-                  0x000d56                  _r_window
-                  0x000d5a                  _theta_window
-                  0x000d5e                  _DelayuSec
-                  0x000d76                  _i2c1_init
-                  0x000d92                  _i2c1_start
-                  0x000dc4                  _i2c1_restart
-                  0x000df0                  _reset_i2c1_bus
-                  0x000e22                  _send_i2c1_byte
-                  0x000e80                  _i2c1_read
-                  0x000eb0                  _i2c1_read_ack
-                  0x000ee6                  _I2C1write
-                  0x000f02                  _I2C1write2bytes
-                  0x000f28                  _I2C1write4bytes
-                  0x000f62                  _I2C1requestFrom
-                  0x000fb6                  _i2c2_init
-                  0x000fda                  _i2c2_start
-                  0x00100c                  _i2c2_restart
-                  0x001038                  _reset_i2c2_bus
-                  0x00106a                  _send_i2c2_byte
-                  0x0010c8                  _i2c2_read
-                  0x0010f8                  _i2c2_read_ack
-                  0x00112e                  _I2C2write
-                  0x00114a                  _I2C2write2bytes
-                  0x001170                  _I2C2write4bytes
-                  0x0011aa                  _I2C2requestFrom
-                  0x0011fe                  _ir1_init
-                  0x001264                  _ir1_request
-                  0x0012bc                  _ir2_init
-                  0x001322                  _ir2_request
-                  0x00137a                  _vision_setup
-                  0x0013ae                  _see_beacon
-                  0x001474                  _stereo_vision
-                  0x001674                  _mono_vision
-                  0x0017ac                  _startDrive
-                  0x0017c6                  _startTurn
-                  0x0017e0                  _stop
-                  0x0017ec                  _debug_2_ints
-                  0x00181c                  _debug_float
-                  0x001848                  _updateBeacon
-                  0x001858                  _main
-                  0x001862                  _initialize
-                  0x001884                  _Start
-                  0x0018a4                  _Align
-                  0x00191e                  _toCenter
-                  0x0019b6                  _getError
-                  0x0019ce                  _getDirection
-
-External Symbols in Program Memory (by name):
-
-                  0x0018a4                  _Align
-                  0x000d5e                  _DelayuSec
-                  0x000f62                  _I2C1requestFrom
-                  0x000ee6                  _I2C1write
-                  0x000f02                  _I2C1write2bytes
-                  0x000f28                  _I2C1write4bytes
-                  0x0011aa                  _I2C2requestFrom
-                  0x00112e                  _I2C2write
-                  0x00114a                  _I2C2write2bytes
-                  0x001170                  _I2C2write4bytes
-                  0x001884                  _Start
->>>>>>> master
                   0x0002aa                  __DefaultInterrupt
-                  0x0018a8                  __T1Interrupt
+                  0x0018a0                  __T1Interrupt
                   0x0002b0                  ___addsf3
                   0x000372                  ___divsf3
                   0x0003f6                  ___eqsf2
@@ -405,7 +303,6 @@ External Symbols in Program Memory (by name):
                   0x0006ae                  __sincosf
                   0x00036a                  _asinf
                   0x00036e                  _cosf
-<<<<<<< HEAD
                   0x00183c                  _debug_2_ints
                   0x001874                  _debug_float
                   0x000926                  _expf
@@ -426,7 +323,7 @@ External Symbols in Program Memory (by name):
                   0x00131a                  _ir2_request
                   0x000bfa                  _ldexpf
                   0x000c3e                  _logf
-                  0x0018c8                  _main
+                  0x0018c0                  _main
                   0x00163a                  _mono_vision
                   0x001772                  _motorsSetup
                   0x0004e8                  _powf
@@ -435,7 +332,6 @@ External Symbols in Program Memory (by name):
                   0x00138c                  _see_beacon
                   0x000e1a                  _send_i2c1_byte
                   0x001062                  _send_i2c2_byte
-                  0x0018a0                  _setup
                   0x000780                  _sinf
                   0x000cec                  _sqrtf
                   0x0017c4                  _startDrive
@@ -446,51 +342,6 @@ External Symbols in Program Memory (by name):
                   0x000784                  _tanf
                   0x001820                  _turn
                   0x001372                  _vision_setup
-=======
-                  0x0017ec                  _debug_2_ints
-                  0x00181c                  _debug_float
-                  0x00098e                  _expf
-                  0x000b58                  _fmodf
-                  0x0019ce                  _getDirection
-                  0x0019b6                  _getError
-                  0x000d76                  _i2c1_init
-                  0x000e80                  _i2c1_read
-                  0x000eb0                  _i2c1_read_ack
-                  0x000dc4                  _i2c1_restart
-                  0x000d92                  _i2c1_start
-                  0x000fb6                  _i2c2_init
-                  0x0010c8                  _i2c2_read
-                  0x0010f8                  _i2c2_read_ack
-                  0x00100c                  _i2c2_restart
-                  0x000fda                  _i2c2_start
-                  0x001862                  _initialize
-                  0x0011fe                  _ir1_init
-                  0x001264                  _ir1_request
-                  0x0012bc                  _ir2_init
-                  0x001322                  _ir2_request
-                  0x000bfa                  _ldexpf
-                  0x000c3e                  _logf
-                  0x001858                  _main
-                  0x001674                  _mono_vision
-                  0x000550                  _powf
-                  0x000d56                  _r_window
-                  0x000df0                  _reset_i2c1_bus
-                  0x001038                  _reset_i2c2_bus
-                  0x0013ae                  _see_beacon
-                  0x000e22                  _send_i2c1_byte
-                  0x00106a                  _send_i2c2_byte
-                  0x0007e8                  _sinf
-                  0x000cec                  _sqrtf
-                  0x0017ac                  _startDrive
-                  0x0017c6                  _startTurn
-                  0x001474                  _stereo_vision
-                  0x0017e0                  _stop
-                  0x0007ec                  _tanf
-                  0x000d5a                  _theta_window
-                  0x00191e                  _toCenter
-                  0x001848                  _updateBeacon
-                  0x00137a                  _vision_setup
->>>>>>> master
 
 Memory Configuration
 
@@ -665,46 +516,26 @@ __FDS
 .comment
  *(.comment)
 
-<<<<<<< HEAD
-.debug_info       0x000000       0x274b
+.debug_info       0x000000       0x2717
  *(.debug_info)
- .debug_info      0x000000       0x274b build/default/production/main.o
-=======
-.debug_info       0x000000       0x1d6b
- *(.debug_info)
- .debug_info      0x000000       0x1d6b build/default/production/main.o
->>>>>>> master
+ .debug_info      0x000000       0x2717 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x1fd
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1fd build/default/production/main.o
 
-<<<<<<< HEAD
-.debug_line       0x000000       0x1154
+.debug_line       0x000000       0x1152
  *(.debug_line)
- .debug_line      0x000000       0x1154 build/default/production/main.o
+ .debug_line      0x000000       0x1152 build/default/production/main.o
 
-.debug_frame      0x000000        0x2b4
+.debug_frame      0x000000        0x2a4
  *(.debug_frame)
- .debug_frame     0x000000        0x2b4 build/default/production/main.o
+ .debug_frame     0x000000        0x2a4 build/default/production/main.o
 
 .debug_str        0x000000        0x171
  *(.debug_str)
  .debug_str       0x000000        0x171 build/default/production/main.o
-=======
-.debug_line       0x000000       0x1179
- *(.debug_line)
- .debug_line      0x000000       0x1179 build/default/production/main.o
-
-.debug_frame      0x000000        0x2d4
- *(.debug_frame)
- .debug_frame     0x000000        0x2d4 build/default/production/main.o
-
-.debug_str        0x000000        0x132
- *(.debug_str)
- .debug_str       0x000000        0x132 build/default/production/main.o
->>>>>>> master
 
 .debug_loc
  *(.debug_loc)
@@ -713,17 +544,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-<<<<<<< HEAD
-                  0x000000        0x35a
+                  0x000000        0x350
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x35a build/default/production/main.o
-=======
-                  0x000000        0x39b
- *(.debug_pubnames)
- .debug_pubnames
-                  0x000000        0x39b build/default/production/main.o
->>>>>>> master
+                  0x000000        0x350 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -745,7 +569,7 @@ __FDS
                   0x000014          0x4 LONG 0x2aa DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x2aa DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x2aa DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x18a8 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x18a0 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x2aa DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2aa DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2aa DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -873,7 +697,7 @@ __FDS
                   0x000114          0x4 LONG 0x2aa DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x2aa DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x2aa DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x18a8 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x18a0 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x2aa DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x2aa DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2aa DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1608,7 +1432,6 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-<<<<<<< HEAD
                   0x000018        0x26d
  .debug_pubtypes
                   0x000018        0x26d build/default/production/main.o
@@ -1681,93 +1504,6 @@ __c30_signature
                   0x00033f          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(logf.eo)
  __c30_signature
                   0x000345          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
-=======
-                  0x000018        0x19e
- .debug_pubtypes
-                  0x000018        0x19e build/default/production/main.o
-
-__c30_signature
-                  0x0001b6         0xc6
- __c30_signature
-                  0x0001b6          0x6 build/default/production/main.o
- __c30_signature
-                  0x0001bc          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
- __c30_signature
-                  0x0001c2          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
- __c30_signature
-                  0x0001c8          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(addsf3.eo)
- __c30_signature
-                  0x0001ce          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(asinf.eo)
- __c30_signature
-                  0x0001d4          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(cosf.eo)
- __c30_signature
-                  0x0001da          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(divsf3.eo)
- __c30_signature
-                  0x0001e0          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fgtge.eo)
- __c30_signature
-                  0x0001e6          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
- __c30_signature
-                  0x0001ec          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
- __c30_signature
-                  0x0001f2          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fpack.eo)
- __c30_signature
-                  0x0001f8          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(funpack.eo)
- __c30_signature
-                  0x0001fe          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(funpack2.eo)
- __c30_signature
-                  0x000204          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(futil.eo)
- __c30_signature
-                  0x00020a          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
- __c30_signature
-                  0x000210          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(powf.eo)
- __c30_signature
-                  0x000216          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sincosf.eo)
- __c30_signature
-                  0x00021c          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sinf.eo)
- __c30_signature
-                  0x000222          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(tanf.eo)
- __c30_signature
-                  0x000228          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(_frexpf.eo)
- __c30_signature
-                  0x00022e          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(asinacosf.eo)
- __c30_signature
-                  0x000234          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
- __c30_signature
-                  0x00023a          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(expf.eo)
- __c30_signature
-                  0x000240          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fchop.eo)
- __c30_signature
-                  0x000246          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fcompare.eo)
- __c30_signature
-                  0x00024c          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(feqltle.eo)
- __c30_signature
-                  0x000252          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
- __c30_signature
-                  0x000258          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
- __c30_signature
-                  0x00025e          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fmodf.eo)
- __c30_signature
-                  0x000264          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(fmodrem.eo)
- __c30_signature
-                  0x00026a          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(ldexpf.eo)
- __c30_signature
-                  0x000270          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(logf.eo)
- __c30_signature
-                  0x000276          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
-
-.nbss               0x0800         0x18
- .nbss              0x0800         0x18 build/default/production/main.o
-                    0x0800                  _x1
-                    0x0802                  _x2
-                    0x0804                  _y1
-                    0x0806                  _y2
-                    0x0808                  _current_state
-                    0x080a                  _step_counter
-                    0x080c                  _step_max
-                    0x080e                  _angle_count
-                    0x0810                  _theta
-                    0x0814                  _r
->>>>>>> master
 
 .nbss               0x0800         0x1c
  .nbss              0x0800         0x1c build/default/production/main.o
@@ -1792,9 +1528,8 @@ __c30_signature
  .nbss              0x0820          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0820                  _errno
 
-<<<<<<< HEAD
-.text             0x000d56        0xc70
- .text            0x000d56        0xc70 build/default/production/main.o
+.text             0x000d56        0xc66
+ .text            0x000d56        0xc66 build/default/production/main.o
                   0x000d56                  _DelayuSec
                   0x000d6e                  _i2c1_init
                   0x000d8a                  _i2c1_start
@@ -1834,60 +1569,8 @@ __c30_signature
                   0x001820                  _turn
                   0x00183c                  _debug_2_ints
                   0x001874                  _debug_float
-                  0x0018a0                  _setup
-                  0x0018a8                  __T1Interrupt
-                  0x0018c8                  _main
+                  0x0018a0                  __T1Interrupt
+                  0x0018c0                  _main
 
-.dinit            0x0019c6         0x18
- .dinit           0x0019c6         0x18 data_init
-=======
-.text             0x000d5e        0xca6
- .text            0x000d5e        0xca6 build/default/production/main.o
-                  0x000d5e                  _DelayuSec
-                  0x000d76                  _i2c1_init
-                  0x000d92                  _i2c1_start
-                  0x000dc4                  _i2c1_restart
-                  0x000df0                  _reset_i2c1_bus
-                  0x000e22                  _send_i2c1_byte
-                  0x000e80                  _i2c1_read
-                  0x000eb0                  _i2c1_read_ack
-                  0x000ee6                  _I2C1write
-                  0x000f02                  _I2C1write2bytes
-                  0x000f28                  _I2C1write4bytes
-                  0x000f62                  _I2C1requestFrom
-                  0x000fb6                  _i2c2_init
-                  0x000fda                  _i2c2_start
-                  0x00100c                  _i2c2_restart
-                  0x001038                  _reset_i2c2_bus
-                  0x00106a                  _send_i2c2_byte
-                  0x0010c8                  _i2c2_read
-                  0x0010f8                  _i2c2_read_ack
-                  0x00112e                  _I2C2write
-                  0x00114a                  _I2C2write2bytes
-                  0x001170                  _I2C2write4bytes
-                  0x0011aa                  _I2C2requestFrom
-                  0x0011fe                  _ir1_init
-                  0x001264                  _ir1_request
-                  0x0012bc                  _ir2_init
-                  0x001322                  _ir2_request
-                  0x00137a                  _vision_setup
-                  0x0013ae                  _see_beacon
-                  0x001474                  _stereo_vision
-                  0x001674                  _mono_vision
-                  0x0017ac                  _startDrive
-                  0x0017c6                  _startTurn
-                  0x0017e0                  _stop
-                  0x0017ec                  _debug_2_ints
-                  0x00181c                  _debug_float
-                  0x001848                  _updateBeacon
-                  0x001858                  _main
-                  0x001862                  _initialize
-                  0x001884                  _Start
-                  0x0018a4                  _Align
-                  0x00191e                  _toCenter
-                  0x0019b6                  _getError
-                  0x0019ce                  _getDirection
-
-.dinit            0x001a04         0x18
- .dinit           0x001a04         0x18 data_init
->>>>>>> master
+.dinit            0x0019bc         0x18
+ .dinit           0x0019bc         0x18 data_init
