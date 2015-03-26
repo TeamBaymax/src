@@ -30,11 +30,15 @@
 #define DEBUG 1
 
 
+<<<<<<< HEAD
 char beacon; // indicator of whether or not we see the beacon
 volatile int x1,x2,y1,y2; //coordinates of image in camrea view
 volatile float theta, r; // angle and distance from IR beacon
 volatile float r_window; // error allowed when aligning theta
 volatile float theta_window; // error allowed when aligning theta
+=======
+int x1, x2, y1, y2;
+>>>>>>> master
 
 /**
  * vision_setup a function that initializes the i2c communication with the ir
@@ -43,6 +47,24 @@ volatile float theta_window; // error allowed when aligning theta
  */
 void vision_setup()
 {
+<<<<<<< HEAD
+=======
+
+    // cycle SDA and SCL Lines to avoid them getting stuck
+    int i =0;
+    for(i = 0; i<10; i++)
+    {
+        LATBbits.LATB2 = 1;
+        LATBbits.LATB8 = 1;
+        LATBbits.LATB9 = 1;
+        LATBbits.LATB15 = 1;
+        LATBbits.LATB2 = 0;
+        LATBbits.LATB8 = 0;
+        LATBbits.LATB9 = 0;
+        LATBbits.LATB15 = 0;
+    }
+
+>>>>>>> master
     i2c1_init(100);
     i2c2_init(100);
 
@@ -66,6 +88,17 @@ char see_beacon(float* theta, float* r)
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);
 
+<<<<<<< HEAD
+=======
+    if(x1 == 0 || x2 == 0) // i2c froze
+    {
+        vision_setup();
+        *theta = PI/2.0;
+        *r = 30;
+        return 0b0;
+    }
+
+>>>>>>> master
     char flag;
 
     if(x1 == 0 || x2 ==0)
@@ -115,6 +148,10 @@ void stereo_vision(int x1, int x2, float* theta, float* r)
       {
         *theta = -th;
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 }
 
 void mono_vision(float x1, float y1,float x2, float y2, float* theta, float* r)

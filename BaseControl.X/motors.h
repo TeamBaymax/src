@@ -29,6 +29,7 @@
     OC3R = 0.5*PR3; //Stepper duty cycle
     T3CONbits.TON = 0;           //disable Timer3
 }*/
+<<<<<<< HEAD
 void motorsSetup()
 {
     _TRISA0 = 0;
@@ -50,6 +51,11 @@ void motorsSetup()
 
 void startDrive(unsigned int direction){
     if(direction == FORWARD){         //drive forward
+=======
+
+void startDrive(unsigned int direction){
+    if(direction == 0){         //drive forward
+>>>>>>> master
          _RA2 = 0;
          _RA1 = 0;
 
@@ -82,6 +88,7 @@ void stop(){
     _RA2 = 0;
 }
 
+<<<<<<< HEAD
 // Straight line - distance [inches], direction forward = 0, reverse = 1
 void straight(float distance, unsigned int direction){  //inches
     if(direction == 0){         //drive forward
@@ -119,5 +126,7 @@ void turn(float angle, unsigned int direction){
     T3CONbits.TON = 1;           //enable Timer3
 }
 
+=======
+>>>>>>> master
 #endif	/* MOTORS_H */
 

@@ -1,9 +1,13 @@
-#include "p24F16KA301.h"
+#include <p24F16KA301.h>
 #include "i2c1_helper.h"
 #include "i2c2_helper.h"
 #include "vision.h"
 #include "motors.h"
 #include "i2c_debug.h"
+<<<<<<< HEAD
+=======
+#include <stdlib.h>
+>>>>>>> master
 
 
 _FOSCSEL(FNOSC_FRC); //8 MHz
@@ -50,11 +54,24 @@ int main(void)
     char flag;
     while(1)
     {
+<<<<<<< HEAD
         if(timeToReadI2C)
         {
             timeToReadI2C = 0;
             
             flag = see_beacon(&theta, &r)
+=======
+        debug_2_ints(x1, y1);
+        debug_2_ints(x2,y2);
+//        char* xptr1 = &x1;
+//        char* yptr1 = &y1;
+//
+//        char* xptr2 = &x2;
+//        char* yptr2 = &y2;
+//
+//        I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
+//        I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
+>>>>>>> master
 
             debug_2_ints(x1,y1);
             debug_2_ints(x2,y2);
