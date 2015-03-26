@@ -33,8 +33,9 @@
 char beacon; // indicator of whether or not we see the beacon
 volatile int x1,x2,y1,y2; //coordinates of image in camrea view
 volatile float theta, r; // angle and distance from IR beacon
-volatile float r_window; // error allowed when aligning theta
-volatile float theta_window; // error allowed when aligning theta
+volatile float r_window = 2.0; // error allowed when aligning theta
+volatile float theta_window = 3.0*PI/180.0; // error allowed when aligning theta
+
 
 
 /**

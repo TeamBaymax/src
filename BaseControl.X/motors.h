@@ -15,6 +15,11 @@
 #define FORWARD 0
 #define REVERSE 1
 
+void _ISR _T3Interrupt(void)
+{
+    _T3IF = 0; // clear interrupt flag
+
+}
 
 /*void initialize(){
 //    current_state = start;
@@ -31,49 +36,54 @@
 }*/
 void motorsSetup()
 {
-    _TRISA0 = 0;
+    _TRISA0 = 0;            //Set to Output
     _TRISA2 = 0;
     _TRISB1 = 0;
-    T2CONbits.TON = 1;
-    T2CONbits.TCS = 0;
-    T2CONbits.TCKPS = 0b01;
-    TMR2 = 0;
-    _T2IE = 1;
-    _T2IF = 0;
-    _T2IP = 4;
-    OC3CON1bits.OCTSEL = 0b000;
-    OC3CON1bits.OCM = 0b110;
-    OC3CON2bits.SYNCSEL = 0b01100;
-    PR2 = 5000;
-    OC3R = PR2/2;
+    T3CONbits.TON = 1;      //Enable
+    T3CONbits.TCS = 0;      //Set source to Internal Clock
+    T3CONbits.TCKPS = 0b10; //Prescale: 1/64
+    PR3 = 625;//5000;       //Set Period so freq = 100 Hz
+    TMR3 = 0;
+    _T3IE = 1;              //Enable Interrupt
+    _T3IF = 0;              //Clear Interrupt flag
+    _T3IP = 4;              //Priority
+    OC3CON1bits.OCTSEL = 0b001;     //Select Timer3 to be timer source
+    OC3CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
+    OC3CON2bits.SYNCSEL = 0b01101;  //Select Timer3 as synchronization source
+    
+    OC3R = PR3/2.0;         //Duty Cycle
 }
 
 void startDrive(unsigned int direction){
-    if(direction == FORWARD){         //drive forward
-         _RA2 = 0;
-         _RA1 = 0;
+    if( T3CONbits.TON == 0){
+        if(direction == FORWARD){         //drive forward
+             _RA2 = 0;
+             _RA1 = 0;
 
-    }
-    else{                       //drive reverse
-        _RA2 = 1;
-        _RA1 = 1;
-    }
+        }
+        else{                       //drive reverse
+            _RA2 = 1;
+            _RA1 = 1;
+        }
 
-    T3CONbits.TON = 1;           //enable Timer3
+        T3CONbits.TON = 1;           //enable Timer3
+    }
 }
 
 void startTurn(unsigned int direction){
-    if(direction == 0){         //turn right
-         _RA2 = 0;
-         _RA1 = 1;
+    if( T3CONbits.TON == 0){
+        if(direction == 0){         //turn right
+             _RA2 = 0;
+             _RA1 = 1;
 
-    }
-    else{                       //turn left
-        _RA2 = 1;
-        _RA1 = 0;
-    }
+        }
+        else{                       //turn left
+            _RA2 = 1;
+            _RA1 = 0;
+        }
 
-    T3CONbits.TON = 1;           //enable Timer3
+        T3CONbits.TON = 1;           //enable Timer3
+    }
 }
 
 void stop(){

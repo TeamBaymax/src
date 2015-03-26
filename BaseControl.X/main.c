@@ -4,7 +4,7 @@
 #include "vision.h"
 #include "motors.h"
 #include "i2c_debug.h"
-//#include "State.h"
+#include "State.h"
 
 
 
@@ -20,11 +20,12 @@ void _ISR _T1Interrupt(void)
     _T1IF = 0; // clear interrupt flag
     timeToReadI2C = 1;
 }
-
+    char flag;
 int main(void)
 {
 
     vision_setup();
+    motorsSetup();
 
     _TRISA1 = 0;
     _TRISA2 = 0;
@@ -45,13 +46,17 @@ int main(void)
     _T1IE = 1;
     _T1IF = 0;
 
-    char flag;
+//    char flag;
     while(1)
     {
         if(timeToReadI2C) // Refresh Vision Data
         {
             timeToReadI2C = 0;
             flag = see_beacon(&theta, &r);
+            // flag = 255 if error
+            // flag = 0 if no beacon
+            // flag = 1 if one camera sees beacon
+            // flag = 2 if two cameras see beacon
 
             debug_2_ints(x1,y1);
             debug_2_ints(x2,y2);
@@ -60,11 +65,28 @@ int main(void)
             debug_float(theta);
         }
 
+        // <editor-fold defaultstate="collapsed" desc="State Machine">
+        switch(state){
+            case search:
+                circleSearch(LEFT, flag); break;
+            case aligntheta:
+                alignTheta(flag); break;
+            case aligndist:
+                state = search; break;
+            default:
+                state = search; break;
+        }
+          // </editor-fold>
+
+
+
+
 //        if(!flag)
 //        {
 //            LATAbits.LATA1 = 1;
 //            LATAbits.LATA2 = 0;
-//            LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+////            LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+//                T3CONbits.TON = 1;
 //        }
 //        else
 //        {
@@ -72,21 +94,26 @@ int main(void)
 //            {
 //                LATAbits.LATA1 = 0;
 //                LATAbits.LATA2 = 1;
-//                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+////                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+//                 T3CONbits.TON = 1;
 //            }
 //            else if(theta < -1.0*theta_window)
 //            {
 //                LATAbits.LATA1 = 1;
 //                LATAbits.LATA2 = 0;
-//                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+////                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
+//                 T3CONbits.TON = 1;
 //            }
 //            else
 //            {
-//                LATBbits.LATB1 = 0;
+//                 T3CONbits.TON = 0;
+////                LATBbits.LATB1 = 0;
 //                LATAbits.LATA1 = 0;
 //                LATAbits.LATA2 = 0;
 //            }
 //        }
+
+
     }
     							//end of program
 }
