@@ -39,9 +39,6 @@ int x1, x2, y1, y2;
  */
 void vision_setup()
 {
-    //Configure pin 2 and 6 for outputs
-    _TRISA0 = 0;
-    _RA0 = 0;
 
     // cycle SDA and SCL Lines to avoid them getting stuck
     int i =0;
@@ -88,10 +85,6 @@ char see_beacon(float* theta, float* r)
         return 0b0;
     }
 
-    if(DEBUG) {
-
-    }
-
     char flag;
 
     if(x1 == 0 && x2 ==0) // error
@@ -136,11 +129,6 @@ void stereo_vision(float x1, float x2, float* theta, float* r)
       {
         *theta = -th;
       }
-
-      int theta_int = (int)th;
-      int r_int = (int)rad;
-
-      debug_2_ints(theta_int, r_int);
 
 }
 

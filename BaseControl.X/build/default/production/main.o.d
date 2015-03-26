@@ -6,4 +6,5 @@ delay.h  \
 vision.h  \
 infrared.h  \
 State.h  \
-motors.h 
+motors.h  \
+i2c_debug.h 

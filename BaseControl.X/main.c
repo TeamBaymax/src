@@ -5,6 +5,7 @@
 #include "infrared.h"
 #include "State.h"
 #include "motors.h"
+#include "i2c_debug.h"
 #include <stdlib.h>
 
 #define CENTER 33.5
@@ -80,14 +81,16 @@ void Align(){
     //theta = PI/2.0;
     while(1)
     {
-        char* xptr1 = &x1;
-        char* yptr1 = &y1;
-
-        char* xptr2 = &x2;
-        char* yptr2 = &y2;
-
-        I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
-        I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
+        debug_2_ints(x1, y1);
+        debug_2_ints(x2,y2);
+//        char* xptr1 = &x1;
+//        char* yptr1 = &y1;
+//
+//        char* xptr2 = &x2;
+//        char* yptr2 = &y2;
+//
+//        I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
+//        I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
 
         char status = see_beacon(&theta, &r);
 
