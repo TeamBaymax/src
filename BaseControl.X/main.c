@@ -4,7 +4,6 @@
 #include "vision.h"
 #include "motors.h"
 #include "i2c_debug.h"
-#include <stdlib.h>
 
 
 
@@ -15,11 +14,6 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 void DelayuSec(unsigned int s);
 char timeToReadI2C;
 
-void setup()
-{
-    vision_setup();
-}
-
 void _ISR _T1Interrupt(void)
 {
     _T1IF = 0; // clear interrupt flag
@@ -29,7 +23,7 @@ void _ISR _T1Interrupt(void)
 int main(void)
 {
 
-    setup();
+    vision_setup();
     _TRISA0 = 0;
     _TRISA2 = 0;
     _TRISB1 = 0;
@@ -52,24 +46,12 @@ int main(void)
     char flag;
     while(1)
     {
-<<<<<<< HEAD
         if(timeToReadI2C)
         {
             timeToReadI2C = 0;
-            
-            flag = see_beacon(&theta, &r)
-=======
-        debug_2_ints(x1, y1);
-        debug_2_ints(x2,y2);
-//        char* xptr1 = &x1;
-//        char* yptr1 = &y1;
-//
-//        char* xptr2 = &x2;
-//        char* yptr2 = &y2;
-//
-//        I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
-//        I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
->>>>>>> master
+            ir1_request(&x1, &y1);
+            ir2_request(&x2, &y2);
+            stereo_vision(x1,x2,&theta,&r);
 
             debug_2_ints(x1,y1);
             debug_2_ints(x2,y2);
