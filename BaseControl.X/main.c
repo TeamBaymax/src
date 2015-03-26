@@ -4,10 +4,8 @@
 #include "vision.h"
 #include "motors.h"
 #include "i2c_debug.h"
-<<<<<<< HEAD
-=======
 #include <stdlib.h>
->>>>>>> master
+
 
 
 _FOSCSEL(FNOSC_FRC); //8 MHz
