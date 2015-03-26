@@ -30,11 +30,14 @@ void ir1_request(char* xptr, char* yptr)
     char data[4] = {0, 0, 0, 0};
     I2C1requestFrom(IR1sensorAddress, 4, &data);
 
-    xptr[1] = data[1];
-    yptr[1] = data[2];
+    // I changed this in my code - James
+    // It appears that my compiler reads bits weird.
+    // Previously Gary was putting the bits into [1] first, the [0]
+    xptr[0] = data[1];
+    yptr[0] = data[2];
     char s = data[3];
-    xptr[0] = (s & 0x30) >> 4;
-    yptr[0] = (s & 0xC0) >> 6;
+    xptr[1] = (s & 0x30) >> 4;
+    yptr[1] = (s & 0xC0) >> 6;
 
     //I2Cwrite(arduinoAddress, (s & 0x30));
 }
@@ -55,11 +58,15 @@ void ir2_request(char* xptr, char* yptr)
     char data[4] = {0, 0, 0, 0};
     I2C2requestFrom(IR2sensorAddress, 4, &data);
 
-    xptr[1] = data[1];
-    yptr[1] = data[2];
+    // I changed this in my code - James
+    // It appears that my compiler reads bits weird.
+    // Previously Gary was putting the bits into [1] first, the [0]
+    xptr[0] = data[1];
+    yptr[0] = data[2];
     char s = data[3];
-    xptr[0] = (s & 0x30) >> 4;
-    yptr[0] = (s & 0xC0) >> 6;
+    xptr[1] = (s & 0x30) >> 4;
+    yptr[1] = (s & 0xC0) >> 6;
+
 
     //I2Cwrite(arduinoAddress, (s & 0x30));
 }

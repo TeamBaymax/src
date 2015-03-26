@@ -29,6 +29,13 @@
 
 #define DEBUG 1
 
+
+char beacon; // indicator of whether or not we see the beacon
+volatile int x1,x2,y1,y2; //coordinates of image in camrea view
+volatile float theta, r; // angle and distance from IR beacon
+volatile float r_window; // error allowed when aligning theta
+volatile float theta_window; // error allowed when aligning theta
+
 /**
  * vision_setup a function that initializes the i2c communication with the ir
  * cameras and sends the appropriate configuration to them.  This must be run
@@ -41,6 +48,8 @@ void vision_setup()
 
     ir1_init();
     ir2_init();
+
+    beacon = 0;
 }
 
 /**
@@ -51,84 +60,58 @@ void vision_setup()
  * @param r a pointer to the returned distance measurement (inches)
  * @return 0 if unable to see.  'm' if using only one camera, 's' if using both
  */
-//char see_beacon(float* theta, float* r)
-//{
-//    x1 = y1 = x2 = y2 = 0;
-//    ir1_request(&x1, &y1);
-//    ir2_request(&x2, &y2);
-//
-//    int theta_int = (int)*theta;
-//    int r_int = (int)*r;
-//
-//    char* x1ptr = &x2;
-//    char* y1ptr = &y1;
-//    char* x2ptr = &x2;
-//    char* y2ptr = &y2;
-//
-//    //char* thptr = &theta_int;
-//    //char* rptr = &r_int;
-//
-//    I2C2write4bytes(arduinoAddress, x1ptr[1], x1ptr[0], y1ptr[1], y1ptr[0]);
-//    I2C2write4bytes(arduinoAddress, x2ptr[1], x2ptr[0], y2ptr[1], y2ptr[0]);
-//    //I2C2write4bytes(arduinoAddress, thptr[1], thptr[0], rptr[1], rptr[0]);
-//
-//    char flag;
-//
-////    if(x1 == 0 || x2 ==0)
-////    {// error
-////        flag = 3;
-////        return flag;
-////    }
-////    else if(x1 < 1023 || x2 < 1023) // saw somehtihng
-////    {
-////        if(x1 >= 1023 || x2>=1023) // only able to see with one eye
-////        {
-////          mono_vision(x1,y1, x2, y2, &theta, &r);
-////          flag = 1;
-////        }
-////        else
-////        {
-////          stereo_vision(x1, x2, &theta, &r);
-////          flag = 2;
-////        }
-////    }
-////    else // didn't see anything
-////    {
-////         flag = 0;
-////    }
-//    return flag;
-//}
-
-void stereo_vision(float x1, float x2, float* theta, float* r)
+char see_beacon(float* theta, float* r)
 {
-    char arduinoAddress = 0x04<<1;
-      int y1 = 0;
-      int y2 = 0;
-//      char* xptr1 = &x1;
-//      char* yptr1 = &y1;
-//      char* xptr2 = &x2;
-//      char* yptr2 = &y2;
-//      I2C2write4bytes(arduinoAddress, xptr1[1], xptr1[0], yptr1[1], yptr1[0]);
-//      I2C2write4bytes(arduinoAddress, xptr2[1], xptr2[0], yptr2[1], yptr2[0]);
+    x1 = y1 = x2 = y2 = 0;
+    ir1_request(&x1, &y1);
+    ir2_request(&x2, &y2);
 
+    char flag;
+
+    if(x1 == 0 || x2 ==0)
+    {// error
+        flag = 3;
+        return flag;
+   }
+    else if(x1 < 1023 || x2 < 1023) // saw somehtihng
+    {
+        if(x1 >= 1023 || x2>=1023) // only able to see with one eye
+        {
+          mono_vision(x1,y1, x2, y2, &theta, &r);
+          flag = 1;
+        }
+        else
+        {
+          stereo_vision(x1, x2, &theta, &r);
+          flag = 2;
+        }
+    }
+    else // didn't see anything
+    {
+         flag = 0;
+    }
+    beacon = flag;
+    return flag;
+
+}
+
+void stereo_vision(int x1, int x2, float* theta, float* r)
+{
       // linearly interpolate gamma1 and gamma2
       float gamma1, gamma2;
       gamma1 = (x1-X1_OFFSET)/1023.0 * 33.0/360.0*2.0*PI;
       gamma2 = (x2-X2_OFFSET)/1023.0 * 33.0/360.0*2.0*PI;
 
-      //debug_float(gamma1);
-      //debug_float(gamma2);
-
       // calculate distance from camera to features r1 and r2
-      float r1 = sin(PI/2.0-PHI2-gamma2)/(sin(PHI1+gamma1+PHI2+gamma2)/D);
-      float r2 = sin(PI/2.0-(PHI1+gamma1))/(sin(PHI1+gamma1+PHI2+gamma2)/D);
+      float r1 = fabs(sin(PI/2.0-PHI2-gamma2)/(sin(PHI1+gamma1+PHI2+gamma2)/D));
+      float r2 = fabs(sin(PI/2.0-(PHI1+gamma1))/(sin(PHI1+gamma1+PHI2+gamma2)/D));
 
       // find r and theta
       *r = pow(pow(r1,2.0)+pow(D/2.0,2.0)-2.0*r1*(D/2.0)*cos(PI/2.0-PHI1-gamma1),1/2.0);
       float rad = *r;
       *theta = asin(r1*(sin(PI/2.0-PHI1-gamma1)/rad)) - PI/2.0; //stuck always negative, due to range of asin()
       float th = *theta;
-      if(r1>r2)
+      if(r1<r2)
       {
         *theta = -th;
       }
