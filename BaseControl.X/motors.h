@@ -55,7 +55,7 @@ void motorsSetup()
 }
 
 void startDrive(unsigned int direction){
-    if( T3CONbits.TON == 0){
+
         if(direction == FORWARD){         //drive forward
              _RA2 = 0;
              _RA1 = 0;
@@ -65,13 +65,11 @@ void startDrive(unsigned int direction){
             _RA2 = 1;
             _RA1 = 1;
         }
-
-        T3CONbits.TON = 1;           //enable Timer3
-    }
+       if( T3CONbits.TON == 0) T3CONbits.TON = 1;           //enable Timer3
 }
 
 void startTurn(unsigned int direction){
-    if( T3CONbits.TON == 0){
+
         if(direction == 0){         //turn right
              _RA2 = 0;
              _RA1 = 1;
@@ -82,8 +80,7 @@ void startTurn(unsigned int direction){
             _RA1 = 0;
         }
 
-        T3CONbits.TON = 1;           //enable Timer3
-    }
+       if( T3CONbits.TON == 0) T3CONbits.TON = 1;           //enable Timer3
 }
 
 void stop(){
