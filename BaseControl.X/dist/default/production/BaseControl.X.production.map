@@ -120,10 +120,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90               0xd7c          0x143a  (5178)
-.dinit                      0x1b0c                0x1c            0x2a  (42)
+.text                        0xd90               0xddc          0x14ca  (5322)
+.dinit                      0x1b6c                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x25bc  (9660) 59%
+                     Total program memory used (bytes):         0x264c  (9804) 60%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -269,10 +269,10 @@ External Symbols in Program Memory (by address):
                   0x0018e0                  _debug_float
                   0x00190c                  _circleSearch
                   0x00192c                  _alignTheta
-                  0x001994                  _alignDist
-                  0x001a5e                  _findGarage
-                  0x001a66                  __T1Interrupt
-                  0x001a86                  _main
+                  0x001996                  _alignDist
+                  0x001aa8                  _findGarage
+                  0x001ab0                  __T1Interrupt
+                  0x001ad0                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -286,7 +286,7 @@ External Symbols in Program Memory (by name):
                   0x00117c                  _I2C2write2bytes
                   0x0011a2                  _I2C2write4bytes
                   0x0002aa                  __DefaultInterrupt
-                  0x001a66                  __T1Interrupt
+                  0x001ab0                  __T1Interrupt
                   0x00179e                  __T3Interrupt
                   0x0002b0                  ___addsf3
                   0x000372                  ___divsf3
@@ -319,7 +319,7 @@ External Symbols in Program Memory (by name):
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
                   0x000712                  __sincosf
-                  0x001994                  _alignDist
+                  0x001996                  _alignDist
                   0x00192c                  _alignTheta
                   0x00036a                  _asinf
                   0x00190c                  _circleSearch
@@ -327,7 +327,7 @@ External Symbols in Program Memory (by name):
                   0x0018a8                  _debug_2_ints
                   0x0018e0                  _debug_float
                   0x00098a                  _expf
-                  0x001a5e                  _findGarage
+                  0x001aa8                  _findGarage
                   0x000b92                  _fmodf
                   0x000da8                  _i2c1_init
                   0x000eb2                  _i2c1_read
@@ -345,7 +345,7 @@ External Symbols in Program Memory (by name):
                   0x001354                  _ir2_request
                   0x000c34                  _ldexpf
                   0x000c78                  _logf
-                  0x001a86                  _main
+                  0x001ad0                  _main
                   0x001666                  _mono_vision
                   0x0017b2                  _motorsSetup
                   0x00054c                  _powf
@@ -553,9 +553,9 @@ __FDS
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x237 build/default/production/main.o
 
-.debug_line       0x000000       0x1215
+.debug_line       0x000000       0x1255
  *(.debug_line)
- .debug_line      0x000000       0x1215 build/default/production/main.o
+ .debug_line      0x000000       0x1255 build/default/production/main.o
 
 .debug_frame      0x000000        0x2f4
  *(.debug_frame)
@@ -597,7 +597,7 @@ __FDS
                   0x000014          0x4 LONG 0x2aa DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x2aa DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x2aa DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x1a66 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x1ab0 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x2aa DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2aa DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2aa DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -725,7 +725,7 @@ __FDS
                   0x000114          0x4 LONG 0x2aa DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x2aa DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x2aa DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x1a66 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x1ab0 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x2aa DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x2aa DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2aa DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1562,8 +1562,8 @@ __c30_signature
  .nbss              0x0822          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0822                  _errno
 
-.text             0x000d90        0xd7c
- .text            0x000d90        0xd7c build/default/production/main.o
+.text             0x000d90        0xddc
+ .text            0x000d90        0xddc build/default/production/main.o
                   0x000d90                  _DelayuSec
                   0x000da8                  _i2c1_init
                   0x000dc4                  _i2c1_start
@@ -1606,10 +1606,10 @@ __c30_signature
                   0x0018e0                  _debug_float
                   0x00190c                  _circleSearch
                   0x00192c                  _alignTheta
-                  0x001994                  _alignDist
-                  0x001a5e                  _findGarage
-                  0x001a66                  __T1Interrupt
-                  0x001a86                  _main
+                  0x001996                  _alignDist
+                  0x001aa8                  _findGarage
+                  0x001ab0                  __T1Interrupt
+                  0x001ad0                  _main
 
-.dinit            0x001b0c         0x1c
- .dinit           0x001b0c         0x1c data_init
+.dinit            0x001b6c         0x1c
+ .dinit           0x001b6c         0x1c data_init

@@ -57,13 +57,13 @@ void motorsSetup()
 void startDrive(unsigned int direction){
     if( T3CONbits.TON == 0){
         if(direction == FORWARD){         //drive forward
-             _RA2 = 0;
-             _RA1 = 0;
+             LATAbits.LATA2 = 0;
+             LATAbits.LATA1 = 0;
 
         }
         else{                       //drive reverse
-            _RA2 = 1;
-            _RA1 = 1;
+            LATAbits.LATA2 = 1;
+            LATAbits.LATA1 = 1;
         }
 
         T3CONbits.TON = 1;           //enable Timer3

@@ -53,16 +53,10 @@ alignTheta(char flag)
         if(theta > 1.0*theta_window)
         {
             startTurn(LEFT);
-//            LATAbits.LATA1 = 0;
-//            LATAbits.LATA2 = 1;
-//            T3CONbits.TON = 1;
         }
         else if(theta < -1.0*theta_window)
         {
             startTurn(RIGHT);
-//            LATAbits.LATA1 = 1;
-//            LATAbits.LATA2 = 0;
-//            T3CONbits.TON = 1;
         }
         else
         {
@@ -72,6 +66,7 @@ alignTheta(char flag)
     }
     else
     {
+        stop();
         state = search;
     }
 
@@ -81,30 +76,40 @@ alignDist(float r_set, char flag)
 {
     if(flag)
     {
-
-       if(r > (r_set-r_window) && r < (r_set+r_window))
-       {
-         state = aligned;
-       }
-       else if (r < (r_set - r_window))
-       {
-           startDrive(REVERSE);
-       }
-       else if (r > (r_window + r_set))
-       {
-           startDrive(FORWARD);
-       }
-       else
-       {
-           // should never enter this state
-           state = search;
-       }
+        if(theta > 1.0*theta_window || theta < -1.0*theta_window)
+        {
+            // we have traveled out of the window
+            stop();
+            state = aligntheta;
+        }
+        else
+        {
+           if(r > (r_set-r_window) && r < (r_set+r_window))
+           {
+             stop();
+             state = aligned;
+           }
+           else if (r < (r_set - r_window))
+           {
+               startDrive(REVERSE);
+           }
+           else if (r > (r_window + r_set))
+           {
+               startDrive(FORWARD);
+           }
+           else
+           {
+               // should never enter this state
+               state = search;
+           }
+        }
     }
     else
     {
+        // error state
+        stop();
         state = search;
     }
-
 }
 
 findGarage()

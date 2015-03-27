@@ -78,7 +78,11 @@ int main(void)
                 break;
 
             case aligndist:
-                state = search; 
+                alignDist(33.5, flag);
+                break;
+
+            case aligned:
+                state = search;
                 break;
 
             default:
