@@ -15,15 +15,26 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 void DelayuSec(unsigned int s);
 char timeToReadI2C;
 
+
+float game_timer; // global variable that is the game time in seconds
+
 void _ISR _T1Interrupt(void)
 {
     _T1IF = 0; // clear interrupt flag
     timeToReadI2C = 1;
 }
 
+void _ISR _T2Interrupt(void)
+{
+    _T2IF = 0; // clear interrupt flag
+    game_timer = game_timer + 0.1;
+}
+
+float initial_r;
 char flag;
 int main(void)
 {
+    state = search;
 
     vision_setup();
     motorsSetup();
@@ -35,10 +46,7 @@ int main(void)
     theta_window = 3.0*PI/180.0;
     timeToReadI2C = 1;
 
-//    float r =0;
-//    float theta=0;
-
-    // enable Timer 1 and setup Interrupt
+    // enable Timer 1 and setup Interrupt for I2C throttling
     T1CONbits.TON = 1;
     T1CONbits.TCS = 0;
     T1CONbits.TCKPS = 0b10;
@@ -46,6 +54,16 @@ int main(void)
     TMR1 = 0;
     _T1IE = 1;
     _T1IF = 0;
+
+    // enable Timer 2 as game timer
+    T2CONbits.TON = 1;
+    T2CONbits.TCS = 0;
+    T1CONbits.TCKPS = 0b11; // post scale by 256 (15625 cycles per second)
+    PR2 = 1563; // results in 10 Hz
+    TMR2 = 0;
+    _T2IE = 1;
+    _T2IF = 0;
+    game_timer = 0.0;
 
 //    char flag;
     while(1)
@@ -68,27 +86,30 @@ int main(void)
 
         //this part isn't really working yet. can't get alignTheta() to work
         // <editor-fold defaultstate="collapsed" desc="State Machine">
-        switch(state){
-            case search:
-                circleSearch(LEFT, flag); 
-                break;
+        switch(period){
+            case locating:
+            {
+                switch(state){
+                    case search:
+                        circleSearch(LEFT, flag);
+                        break;
 
-            case aligntheta:
-                alignTheta(flag); 
-                break;
+                    case aligntheta:
+                        alignTheta(flag);
+                        break;
 
-            case aligndist:
-                alignDist(33.5, flag);
-                break;
+                    case aligndist:
+                        alignDist(33.5, flag);
+                        break;
 
-            case aligned:
-                state = search;
-                break;
+                    case wait:
+                        waitUntil(5.0);
+                        break;
 
-            default:
-                state = search;
-                break;
-        }
+                    default:
+                        state = search;
+                        break;
+                }
         // </editor-fold>
 
     }

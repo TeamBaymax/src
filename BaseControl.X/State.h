@@ -23,13 +23,19 @@
 
 typedef enum{
     search, aligntheta, aligndist, aligned, forward0, reverse0,  //begin
-    at_center,                          //oriented
+    at_center, wait,                          //oriented
     align1, forward1, reverse1,          //collecting
     scan, align2, shoot,                //scoring
     end, finish                         //end states - end: gets out of dispensing zone, finish: stop
 } State;
-
 State state;
+
+typedef enum{
+    locating, // beginning of game, locating garage and orienting self
+    scoring   // most of the game, collecting balls and shooting
+} Period;
+
+Period period;
 
 circleSearch(char dir, char flag)
 {
@@ -112,8 +118,19 @@ alignDist(float r_set, char flag)
     }
 }
 
+char waitUntil(float time)
+{
+    if(game_timer > time)
+    {
+        return 1;
+    }
+    else return 0;
+}
+
 findGarage()
 {
+
+
     
 }
 
