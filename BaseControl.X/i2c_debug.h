@@ -20,13 +20,13 @@ void debug_2_ints(int x1, int y1)
     char* ptr1 = &val1;
     char* ptr2 = &val2;
 
-     I2C2write4bytes(arduinoAddress, ptr1[1], ptr1[0], ptr2[1], ptr2[0]);
+     I2C1write4bytes(arduinoAddress, ptr1[1], ptr1[0], ptr2[1], ptr2[0]);
 }
 
 void debug_float(float val)
 {
     char* ptr1 = &val;
-    I2C2write4bytes(arduinoAddress, ptr1[3], ptr1[2], ptr1[1], ptr1[0]);
+    I2C1write4bytes(arduinoAddress, ptr1[3], ptr1[2], ptr1[1], ptr1[0]);
 }
 
 #endif	/* I2C_DEBUG_H */

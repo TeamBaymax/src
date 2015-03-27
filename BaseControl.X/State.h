@@ -48,33 +48,32 @@ circleSearch(char dir, char flag)
 
 alignTheta(char flag)
 {
-//    if(flag)
-//    {
-//        if( theta < theta_window && theta > -1.0*theta_window)
-//        {
-//            startTurn(LEFT);
-//            state = aligndist;
-//        }
-//        else if(theta > theta_window)
-//        {
-//            startTurn(LEFT);
-//        }
-//        else if(theta < -1.0*theta_window)
-//        {
-//            startTurn(RIGHT);
-//        }
-//        else
-//        {
-//            //should never enter this state
-//            state = search;
-//        }
-//    }
-//    else
-//    {
-//        stop();
-//        state = search;
-//    }
-
+    if(flag)
+    {
+        if(theta > 1.0*theta_window)
+        {
+            startTurn(LEFT);
+//            LATAbits.LATA1 = 0;
+//            LATAbits.LATA2 = 1;
+//            T3CONbits.TON = 1;
+        }
+        else if(theta < -1.0*theta_window)
+        {
+            startTurn(RIGHT);
+//            LATAbits.LATA1 = 1;
+//            LATAbits.LATA2 = 0;
+//            T3CONbits.TON = 1;
+        }
+        else
+        {
+            stop();
+            state = aligndist;
+        }
+    }
+    else
+    {
+        state = search;
+    }
 
 }
 

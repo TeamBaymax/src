@@ -72,14 +72,14 @@ void startDrive(unsigned int direction){
 
 void startTurn(unsigned int direction){
     if( T3CONbits.TON == 0){
-        if(direction == 0){         //turn right
-             _RA2 = 0;
-             _RA1 = 1;
+        if(direction == RIGHT){         //turn right
+             LATAbits.LATA2 = 0;
+             LATAbits.LATA1 = 1;
 
         }
         else{                       //turn left
-            _RA2 = 1;
-            _RA1 = 0;
+            LATAbits.LATA2 = 1;
+            LATAbits.LATA1 = 0;
         }
 
         T3CONbits.TON = 1;           //enable Timer3

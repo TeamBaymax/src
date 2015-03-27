@@ -20,22 +20,23 @@ void _ISR _T1Interrupt(void)
     _T1IF = 0; // clear interrupt flag
     timeToReadI2C = 1;
 }
-    char flag;
+
+char flag;
 int main(void)
 {
 
     vision_setup();
     motorsSetup();
 
-    _TRISA1 = 0;
+    _TRISA1 = 0; // I know this is redundant, but it doesn't work otherwise
     _TRISA2 = 0;
     _TRISB1 = 0;
     
     theta_window = 3.0*PI/180.0;
     timeToReadI2C = 1;
 
-    float r =0;
-    float theta=0;
+//    float r =0;
+//    float theta=0;
 
     // enable Timer 1 and setup Interrupt
     T1CONbits.TON = 1;
@@ -57,62 +58,34 @@ int main(void)
             // flag = 0 if no beacon
             // flag = 1 if one camera sees beacon
             // flag = 2 if two cameras see beacon
+//
+//           debug_2_ints(x1,y1);
+//            debug_2_ints(x2,y2);
 
-            debug_2_ints(x1,y1);
-            debug_2_ints(x2,y2);
-
-            debug_float(r);
-            debug_float(theta);
+//            debug_float(r);
+//            debug_float(theta);
         }
 
+        //this part isn't really working yet. can't get alignTheta() to work
         // <editor-fold defaultstate="collapsed" desc="State Machine">
         switch(state){
             case search:
-                circleSearch(LEFT, flag); break;
+                circleSearch(LEFT, flag); 
+                break;
+
             case aligntheta:
-                alignTheta(flag); break;
+                alignTheta(flag); 
+                break;
+
             case aligndist:
-                state = search; break;
+                state = search; 
+                break;
+
             default:
-                state = search; break;
+                state = search;
+                break;
         }
-          // </editor-fold>
-
-
-
-
-//        if(!flag)
-//        {
-//            LATAbits.LATA1 = 1;
-//            LATAbits.LATA2 = 0;
-////            LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
-//                T3CONbits.TON = 1;
-//        }
-//        else
-//        {
-//            if(theta > 1.0*theta_window)
-//            {
-//                LATAbits.LATA1 = 0;
-//                LATAbits.LATA2 = 1;
-////                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
-//                 T3CONbits.TON = 1;
-//            }
-//            else if(theta < -1.0*theta_window)
-//            {
-//                LATAbits.LATA1 = 1;
-//                LATAbits.LATA2 = 0;
-////                LATBbits.LATB1 = 1; // to be replaced by PWM on OCR3
-//                 T3CONbits.TON = 1;
-//            }
-//            else
-//            {
-//                 T3CONbits.TON = 0;
-////                LATBbits.LATB1 = 0;
-//                LATAbits.LATA1 = 0;
-//                LATAbits.LATA2 = 0;
-//            }
-//        }
-
+        // </editor-fold>
 
     }
     							//end of program
