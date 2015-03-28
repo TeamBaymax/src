@@ -15,9 +15,13 @@
 #define FORWARD 0
 #define REVERSE 1
 
+volatile int step_counter;
+volatile int step_max;
+
 void _ISR _T3Interrupt(void)
 {
     _T3IF = 0; // clear interrupt flag
+    step_counter++;
 
 }
 
@@ -101,11 +105,13 @@ void straight(float distance, unsigned int direction){  //inches
         _RA2 = 1;
         _RA1 = 1;
     }
-    //step_counter = 0;
+    step_counter = 0;
 
     //200 steps = WHEEL_DIA*pi inches;
-    //step_max = 200.0/(3.14159265*WHEEL_DIA) * distance;
+    step_max = 200.0/(3.14159265*2.5) * distance;
     T3CONbits.TON = 1;           //enable Timer3
+    while(step_counter < step_max);
+    T3CONbits.TON = 0;           //disable Timer3
 }
 
 // Turn, angle [degrees], direction right = 0, left = 1;
@@ -120,11 +126,13 @@ void turn(float angle, unsigned int direction){
         _RA2 = 1;
         _RA1 = 0;
     }
-    //step_counter = 0;
+    step_counter = 0;
 
     //steps = 200/(pi*WHEEL_DIA) * 7.85/2 * angle * pi/180; minus 5 fudgefactor
-    //step_max = 152.0/90.0 * angle;
+    step_max = 152.0/90.0 * angle;
     T3CONbits.TON = 1;           //enable Timer3
+    while(step_counter < step_max);
+    T3CONbits.TON = 0;           //disable Timer3
 }
 #endif	/* MOTORS_H */
 

@@ -25,7 +25,7 @@
 typedef enum{
     search, aligntheta, aligndist, //aligned, //begin
     at_center, wait,                          //oriented
-    searchgarage, aligncollect, gocollect, load, donecollect,          //collecting
+    searchgarage, aligncollect, gocollect, openloopcollect, load, donecollect,          //collecting
     searchgoal, aligngoal, distgoal, shoot,                //scoring
     end, finish                         //end states - end: gets out of dispensing zone, finish: stop
 } State;
@@ -97,12 +97,12 @@ alignDist(float r_set, char flag){
         }
         else
         {
+
            if(r > (r_set-r_window) && r < (r_set+r_window))
            {
-
             stop();
             if(state == aligndist) state = wait;
-            else if(state == gocollect) state = load;
+            else if(state == gocollect) state = openloopcollect;
             else if(state == distgoal) state = shoot;
            }
            else if (r < (r_set - r_window))
@@ -128,6 +128,12 @@ alignDist(float r_set, char flag){
         else if(state == gocollect)  state = searchgarage;
         else if(state == distgoal) state = searchgoal;
     }
+}
+
+openloopDist(float r_set, char flag){
+    straight(r_set, FORWARD);
+    state = load;
+    
 }
 
 char waitUntil(float time){

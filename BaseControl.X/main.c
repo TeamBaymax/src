@@ -77,7 +77,10 @@ int main(void)
                         alignTheta(flag);
                         break;
                     case gocollect:
-                        alignDist(12.0, flag);
+                        alignDist(15.0, flag);
+                        break;
+                    case openloopcollect:
+                        openloopDist(5, flag);
                         break;
                     case load:
                         loadBalls(6);
