@@ -36,7 +36,17 @@ volatile float theta, r; // angle and distance from IR beacon
 volatile float r_window = 2.0; // error allowed when aligning theta
 volatile float theta_window = 3.0*PI/180.0; // error allowed when aligning theta
 
+char timeToReadVision;
 
+/**
+ * Interupt for throtling the use of the I2C bus to read the IR cammeras. The
+ * see_beacon() shoulc only be called when timeToReadVision is true.
+ */
+void _ISR _T1Interrupt(void)
+{
+    _T1IF = 0; // clear interrupt flag
+    timeToReadVision = 1;
+}
 
 /**
  * vision_setup a function that initializes the i2c communication with the ir
@@ -52,6 +62,17 @@ void vision_setup()
     ir2_init();
 
     beacon = 0;
+
+    timeToReadVision = 1;
+
+    // enable Timer 1 and setup Interrupt for I2C throttling
+    T1CONbits.TON = 1;
+    T1CONbits.TCS = 0;
+    T1CONbits.TCKPS = 0b10;
+    PR1 = 10000; // period to read I2C
+    TMR1 = 0;
+    _T1IE = 1;
+    _T1IF = 0;
 }
 
 /**
@@ -64,6 +85,8 @@ void vision_setup()
  */
 char see_beacon(float* thetaptr, float* rptr)
 {
+    timeToReadVision = 0;
+
     x1 = y1 = x2 = y2 = 0;
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);

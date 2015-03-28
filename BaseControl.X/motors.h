@@ -50,40 +50,38 @@ void motorsSetup()
     OC3CON1bits.OCTSEL = 0b001;     //Select Timer3 to be timer source
     OC3CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
     OC3CON2bits.SYNCSEL = 0b01101;  //Select Timer3 as synchronization source
-    
+   
+    T3CONbits.TON = 0;      //Disable until we start
     OC3R = PR3/2.0;         //Duty Cycle
+    
 }
 
 void startDrive(unsigned int direction){
-    if( T3CONbits.TON == 0){
-        if(direction == FORWARD){         //drive forward
-             LATAbits.LATA2 = 0;
-             LATAbits.LATA1 = 0;
+    if(direction == FORWARD){         //drive forward
+         LATAbits.LATA2 = 0;
+         LATAbits.LATA1 = 0;
 
-        }
-        else{                       //drive reverse
-            LATAbits.LATA2 = 1;
-            LATAbits.LATA1 = 1;
-        }
-
-        T3CONbits.TON = 1;           //enable Timer3
     }
+    else{                       //drive reverse
+        LATAbits.LATA2 = 1;
+        LATAbits.LATA1 = 1;
+    }
+
+    if( T3CONbits.TON == 0) T3CONbits.TON = 1;           //enable Timer3
 }
 
 void startTurn(unsigned int direction){
-    if( T3CONbits.TON == 0){
-        if(direction == RIGHT){         //turn right
-             LATAbits.LATA2 = 0;
-             LATAbits.LATA1 = 1;
+    if(direction == RIGHT){         //turn right
+         LATAbits.LATA2 = 0;
+         LATAbits.LATA1 = 1;
 
-        }
-        else{                       //turn left
-            LATAbits.LATA2 = 1;
-            LATAbits.LATA1 = 0;
-        }
-
-        T3CONbits.TON = 1;           //enable Timer3
     }
+    else{                       //turn left
+        LATAbits.LATA2 = 1;
+        LATAbits.LATA1 = 0;
+    }
+
+    if( T3CONbits.TON == 0) T3CONbits.TON = 1;           //enable Timer3
 }
 
 void stop(){

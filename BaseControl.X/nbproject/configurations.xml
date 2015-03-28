@@ -12,6 +12,8 @@
       <itemPath>vision.h</itemPath>
       <itemPath>i2c_debug.h</itemPath>
       <itemPath>motors.h</itemPath>
+      <itemPath>servo.h</itemPath>
+      <itemPath>game_timer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -44,7 +46,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.24</languageToolchainVersion>
-        <platform>2</platform>
+        <platform>3</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
