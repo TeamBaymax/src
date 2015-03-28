@@ -120,10 +120,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90              0x1128          0x19bc  (6588)
-.dinit                      0x1eb8                0x1c            0x2a  (42)
+.text                        0xd90              0x114c          0x19f2  (6642)
+.dinit                      0x1edc                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x2b3e  (11070) 68%
+                     Total program memory used (bytes):         0x2b74  (11124) 68%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -281,14 +281,14 @@ External Symbols in Program Memory (by address):
                   0x001956                  __T2Interrupt
                   0x001a44                  _game_time_setup
                   0x001a70                  _servoSetup
-                  0x001a98                  _moveServo
-                  0x001b00                  _circleSearch
-                  0x001b3e                  _alignTheta
-                  0x001be4                  _alignDist
-                  0x001d68                  _waitUntil
-                  0x001d94                  _findGarage
-                  0x001d9e                  _loadBalls
-                  0x001dcc                  _main
+                  0x001a9c                  _moveServo
+                  0x001b04                  _circleSearch
+                  0x001b42                  _alignTheta
+                  0x001be8                  _alignDist
+                  0x001d8c                  _waitUntil
+                  0x001db8                  _findGarage
+                  0x001dc2                  _loadBalls
+                  0x001df0                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -336,15 +336,15 @@ External Symbols in Program Memory (by name):
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
                   0x000712                  __sincosf
-                  0x001be4                  _alignDist
-                  0x001b3e                  _alignTheta
+                  0x001be8                  _alignDist
+                  0x001b42                  _alignTheta
                   0x00036a                  _asinf
-                  0x001b00                  _circleSearch
+                  0x001b04                  _circleSearch
                   0x00036e                  _cosf
                   0x001230                  _debug_2_ints
                   0x001268                  _debug_float
                   0x00098a                  _expf
-                  0x001d94                  _findGarage
+                  0x001db8                  _findGarage
                   0x000b92                  _fmodf
                   0x001a44                  _game_time_setup
                   0x000da8                  _i2c1_init
@@ -362,12 +362,12 @@ External Symbols in Program Memory (by name):
                   0x001352                  _ir2_init
                   0x0013b8                  _ir2_request
                   0x000c34                  _ldexpf
-                  0x001d9e                  _loadBalls
+                  0x001dc2                  _loadBalls
                   0x000c78                  _logf
-                  0x001dcc                  _main
+                  0x001df0                  _main
                   0x001712                  _mono_vision
                   0x00185e                  _motorsSetup
-                  0x001a98                  _moveServo
+                  0x001a9c                  _moveServo
                   0x00054c                  _powf
                   0x000e22                  _reset_i2c1_bus
                   0x00106a                  _reset_i2c2_bus
@@ -385,7 +385,7 @@ External Symbols in Program Memory (by name):
                   0x0007e8                  _tanf
                   0x00193a                  _turn
                   0x001430                  _vision_setup
-                  0x001d68                  _waitUntil
+                  0x001d8c                  _waitUntil
 
 Memory Configuration
 
@@ -566,18 +566,18 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x2df2
+.debug_info       0x000000       0x2ded
  *(.debug_info)
- .debug_info      0x000000       0x2df2 build/default/production/main.o
+ .debug_info      0x000000       0x2ded build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x24c
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x24c build/default/production/main.o
 
-.debug_line       0x000000       0x1575
+.debug_line       0x000000       0x157d
  *(.debug_line)
- .debug_line      0x000000       0x1575 build/default/production/main.o
+ .debug_line      0x000000       0x157d build/default/production/main.o
 
 .debug_frame      0x000000        0x354
  *(.debug_frame)
@@ -1589,8 +1589,8 @@ __c30_signature
  .nbss              0x0832          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0832                  _errno
 
-.text             0x000d90       0x1128
- .text            0x000d90       0x1128 build/default/production/main.o
+.text             0x000d90       0x114c
+ .text            0x000d90       0x114c build/default/production/main.o
                   0x000d90                  _DelayuSec
                   0x000da8                  _i2c1_init
                   0x000dc4                  _i2c1_start
@@ -1635,14 +1635,14 @@ __c30_signature
                   0x001956                  __T2Interrupt
                   0x001a44                  _game_time_setup
                   0x001a70                  _servoSetup
-                  0x001a98                  _moveServo
-                  0x001b00                  _circleSearch
-                  0x001b3e                  _alignTheta
-                  0x001be4                  _alignDist
-                  0x001d68                  _waitUntil
-                  0x001d94                  _findGarage
-                  0x001d9e                  _loadBalls
-                  0x001dcc                  _main
+                  0x001a9c                  _moveServo
+                  0x001b04                  _circleSearch
+                  0x001b42                  _alignTheta
+                  0x001be8                  _alignDist
+                  0x001d8c                  _waitUntil
+                  0x001db8                  _findGarage
+                  0x001dc2                  _loadBalls
+                  0x001df0                  _main
 
-.dinit            0x001eb8         0x1c
- .dinit           0x001eb8         0x1c data_init
+.dinit            0x001edc         0x1c
+ .dinit           0x001edc         0x1c data_init

@@ -26,6 +26,7 @@ void servoSetup()
     OC2CON1bits.OCTSEL = 0b000;     //Select Timer2 to be timer source
     OC2CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
     OC2CON2bits.SYNCSEL = 0b01100;  //Select Timer2 as synchronization source
+    OC2R = 16;
     OC2R = 0;
 }
 

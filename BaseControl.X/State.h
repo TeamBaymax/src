@@ -49,6 +49,7 @@ circleSearch(char dir, char flag){
     }
     else
     {
+
         startTurn(dir);
     }
 
@@ -98,7 +99,8 @@ alignDist(float r_set, char flag){
         {
            if(r > (r_set-r_window) && r < (r_set+r_window))
            {
-             stop();
+
+            stop();
             if(state == aligndist) state = wait;
             else if(state == gocollect) state = load;
             else if(state == distgoal) state = shoot;
@@ -123,7 +125,7 @@ alignDist(float r_set, char flag){
         // error state
         stop();
         if(state == aligndist) state = search;
-        else if(state == gocollect) state = searchgarage;
+        else if(state == gocollect)  state = searchgarage;
         else if(state == distgoal) state = searchgoal;
     }
 }
