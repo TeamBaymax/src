@@ -60,7 +60,7 @@ int main(void)
 
         char status;
 
-        if(waitUntil(180.0)){
+        if(waitUntil(105.0)){ // game is over
             period = finishing;
             state = search;
         }
@@ -203,7 +203,6 @@ int main(void)
             case finishing:
                 switch(state){
                     case search:
-                        case search:
                         status = circleSearch(LEFT, flag); //modify
                         if(status == 1)
                             state = aligntheta;
