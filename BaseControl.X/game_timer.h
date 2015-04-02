@@ -1,8 +1,6 @@
-
-
 /*
  * File:   gameTimer.h
- * Author: ecestudent
+ * Author: James
  *
  * Created on March 27, 2015, 3:33 PM
  */

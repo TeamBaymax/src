@@ -20,8 +20,6 @@
 
 #define CENTER 33.5
 
-//char beacon //defined in vision.h -> indicator of if a beacon is on
-
 typedef enum{
     search, aligntheta, aligndist, //aligned, //begin
     at_center, wait,                          //oriented
@@ -45,14 +43,11 @@ char circleSearch(char dir, char flag){
     {
         stop();
         return 1;
-        if(state == searchgarage) state = aligncollect;
-        else if(state == searchgoal) state = aligngoal;
-        return 1;
     }
     else
     {
-        return 0;
         startTurn(dir);
+        return 0;
     }
 
 }
@@ -72,15 +67,12 @@ char alignTheta(char flag){
         {
             stop();
             return 1;
-            if(state == aligngoal) state = distgoal;
         }
     }
     else
     {
         stop();
         return 255;
-        if(state == aligncollect) state = searchgarage;
-        else if(state == aligngoal) state = searchgoal;
     }
     return 0;
 
@@ -101,9 +93,8 @@ char alignDist(float r_set, char flag){
 
            if(r > (r_set-r_window) && r < (r_set+r_window))
            {
-            stop();
-            return 1;
-            if(state == distgoal) state = shoot;
+               stop();
+               return 1;
            }
            else if (r < (r_set - r_window))
            {
@@ -117,7 +108,6 @@ char alignDist(float r_set, char flag){
            {
                return 255;
                // should never enter this state
-               //state = search;
            }
         }
     }
@@ -125,9 +115,7 @@ char alignDist(float r_set, char flag){
     {
         // error state
         stop();
-        if(state == aligndist) state = search;
-        else if(state == gocollect)  state = searchgarage;
-        else if(state == distgoal) state = searchgoal;
+        return 255;
     }
 }
 
@@ -149,12 +137,6 @@ char waitUntil(float time){
     else return 0;
 }
 
-findGarage(char flag){
-
-    //turn 90 or something.
-    
-}
-
 loadBalls(int n){
     int i=0;
     while(i<n){
@@ -174,8 +156,6 @@ shootBalls(int n){
     stopShooter();
 
 }
-
-
 
 #endif	/* STATE_H */
 

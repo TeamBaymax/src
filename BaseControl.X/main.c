@@ -42,21 +42,25 @@ int main(void)
         if(timeToReadVision) // Refresh Vision Data
         {
             flag = see_beacon(&theta, &r);
-            // flag = 255 if error
-            // flag = 0 if no beacon
-            // flag = 1 if one camera sees beacon
-            // flag = 2 if two cameras see beacon
-
+            // <editor-fold defaultstate="collapsed" desc="I2C Debug">
 //          debug_2_ints(x1,y1);
 //          debug_2_ints(x2,y2);
-
 //          debug_float(r);
 //          debug_float(theta);
+            // </editor-fold>
         }
-        // <editor-fold defaultstate="collapsed" desc="State Machine">
+        // <editor-fold defaultstate="expanded" desc="State Machine">
 
         char status;
+
+        if(waitUntil(180.0)){
+            period = finishing;
+            state = search;
+        }
+
         switch(period){
+
+            // <editor-fold defaultstate="expanded" desc="Locating">
             case locating: // if we are in the first 10 seconds of the game
                 switch(state){
 
@@ -85,9 +89,11 @@ int main(void)
                         break;
 
                     case wait:
-                        // look at game timer
-                        status = openloopTurn(90.0, RIGHT, flag);
-                        state = searchgarage;
+                        status = waitUntil(5.0);
+                        if(status == 1){
+                            status = openloopTurn(90.0, RIGHT, flag);
+                            state = searchgarage;
+                        }
                         break;
 
                     case searchgarage:
@@ -101,7 +107,9 @@ int main(void)
                          break;
                 }
                 break;
-            
+                //</editor-fold>
+
+            // <editor-fold defaultstate="expanded" desc="Loading">
             case loading: // loading new balls
                 switch(state){
                     case search: // search for the garage
@@ -140,6 +148,9 @@ int main(void)
                         break;
                 }
                 break;
+                //</editor-fold>
+
+            // <editor-fold defaultstate="expanded" desc="Scoring">
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
@@ -175,6 +186,38 @@ int main(void)
                         break;
                 }
                 break;
+                //</editor-fold>
+
+            // <editor-fold defaultstate="expanded" desc="Finishing">
+            case finishing:
+                switch(state){
+                    case search:
+                        case search:
+                        status = circleSearch(LEFT, flag); //modify
+                        if(status == 1)
+                            state = aligntheta;
+                        break;
+
+                    case aligntheta: // align to goal
+                        status = alignTheta(flag);
+                        if(status==1)
+                            state = aligndist;
+                        break;
+
+                    case aligndist: // go get the right distance away
+                        status = alignDist(33.5, flag);
+                        if(status == 254) // traveled out of window
+                            state = aligntheta;
+                        else if(status == 255)
+                            state = search;
+                        else if(status = 1) // reached desired distance
+                            state = end;
+                        break;
+                    case end:
+                        break;
+                }
+                break;
+                //</editor-fold>
 
           default: // default error state
               period = loading;
@@ -183,7 +226,7 @@ int main(void)
             } // period case structure
         // </editor-fold>
         
-        } // while(1) loop
+    }
      
 } // int main()
 

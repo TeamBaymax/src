@@ -1,6 +1,6 @@
 /* 
  * File:   vision.h
- * Author: ecestudent
+ * Author: James
  *
  * Created on March 20, 2015, 6:03 PM
  */
