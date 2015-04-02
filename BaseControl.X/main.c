@@ -1,3 +1,10 @@
+/*
+ * File:   main.c
+ * Author: James
+ *
+ * Created on March 7, 2015, 2:18 PM
+ */
+
 #include <p24F16KA301.h>
 #include "i2c1_helper.h"
 #include "i2c2_helper.h"
@@ -98,8 +105,8 @@ int main(void)
 
                     case searchgarage:
                         if(flag){ // we can see the beacon right away
-                            state = aligncollect;
-                            period = scoring;
+                            state = aligntheta;
+                            period = loading;
                         }else{ // we cannot see the beacon
                             openloopDist(5.0,REVERSE,flag);
                             openloopTurn(5,RIGHT,flag);
@@ -120,12 +127,14 @@ int main(void)
 
                     case aligntheta: // align to garage
                         status = alignTheta(flag);
-                        if(status==1)
+                        if(status == 1)
                             state = aligndist;
+                        if(status = 255)
+                            state = search;
                         break;
 
                     case aligndist: // go get balls
-                        status = alignDist(33.5, flag);
+                        status = alignDist(15, flag);
                         if(status == 254) // traveled out of window
                             state = aligntheta;
                         else if(status == 255)
@@ -163,6 +172,8 @@ int main(void)
                         status = alignTheta(flag);
                         if(status==1)
                             state = aligndist;
+                        if(status = 255)
+                            state = search;
                         break;
 
                     case aligndist: // go get the right distance away
@@ -172,7 +183,7 @@ int main(void)
                         else if(status == 255)
                             state = search;
                         else if(status = 1) // reached desired distance
-                            state = collect;
+                            state = shoot;
                         break;
 
                     case shoot:

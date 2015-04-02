@@ -22,10 +22,13 @@
 
 typedef enum{
     search, aligntheta, aligndist, //aligned, //begin
-    at_center, wait,                          //oriented
-    searchgarage, aligncollect, gocollect, collect,          //collecting
-    searchgoal, aligngoal, distgoal, shoot,                //scoring
-    end, finish                         //end states - end: gets out of dispensing zone, finish: stop
+    //at_center,
+    wait,                          //oriented
+    searchgarage,
+    collect,//aligncollect, gocollect, collect,          //collecting
+    //searchgoal, aligngoal, distgoal,
+    shoot,                //scoring
+    end,                         //end states - end: gets out of dispensing zone, finish: stop
 } State;
 
 typedef enum{
@@ -86,7 +89,6 @@ char alignDist(float r_set, char flag){
             // we have traveled out of the window
             stop();
             return 254;
-            if(state == distgoal) state = aligngoal;
         }
         else
         {
