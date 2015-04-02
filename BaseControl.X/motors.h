@@ -17,6 +17,7 @@
 
 volatile int step_counter;
 volatile int step_max;
+volatile char shooter_on;
 
 void _ISR _T3Interrupt(void)
 {
@@ -43,6 +44,8 @@ void motorsSetup()
     _TRISA0 = 0;            //Set to Output
     _TRISA2 = 0;
     _TRISB1 = 0;
+    _TRISB12 = 0;
+    _TRISA6 = 0;
     T3CONbits.TON = 1;      //Enable
     T3CONbits.TCS = 0;      //Set source to Internal Clock
     T3CONbits.TCKPS = 0b10; //Prescale: 1/64
@@ -57,6 +60,10 @@ void motorsSetup()
    
     T3CONbits.TON = 0;      //Disable until we start
     OC3R = PR3/2.0;         //Duty Cycle
+
+    LATAbits.LATA6 = 0;   // turn off shooter wheels
+    LATBbits.LATB12 = 0;  // turn off shooter solenoids
+    shooter_on = 0;
     
 }
 
@@ -117,7 +124,7 @@ void straight(float distance, unsigned int direction){  //inches
 // Turn, angle [degrees], direction right = 0, left = 1;
 void turn(float angle, unsigned int direction){
 
-    if(direction == 0){         //turn right
+    if(direction == RIGHT){         //turn right
          _RA2 = 0;
          _RA1 = 1;
 
@@ -136,3 +143,30 @@ void turn(float angle, unsigned int direction){
 }
 #endif	/* MOTORS_H */
 
+void spinShooter()
+{
+    shooter_on = 1;
+    LATAbits.LATA6 = 1; // turn on shooter wheels
+}
+
+void stopShooter()
+{
+    shooter_on = 0;
+    LATAbits.LATA6 = 0;
+}
+
+void advanceBall()
+{
+    if(shooter_on)
+    {
+        LATBbits.LATB12 = 1;
+        DelayuSec(65000); // experiment with this timing, it's probably wrong
+        LATBbits.LATB12 = 0;
+        DelayuSec(65000);
+    }
+    else
+    {
+        spinShooter();
+        advanceBall(); // This should not create and endless loop, but it might
+    }
+}

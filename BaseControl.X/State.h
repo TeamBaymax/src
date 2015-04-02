@@ -25,37 +25,39 @@
 typedef enum{
     search, aligntheta, aligndist, //aligned, //begin
     at_center, wait,                          //oriented
-    searchgarage, aligncollect, gocollect, openloopcollect, load, donecollect,          //collecting
+    searchgarage, aligncollect, gocollect, collect,          //collecting
     searchgoal, aligngoal, distgoal, shoot,                //scoring
     end, finish                         //end states - end: gets out of dispensing zone, finish: stop
 } State;
 
 typedef enum{
     locating, // beginning of game, locating garage and orienting self
-    scoring,   // most of the game, collecting balls and shooting
-    finishing,  //lsat 5 seconds of game - no goals active, get away from walls and garage
+    loading,  // getting new balls
+    scoring,  // finding goals and shooting
+    finishing,//lsat 5 seconds of game - no goals active, get away from walls and garage
 } Period;
 
 State state;
 Period period;
 
-circleSearch(char dir, char flag){
+char circleSearch(char dir, char flag){
     if(flag)
     {
         stop();
-        if(state == search) state = aligntheta;
-        else if(state == searchgarage) state = aligncollect;
+        return 1;
+        if(state == searchgarage) state = aligncollect;
         else if(state == searchgoal) state = aligngoal;
+        return 1;
     }
     else
     {
-
+        return 0;
         startTurn(dir);
     }
 
 }
 
-alignTheta(char flag){
+char alignTheta(char flag){
     if(flag)
     {
         if(theta > 1.0*theta_window)
@@ -69,31 +71,30 @@ alignTheta(char flag){
         else
         {
             stop();
-            if(state == aligntheta) state = aligndist;
-            else if(state == aligncollect) state = gocollect;
-            else if(state == aligngoal) state = distgoal;
+            return 1;
+            if(state == aligngoal) state = distgoal;
         }
     }
     else
     {
         stop();
-        if(state == aligntheta) state = search;
-        else if(state == aligncollect) state = searchgarage;
+        return 255;
+        if(state == aligncollect) state = searchgarage;
         else if(state == aligngoal) state = searchgoal;
     }
+    return 0;
 
 }
 
-alignDist(float r_set, char flag){
+char alignDist(float r_set, char flag){
     if(flag)
     {
         if(theta > 2.0*theta_window || theta < -2.0*theta_window)
         {
             // we have traveled out of the window
             stop();
-            if(state == aligndist) state = aligntheta;
-            else if(state == gocollect) state = aligncollect;
-            else if(state == distgoal) state = aligngoal;
+            return 254;
+            if(state == distgoal) state = aligngoal;
         }
         else
         {
@@ -101,9 +102,8 @@ alignDist(float r_set, char flag){
            if(r > (r_set-r_window) && r < (r_set+r_window))
            {
             stop();
-            if(state == aligndist) state = wait;
-            else if(state == gocollect) state = openloopcollect;
-            else if(state == distgoal) state = shoot;
+            return 1;
+            if(state == distgoal) state = shoot;
            }
            else if (r < (r_set - r_window))
            {
@@ -115,6 +115,7 @@ alignDist(float r_set, char flag){
            }
            else
            {
+               return 255;
                // should never enter this state
                //state = search;
            }
@@ -130,10 +131,14 @@ alignDist(float r_set, char flag){
     }
 }
 
-openloopDist(float r_set, char flag){
-    straight(r_set, FORWARD);
-    state = load;
-    
+char openloopDist(float r_set, char direction, char flag){
+    straight(r_set, direction);
+    return 1;
+}
+
+char openloopTurn(float theta_set, char direction, char flag){
+    turn(theta_set, direction);
+    return 1;
 }
 
 char waitUntil(float time){
@@ -155,11 +160,21 @@ loadBalls(int n){
     while(i<n){
         moveServo();
         balls++; balls++;
-        i++; i++;   //each time this loops it collects 2 balls
-
+        i++;
     }
-    state = donecollect;
 }
+
+shootBalls(int n){
+    spinShooter();
+    int i = 0;
+    for(i=0; i<n; i++)
+    {
+        advanceBall();
+    }
+    stopShooter();
+
+}
+
 
 
 #endif	/* STATE_H */

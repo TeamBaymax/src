@@ -18,10 +18,10 @@
 #include "i2c1_helper.h"
 #include "i2c2_helper.h"
 #define PI 3.14159265359
-#define X1_OFFSET 572 // These are the values when the robot is looking directly at
-#define X2_OFFSET 467 // a light in the corner from the center of the ring
-#define Y1_OFFSET 514
-#define Y2_OFFSET 521
+#define X1_OFFSET 512 // These are the values when the robot is looking directly at
+#define X2_OFFSET 512 // a light in the corner from the center of the ring
+#define Y1_OFFSET 512
+#define Y2_OFFSET 512
 
 #define PHI1 0.0794
 #define PHI2 0.0794

@@ -32,6 +32,8 @@ int main(void)
     _TRISA2 = 0;
     _TRISB1 = 0;
     _TRISB0 = 0;
+    _TRISB12 = 0;
+    _TRISA6 = 0;
     
     theta_window = 3.0*PI/180.0;
 
@@ -44,72 +46,146 @@ int main(void)
             // flag = 0 if no beacon
             // flag = 1 if one camera sees beacon
             // flag = 2 if two cameras see beacon
-//
-//           debug_2_ints(x1,y1);
-//            debug_2_ints(x2,y2);
 
-//            debug_float(r);
-//            debug_float(theta);
+//          debug_2_ints(x1,y1);
+//          debug_2_ints(x2,y2);
+
+//          debug_float(r);
+//          debug_float(theta);
         }
-
         // <editor-fold defaultstate="collapsed" desc="State Machine">
+
+        char status;
         switch(period){
-            case locating:{
+            case locating: // if we are in the first 10 seconds of the game
                 switch(state){
+
                     case search:
-                        circleSearch(LEFT, flag);
+                        status = circleSearch(LEFT, flag);
+                        if(status ==1) // found beacon
+                            state = aligntheta;
                         break;
+
                     case aligntheta:
-                        alignTheta(flag);
+                        status = alignTheta(flag);
+                        if (status == 255) // lost beacon
+                            state = search;
+                        else if(status == 1) // aligned
+                            state = aligndist;
                         break;
+
                     case aligndist:
-                        alignDist(33.5, flag);
+                        status = alignDist(33.5, flag);
+                        if(status == 254) // traveled out of window
+                            state = aligntheta;
+                        else if(status == 255) // error state
+                            state = search;
+                        else if(status = 1) // reached desired distance
+                            state = wait;
                         break;
+
                     case wait:
-                        state = search;
+                        // look at game timer
+                        status = openloopTurn(90.0, RIGHT, flag);
+                        state = searchgarage;
                         break;
 
                     case searchgarage:
-//                        findGarage(flag);     --not implemented yet
-                        circleSearch(LEFT, flag);
+                        if(flag){ // we can see the beacon right away
+                            state = aligncollect;
+                            period = scoring;
+                        }else{ // we cannot see the beacon
+                            openloopDist(5.0,REVERSE,flag);
+                            openloopTurn(5,RIGHT,flag);
+                        }
                          break;
-                    case aligncollect:
-                        alignTheta(flag);
+                }
+                break;
+            
+            case loading: // loading new balls
+                switch(state){
+                    case search: // search for the garage
+                        status = circleSearch(LEFT,flag);
+                        if(status ==1);
+                            state = aligntheta;
                         break;
-                    case gocollect:
-                        alignDist(15.0, flag);
+
+                    case aligntheta: // align to garage
+                        status = alignTheta(flag);
+                        if(status==1)
+                            state = aligndist;
                         break;
-                    case openloopcollect:
-                        openloopDist(5, flag);
+
+                    case aligndist: // go get balls
+                        status = alignDist(33.5, flag);
+                        if(status == 254) // traveled out of window
+                            state = aligntheta;
+                        else if(status == 255)
+                            state = search;
+                        else if(status = 1) // reached desired distance
+                            state = collect;
                         break;
-                    case load:
+
+                    case collect:
+                        openloopDist(5, FORWARD, flag);
                         loadBalls(6);
-                    case donecollect:
-                        //turn 180 and drive to center
+                        openloopDist(33.5, REVERSE,flag);
+                        period = scoring;
+                        state = search;
                         break;
-
-                    case searchgoal:
-                        circleSearch(LEFT, flag);
-                        break;
-                    case aligngoal:
-                        alignTheta(flag);
-                        break;
-                    case distgoal:
-                        alignDist(33.5,flag);
-                        break;
-                    case shoot:
-
-
+                     break;
 
                     default:
                         state = search;
                         break;
                 }
-            }
-        }
+                break;
+            case scoring: // finding goals and shooting
+                switch(state){
+                    case search:
+                        status = circleSearch(LEFT, flag); //modify
+                        if(status == 1)
+                            state = aligntheta;
+                        break;
+
+                    case aligntheta: // align to goal
+                        status = alignTheta(flag);
+                        if(status==1)
+                            state = aligndist;
+                        break;
+
+                    case aligndist: // go get the right distance away
+                        status = alignDist(33.5, flag);
+                        if(status == 254) // traveled out of window
+                            state = aligntheta;
+                        else if(status == 255)
+                            state = search;
+                        else if(status = 1) // reached desired distance
+                            state = collect;
+                        break;
+
+                    case shoot:
+                        shootBalls(6);
+                        openloopTurn(90,LEFT,flag);
+                        period = loading;
+                        state = search;
+
+                    default:
+                        state = search;
+                        break;
+                }
+                break;
+
+          default: // default error state
+              period = loading;
+              state = search;
+              break;
+            } // period case structure
         // </editor-fold>
-   }
-}//end of program
+        
+        } // while(1) loop
+     
+} // int main()
 
 
 
