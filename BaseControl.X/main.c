@@ -27,8 +27,9 @@ float initial_r;
 char flag;
 int main(void)
 {
-    state = searchgarage;
+    
     period = locating;
+    state = wait;
 
     vision_setup();
     motorsSetup();
@@ -49,21 +50,22 @@ int main(void)
         if(timeToReadVision) // Refresh Vision Data
         {
             flag = see_beacon(&theta, &r);
-            // <editor-fold defaultstate="collapsed" desc="I2C Debug">
+         
+         // I2C Debug
 //          debug_2_ints(x1,y1);
 //          debug_2_ints(x2,y2);
 //          debug_float(r);
 //          debug_float(theta);
-            // </editor-fold>
+      
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
 
         char status;
 
-        if(waitUntil(105.0)){ // game is over
-            period = finishing;
-            state = search;
-        }
+//        if(waitUntil(105.0)){ // game is over
+//            period = finishing;
+//            state = search;
+//        }
 
         switch(period){
 
@@ -79,7 +81,7 @@ int main(void)
 
                     case aligntheta:
                         status = alignTheta(flag);
-                        if (status == 255) // lost beacon
+                        if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
                             state = aligndist;
@@ -87,31 +89,39 @@ int main(void)
 
                     case aligndist:
                         status = alignDist(33.5, flag);
-                        if(status == 254) // traveled out of window
+                        if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == 255) // error state
+                        else if(status == LOSTBEACON) // error state
                             state = search;
-                        else if(status = 1) // reached desired distance
+                        else if(status == 1) // reached desired distance
                             state = wait;
                         break;
 
                     case wait:
-                        status = waitUntil(5.0);
+                        status = 1;//waitUntil(5.0);
                         if(status == 1){
                             status = openloopTurn(90.0, RIGHT, flag);
                             state = searchgarage;
-                        }
+/*up to here works*/    }
                         break;
 
                     case searchgarage:
                         if(flag){ // we can see the beacon right away
-                            state = aligntheta;
-                            period = loading;
+                            state = halt;
+                            //state = aligntheta;
+                            //period = loading;
                         }else{ // we cannot see the beacon
                             openloopDist(5.0,REVERSE,flag);
-                            openloopTurn(5,RIGHT,flag);
+                            openloopTurn(5.0,RIGHT,flag);
                         }
                          break;
+                         
+                    case halt:
+                        stop();
+                        break;
+
+                    default:
+                        state = search;
                 }
                 break;
                 //</editor-fold>
@@ -129,15 +139,15 @@ int main(void)
                         status = alignTheta(flag);
                         if(status == 1)
                             state = aligndist;
-                        if(status = 255)
+                        if(status = LOSTBEACON)
                             state = search;
                         break;
 
                     case aligndist: // go get balls
                         status = alignDist(15, flag);
-                        if(status == 254) // traveled out of window
+                        if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == 255)
+                        else if(status == LOSTBEACON)
                             state = search;
                         else if(status = 1) // reached desired distance
                             state = collect;
@@ -172,22 +182,26 @@ int main(void)
                         status = alignTheta(flag);
                         if(status==1)
                             state = aligndist;
-                        if(status = 255)
+                        if(status = LOSTBEACON)
                             state = search;
                         break;
 
                     case aligndist: // go get the right distance away
                         status = alignDist(33.5, flag);
-                        if(status == 254) // traveled out of window
+                        if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == 255)
+                        else if(status == LOSTBEACON)
                             state = search;
                         else if(status = 1) // reached desired distance
                             state = shoot;
                         break;
 
                     case shoot:
+                        spinShooter();
+                        Delay(500);
                         shootBalls(6);
+                        stopShooter();
+                        Delay(500);
                         openloopTurn(90,LEFT,flag);
                         period = loading;
                         state = search;
@@ -216,9 +230,9 @@ int main(void)
 
                     case aligndist: // go get the right distance away
                         status = alignDist(33.5, flag);
-                        if(status == 254) // traveled out of window
+                        if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == 255)
+                        else if(status == LOSTBEACON)
                             state = search;
                         else if(status = 1) // reached desired distance
                             state = end;

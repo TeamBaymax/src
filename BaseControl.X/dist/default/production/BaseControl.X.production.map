@@ -120,10 +120,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90              0x133c          0x1cda  (7386)
-.dinit                      0x20cc                0x1c            0x2a  (42)
+.text                        0xd90              0x13c2          0x1da3  (7587)
+.dinit                      0x2152                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x2e5c  (11868) 73%
+                     Total program memory used (bytes):         0x2f25  (12069) 74%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -203,19 +203,19 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init_standard
                   0x00023c                  __data_init
+                  0x00023c                  __data_init_standard
                   0x0002aa                  __DefaultInterrupt
                   0x0002ae                  ___subsf3
                   0x0002b0                  ___addsf3
                   0x00036a                  _asinf
                   0x00036e                  _cosf
                   0x000372                  ___divsf3
+                  0x0003f6                  ___lesf2
                   0x0003f6                  ___eqsf2
                   0x0003f6                  ___ltsf2
-                  0x0003f6                  ___lesf2
-                  0x0003fa                  ___gesf2
                   0x0003fa                  ___gtsf2
+                  0x0003fa                  ___gesf2
                   0x0003fe                  ___fixsfsi
                   0x000440                  ___fixunssfsi
                   0x000476                  ___floatsisf
@@ -244,78 +244,80 @@ External Symbols in Program Memory (by address):
                   0x000c78                  _logf
                   0x000d26                  _sqrtf
                   0x000d90                  _DelayuSec
-                  0x000da8                  _i2c1_init
-                  0x000dc4                  _i2c1_start
-                  0x000df6                  _i2c1_restart
-                  0x000e22                  _reset_i2c1_bus
-                  0x000e54                  _send_i2c1_byte
-                  0x000eb2                  _i2c1_read
-                  0x000ee2                  _i2c1_read_ack
-                  0x000f18                  _I2C1write
-                  0x000f34                  _I2C1write2bytes
-                  0x000f5a                  _I2C1write4bytes
-                  0x000f94                  _I2C1requestFrom
-                  0x000fe8                  _i2c2_init
-                  0x00100c                  _i2c2_start
-                  0x00103e                  _i2c2_restart
-                  0x00106a                  _reset_i2c2_bus
-                  0x00109c                  _send_i2c2_byte
-                  0x0010fa                  _i2c2_read
-                  0x00112a                  _i2c2_read_ack
-                  0x001160                  _I2C2write
-                  0x00117c                  _I2C2write2bytes
-                  0x0011a2                  _I2C2write4bytes
-                  0x0011dc                  _I2C2requestFrom
-                  0x001230                  _debug_2_ints
-                  0x001268                  _debug_float
-                  0x001294                  _ir1_init
-                  0x0012fa                  _ir1_request
-                  0x001352                  _ir2_init
-                  0x0013b8                  _ir2_request
-                  0x001410                  __T1Interrupt
-                  0x001430                  _vision_setup
-                  0x00146a                  _see_beacon
-                  0x001512                  _stereo_vision
-                  0x001712                  _mono_vision
-                  0x00184a                  __T3Interrupt
-                  0x001864                  _motorsSetup
-                  0x0018e0                  _startDrive
-                  0x001904                  _startTurn
-                  0x001928                  _stop
-                  0x001934                  _straight
-                  0x001974                  _turn
-                  0x0019b4                  _spinShooter
-                  0x0019c4                  _stopShooter
-                  0x0019d4                  _advanceBall
-                  0x0019f4                  __T2Interrupt
-                  0x001ae2                  _game_time_setup
-                  0x001b0e                  _servoSetup
-                  0x001b3a                  _moveServo
-                  0x001ba2                  _circleSearch
-                  0x001bc2                  _alignTheta
-                  0x001c2c                  _alignDist
-                  0x001d4c                  _openloopDist
-                  0x001d66                  _openloopTurn
-                  0x001d80                  _waitUntil
-                  0x001dac                  _loadBalls
-                  0x001dd4                  _shootBalls
-                  0x001df8                  _main
+                  0x000da8                  _Delay
+                  0x000dc4                  _i2c1_init
+                  0x000de0                  _i2c1_start
+                  0x000e12                  _i2c1_restart
+                  0x000e3e                  _reset_i2c1_bus
+                  0x000e70                  _send_i2c1_byte
+                  0x000ece                  _i2c1_read
+                  0x000efe                  _i2c1_read_ack
+                  0x000f34                  _I2C1write
+                  0x000f50                  _I2C1write2bytes
+                  0x000f76                  _I2C1write4bytes
+                  0x000fb0                  _I2C1requestFrom
+                  0x001004                  _i2c2_init
+                  0x001028                  _i2c2_start
+                  0x00105a                  _i2c2_restart
+                  0x001086                  _reset_i2c2_bus
+                  0x0010b8                  _send_i2c2_byte
+                  0x001116                  _i2c2_read
+                  0x001146                  _i2c2_read_ack
+                  0x00117c                  _I2C2write
+                  0x001198                  _I2C2write2bytes
+                  0x0011be                  _I2C2write4bytes
+                  0x0011f8                  _I2C2requestFrom
+                  0x00124c                  _debug_2_ints
+                  0x001284                  _debug_float
+                  0x0012b0                  _ir1_init
+                  0x001316                  _ir1_request
+                  0x00136e                  _ir2_init
+                  0x0013d4                  _ir2_request
+                  0x00142c                  __T1Interrupt
+                  0x00144c                  _vision_setup
+                  0x001486                  _see_beacon
+                  0x00152e                  _stereo_vision
+                  0x00172e                  _mono_vision
+                  0x001866                  __T3Interrupt
+                  0x001880                  _motorsSetup
+                  0x0018fc                  _startDrive
+                  0x001920                  _startTurn
+                  0x001944                  _stop
+                  0x001950                  _straight
+                  0x001990                  _turn
+                  0x0019d0                  _spinShooter
+                  0x0019e0                  _stopShooter
+                  0x0019f0                  _advanceBall
+                  0x001a10                  __T2Interrupt
+                  0x001afe                  _game_time_setup
+                  0x001b2a                  _servoSetup
+                  0x001b56                  _moveServo
+                  0x001bbe                  _circleSearch
+                  0x001bde                  _alignTheta
+                  0x001c48                  _alignDist
+                  0x001d68                  _openloopDist
+                  0x001d82                  _openloopTurn
+                  0x001d9c                  _waitUntil
+                  0x001dc8                  _loadBalls
+                  0x001dea                  _shootBalls
+                  0x001e12                  _main
 
 External Symbols in Program Memory (by name):
 
+                  0x000da8                  _Delay
                   0x000d90                  _DelayuSec
-                  0x000f94                  _I2C1requestFrom
-                  0x000f18                  _I2C1write
-                  0x000f34                  _I2C1write2bytes
-                  0x000f5a                  _I2C1write4bytes
-                  0x0011dc                  _I2C2requestFrom
-                  0x001160                  _I2C2write
-                  0x00117c                  _I2C2write2bytes
-                  0x0011a2                  _I2C2write4bytes
+                  0x000fb0                  _I2C1requestFrom
+                  0x000f34                  _I2C1write
+                  0x000f50                  _I2C1write2bytes
+                  0x000f76                  _I2C1write4bytes
+                  0x0011f8                  _I2C2requestFrom
+                  0x00117c                  _I2C2write
+                  0x001198                  _I2C2write2bytes
+                  0x0011be                  _I2C2write4bytes
                   0x0002aa                  __DefaultInterrupt
-                  0x001410                  __T1Interrupt
-                  0x0019f4                  __T2Interrupt
-                  0x00184a                  __T3Interrupt
+                  0x00142c                  __T1Interrupt
+                  0x001a10                  __T2Interrupt
+                  0x001866                  __T3Interrupt
                   0x0002b0                  ___addsf3
                   0x000372                  ___divsf3
                   0x0003f6                  ___eqsf2
@@ -347,61 +349,61 @@ External Symbols in Program Memory (by name):
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
                   0x000754                  __sincosf
-                  0x0019d4                  _advanceBall
-                  0x001c2c                  _alignDist
-                  0x001bc2                  _alignTheta
+                  0x0019f0                  _advanceBall
+                  0x001c48                  _alignDist
+                  0x001bde                  _alignTheta
                   0x00036a                  _asinf
-                  0x001ba2                  _circleSearch
+                  0x001bbe                  _circleSearch
                   0x00036e                  _cosf
-                  0x001230                  _debug_2_ints
-                  0x001268                  _debug_float
+                  0x00124c                  _debug_2_ints
+                  0x001284                  _debug_float
                   0x0009cc                  _expf
                   0x000b92                  _fmodf
-                  0x001ae2                  _game_time_setup
-                  0x000da8                  _i2c1_init
-                  0x000eb2                  _i2c1_read
-                  0x000ee2                  _i2c1_read_ack
-                  0x000df6                  _i2c1_restart
-                  0x000dc4                  _i2c1_start
-                  0x000fe8                  _i2c2_init
-                  0x0010fa                  _i2c2_read
-                  0x00112a                  _i2c2_read_ack
-                  0x00103e                  _i2c2_restart
-                  0x00100c                  _i2c2_start
-                  0x001294                  _ir1_init
-                  0x0012fa                  _ir1_request
-                  0x001352                  _ir2_init
-                  0x0013b8                  _ir2_request
+                  0x001afe                  _game_time_setup
+                  0x000dc4                  _i2c1_init
+                  0x000ece                  _i2c1_read
+                  0x000efe                  _i2c1_read_ack
+                  0x000e12                  _i2c1_restart
+                  0x000de0                  _i2c1_start
+                  0x001004                  _i2c2_init
+                  0x001116                  _i2c2_read
+                  0x001146                  _i2c2_read_ack
+                  0x00105a                  _i2c2_restart
+                  0x001028                  _i2c2_start
+                  0x0012b0                  _ir1_init
+                  0x001316                  _ir1_request
+                  0x00136e                  _ir2_init
+                  0x0013d4                  _ir2_request
                   0x000c34                  _ldexpf
-                  0x001dac                  _loadBalls
+                  0x001dc8                  _loadBalls
                   0x000c78                  _logf
-                  0x001df8                  _main
-                  0x001712                  _mono_vision
-                  0x001864                  _motorsSetup
-                  0x001b3a                  _moveServo
-                  0x001d4c                  _openloopDist
-                  0x001d66                  _openloopTurn
+                  0x001e12                  _main
+                  0x00172e                  _mono_vision
+                  0x001880                  _motorsSetup
+                  0x001b56                  _moveServo
+                  0x001d68                  _openloopDist
+                  0x001d82                  _openloopTurn
                   0x00058e                  _powf
-                  0x000e22                  _reset_i2c1_bus
-                  0x00106a                  _reset_i2c2_bus
-                  0x00146a                  _see_beacon
-                  0x000e54                  _send_i2c1_byte
-                  0x00109c                  _send_i2c2_byte
-                  0x001b0e                  _servoSetup
-                  0x001dd4                  _shootBalls
+                  0x000e3e                  _reset_i2c1_bus
+                  0x001086                  _reset_i2c2_bus
+                  0x001486                  _see_beacon
+                  0x000e70                  _send_i2c1_byte
+                  0x0010b8                  _send_i2c2_byte
+                  0x001b2a                  _servoSetup
+                  0x001dea                  _shootBalls
                   0x000826                  _sinf
-                  0x0019b4                  _spinShooter
+                  0x0019d0                  _spinShooter
                   0x000d26                  _sqrtf
-                  0x0018e0                  _startDrive
-                  0x001904                  _startTurn
-                  0x001512                  _stereo_vision
-                  0x001928                  _stop
-                  0x0019c4                  _stopShooter
-                  0x001934                  _straight
+                  0x0018fc                  _startDrive
+                  0x001920                  _startTurn
+                  0x00152e                  _stereo_vision
+                  0x001944                  _stop
+                  0x0019e0                  _stopShooter
+                  0x001950                  _straight
                   0x00082a                  _tanf
-                  0x001974                  _turn
-                  0x001430                  _vision_setup
-                  0x001d80                  _waitUntil
+                  0x001990                  _turn
+                  0x00144c                  _vision_setup
+                  0x001d9c                  _waitUntil
 
 Memory Configuration
 
@@ -582,22 +584,22 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x3045
+.debug_info       0x000000       0x307e
  *(.debug_info)
- .debug_info      0x000000       0x3045 build/default/production/main.o
+ .debug_info      0x000000       0x307e build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x235
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x235 build/default/production/main.o
 
-.debug_line       0x000000       0x18a4
+.debug_line       0x000000       0x198e
  *(.debug_line)
- .debug_line      0x000000       0x18a4 build/default/production/main.o
+ .debug_line      0x000000       0x198e build/default/production/main.o
 
-.debug_frame      0x000000        0x3a4
+.debug_frame      0x000000        0x3b4
  *(.debug_frame)
- .debug_frame     0x000000        0x3a4 build/default/production/main.o
+ .debug_frame     0x000000        0x3b4 build/default/production/main.o
 
 .debug_str        0x000000        0x20e
  *(.debug_str)
@@ -610,10 +612,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x4cd
+                  0x000000        0x4d7
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x4cd build/default/production/main.o
+                  0x000000        0x4d7 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -635,12 +637,12 @@ __FDS
                   0x000014          0x4 LONG 0x2aa DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000016          0x4 LONG 0x2aa DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000018          0x4 LONG 0x2aa DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x1410 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00001a          0x4 LONG 0x142c DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00001c          0x4 LONG 0x2aa DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2aa DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2aa DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x19f4 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x184a DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x1a10 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x1866 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x2aa DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x2aa DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x2aa DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -763,12 +765,12 @@ __FDS
                   0x000114          0x4 LONG 0x2aa DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000116          0x4 LONG 0x2aa DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000118          0x4 LONG 0x2aa DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x1410 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00011a          0x4 LONG 0x142c DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00011c          0x4 LONG 0x2aa DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x2aa DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2aa DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000122          0x4 LONG 0x19f4 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x184a DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000122          0x4 LONG 0x1a10 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x1866 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x2aa DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x2aa DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x2aa DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1608,65 +1610,66 @@ __c30_signature
  .nbss              0x0838          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0838                  _errno
 
-.text             0x000d90       0x133c
- .text            0x000d90       0x133c build/default/production/main.o
+.text             0x000d90       0x13c2
+ .text            0x000d90       0x13c2 build/default/production/main.o
                   0x000d90                  _DelayuSec
-                  0x000da8                  _i2c1_init
-                  0x000dc4                  _i2c1_start
-                  0x000df6                  _i2c1_restart
-                  0x000e22                  _reset_i2c1_bus
-                  0x000e54                  _send_i2c1_byte
-                  0x000eb2                  _i2c1_read
-                  0x000ee2                  _i2c1_read_ack
-                  0x000f18                  _I2C1write
-                  0x000f34                  _I2C1write2bytes
-                  0x000f5a                  _I2C1write4bytes
-                  0x000f94                  _I2C1requestFrom
-                  0x000fe8                  _i2c2_init
-                  0x00100c                  _i2c2_start
-                  0x00103e                  _i2c2_restart
-                  0x00106a                  _reset_i2c2_bus
-                  0x00109c                  _send_i2c2_byte
-                  0x0010fa                  _i2c2_read
-                  0x00112a                  _i2c2_read_ack
-                  0x001160                  _I2C2write
-                  0x00117c                  _I2C2write2bytes
-                  0x0011a2                  _I2C2write4bytes
-                  0x0011dc                  _I2C2requestFrom
-                  0x001230                  _debug_2_ints
-                  0x001268                  _debug_float
-                  0x001294                  _ir1_init
-                  0x0012fa                  _ir1_request
-                  0x001352                  _ir2_init
-                  0x0013b8                  _ir2_request
-                  0x001410                  __T1Interrupt
-                  0x001430                  _vision_setup
-                  0x00146a                  _see_beacon
-                  0x001512                  _stereo_vision
-                  0x001712                  _mono_vision
-                  0x00184a                  __T3Interrupt
-                  0x001864                  _motorsSetup
-                  0x0018e0                  _startDrive
-                  0x001904                  _startTurn
-                  0x001928                  _stop
-                  0x001934                  _straight
-                  0x001974                  _turn
-                  0x0019b4                  _spinShooter
-                  0x0019c4                  _stopShooter
-                  0x0019d4                  _advanceBall
-                  0x0019f4                  __T2Interrupt
-                  0x001ae2                  _game_time_setup
-                  0x001b0e                  _servoSetup
-                  0x001b3a                  _moveServo
-                  0x001ba2                  _circleSearch
-                  0x001bc2                  _alignTheta
-                  0x001c2c                  _alignDist
-                  0x001d4c                  _openloopDist
-                  0x001d66                  _openloopTurn
-                  0x001d80                  _waitUntil
-                  0x001dac                  _loadBalls
-                  0x001dd4                  _shootBalls
-                  0x001df8                  _main
+                  0x000da8                  _Delay
+                  0x000dc4                  _i2c1_init
+                  0x000de0                  _i2c1_start
+                  0x000e12                  _i2c1_restart
+                  0x000e3e                  _reset_i2c1_bus
+                  0x000e70                  _send_i2c1_byte
+                  0x000ece                  _i2c1_read
+                  0x000efe                  _i2c1_read_ack
+                  0x000f34                  _I2C1write
+                  0x000f50                  _I2C1write2bytes
+                  0x000f76                  _I2C1write4bytes
+                  0x000fb0                  _I2C1requestFrom
+                  0x001004                  _i2c2_init
+                  0x001028                  _i2c2_start
+                  0x00105a                  _i2c2_restart
+                  0x001086                  _reset_i2c2_bus
+                  0x0010b8                  _send_i2c2_byte
+                  0x001116                  _i2c2_read
+                  0x001146                  _i2c2_read_ack
+                  0x00117c                  _I2C2write
+                  0x001198                  _I2C2write2bytes
+                  0x0011be                  _I2C2write4bytes
+                  0x0011f8                  _I2C2requestFrom
+                  0x00124c                  _debug_2_ints
+                  0x001284                  _debug_float
+                  0x0012b0                  _ir1_init
+                  0x001316                  _ir1_request
+                  0x00136e                  _ir2_init
+                  0x0013d4                  _ir2_request
+                  0x00142c                  __T1Interrupt
+                  0x00144c                  _vision_setup
+                  0x001486                  _see_beacon
+                  0x00152e                  _stereo_vision
+                  0x00172e                  _mono_vision
+                  0x001866                  __T3Interrupt
+                  0x001880                  _motorsSetup
+                  0x0018fc                  _startDrive
+                  0x001920                  _startTurn
+                  0x001944                  _stop
+                  0x001950                  _straight
+                  0x001990                  _turn
+                  0x0019d0                  _spinShooter
+                  0x0019e0                  _stopShooter
+                  0x0019f0                  _advanceBall
+                  0x001a10                  __T2Interrupt
+                  0x001afe                  _game_time_setup
+                  0x001b2a                  _servoSetup
+                  0x001b56                  _moveServo
+                  0x001bbe                  _circleSearch
+                  0x001bde                  _alignTheta
+                  0x001c48                  _alignDist
+                  0x001d68                  _openloopDist
+                  0x001d82                  _openloopTurn
+                  0x001d9c                  _waitUntil
+                  0x001dc8                  _loadBalls
+                  0x001dea                  _shootBalls
+                  0x001e12                  _main
 
-.dinit            0x0020cc         0x1c
- .dinit           0x0020cc         0x1c data_init
+.dinit            0x002152         0x1c
+ .dinit           0x002152         0x1c data_init

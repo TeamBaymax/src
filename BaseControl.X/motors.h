@@ -160,13 +160,13 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        DelayuSec(65000); // experiment with this timing, it's probably wrong
+        Delay(200); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        DelayuSec(65000);
+        Delay(200);
     }
     else
     {
         spinShooter();
-        advanceBall(); // This should not create and endless loop, but it might
+        advanceBall(); // This should not create an endless loop, but it might
     }
 }

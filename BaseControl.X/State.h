@@ -18,6 +18,9 @@
 #define FORWARD 0
 #define REVERSE 1
 
+#define LOSTBEACON 3
+#define OUTOFWINDOW 4
+
 #define CENTER 33.5
 
 typedef enum{
@@ -28,7 +31,8 @@ typedef enum{
     collect,//aligncollect, gocollect, collect,          //collecting
     //searchgoal, aligngoal, distgoal,
     shoot,                //scoring
-    end,                         //end states - end: gets out of dispensing zone, finish: stop
+    end,                         //end states - end: gets out of dispensing zone
+    halt
 } State;
 
 typedef enum{
@@ -75,7 +79,7 @@ char alignTheta(char flag){
     else
     {
         stop();
-        return 255;
+        return LOSTBEACON;
     }
     return 0;
 
@@ -88,7 +92,7 @@ char alignDist(float r_set, char flag){
         {
             // we have traveled out of the window
             stop();
-            return 254;
+            return OUTOFWINDOW;
         }
         else
         {
@@ -108,7 +112,7 @@ char alignDist(float r_set, char flag){
            }
            else
            {
-               return 255;
+               return LOSTBEACON;
                // should never enter this state
            }
         }
@@ -117,7 +121,7 @@ char alignDist(float r_set, char flag){
     {
         // error state
         stop();
-        return 255;
+        return LOSTBEACON;
     }
 }
 
@@ -143,7 +147,7 @@ loadBalls(int n){
     int i=0;
     while(i<n){
         moveServo();
-        balls++; balls++;
+        balls++;
         i++;
     }
 }
@@ -154,8 +158,9 @@ shootBalls(int n){
     for(i=0; i<n; i++)
     {
         advanceBall();
+        balls--;
     }
-    stopShooter();
+    //stopShooter();
 
 }
 
