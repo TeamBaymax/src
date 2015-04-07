@@ -103,14 +103,14 @@ void stop(){
 
 // Straight line - distance [inches], direction forward = 0, reverse = 1
 void straight(float distance, unsigned int direction){  //inches
-    if(direction == 0){         //drive forward
-         _RA2 = 0;
-         _RA1 = 0;
+    if(direction == FORWARD){         //drive forward
+         LATAbits.LATA2 = 0;
+         LATAbits.LATA1 = 0;
 
     }
     else{                       //drive reverse
-        _RA2 = 1;
-        _RA1 = 1;
+        LATAbits.LATA2 = 1;
+        LATAbits.LATA1 = 1;
     }
     step_counter = 0;
 
@@ -125,13 +125,13 @@ void straight(float distance, unsigned int direction){  //inches
 void turn(float angle, unsigned int direction){
 
     if(direction == RIGHT){         //turn right
-         _RA2 = 0;
-         _RA1 = 1;
+         LATAbits.LATA2 = 0;
+         LATAbits.LATA1 = 1;
 
     }
     else{                       //turn left
-        _RA2 = 1;
-        _RA1 = 0;
+        LATAbits.LATA2 = 1;
+        LATAbits.LATA1 = 0;
     }
     step_counter = 0;
 
@@ -160,9 +160,9 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        Delay(200); // experiment with this timing, it's probably wrong
+        Delay(300); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        Delay(200);
+        Delay(300);
     }
     else
     {

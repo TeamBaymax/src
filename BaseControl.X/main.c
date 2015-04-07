@@ -29,7 +29,7 @@ int main(void)
 {
     
     period = locating;
-    state = wait;
+    state = search;
 
     vision_setup();
     motorsSetup();
@@ -75,7 +75,7 @@ int main(void)
 
                     case search:
                         status = circleSearch(LEFT, flag);
-                        if(status ==1) // found beacon
+                        if(flag) // found beacon
                             state = aligntheta;
                         break;
 
@@ -98,21 +98,21 @@ int main(void)
                         break;
 
                     case wait:
-                        status = 1;//waitUntil(5.0);
+                        openloopTurn(90.0, RIGHT, flag);
+                        status = waitUntil(5.0);
                         if(status == 1){
-                            status = openloopTurn(90.0, RIGHT, flag);
+                            
                             state = searchgarage;
 /*up to here works*/    }
                         break;
 
                     case searchgarage:
                         if(flag){ // we can see the beacon right away
-                            state = halt;
-                            //state = aligntheta;
-                            //period = loading;
+                            state = aligntheta;
+                            period = loading;
                         }else{ // we cannot see the beacon
-                            openloopDist(5.0,REVERSE,flag);
-                            openloopTurn(5.0,RIGHT,flag);
+                            openloopDist(3.0,REVERSE,flag);
+                            openloopTurn(10.0,RIGHT,flag);
                         }
                          break;
                          
@@ -129,34 +129,34 @@ int main(void)
             // <editor-fold defaultstate="expanded" desc="Loading">
             case loading: // loading new balls
                 switch(state){
-                    case search: // search for the garage
-                        status = circleSearch(LEFT,flag);
-                        if(status ==1);
+                    case search:
+                        status = circleSearch(LEFT, flag);
+                        if(flag) // found beacon
                             state = aligntheta;
                         break;
 
-                    case aligntheta: // align to garage
+                    case aligntheta:
                         status = alignTheta(flag);
-                        if(status == 1)
-                            state = aligndist;
-                        if(status = LOSTBEACON)
+                        if (status == LOSTBEACON) // lost beacon
                             state = search;
+                        else if(status == 1) // aligned
+                            state = aligndist;
                         break;
 
-                    case aligndist: // go get balls
-                        status = alignDist(15, flag);
+                    case aligndist:
+                        status = alignDist(15.0, flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == LOSTBEACON)
+                        else if(status == LOSTBEACON) // error state
                             state = search;
-                        else if(status = 1) // reached desired distance
+                        else if(status == 1) // reached desired distance
                             state = collect;
                         break;
 
                     case collect:
                         openloopDist(5, FORWARD, flag);
                         loadBalls(6);
-                        openloopDist(33.5, REVERSE,flag);
+                        openloopDist(20.0, REVERSE,flag);
                         period = scoring;
                         state = search;
                         break;
