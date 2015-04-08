@@ -120,10 +120,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90              0x13d8          0x1dc4  (7620)
-.dinit                      0x2168                0x1c            0x2a  (42)
+.text                        0xd90              0x13f6          0x1df1  (7665)
+.dinit                      0x2186                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x2f46  (12102) 75%
+                     Total program memory used (bytes):         0x2f73  (12147) 75%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -300,7 +300,7 @@ External Symbols in Program Memory (by address):
                   0x001d9c                  _waitUntil
                   0x001dc8                  _loadBalls
                   0x001dea                  _shootBalls
-                  0x001e12                  _main
+                  0x001e10                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -377,7 +377,7 @@ External Symbols in Program Memory (by name):
                   0x000c34                  _ldexpf
                   0x001dc8                  _loadBalls
                   0x000c78                  _logf
-                  0x001e12                  _main
+                  0x001e10                  _main
                   0x00172e                  _mono_vision
                   0x001880                  _motorsSetup
                   0x001b56                  _moveServo
@@ -593,9 +593,9 @@ __FDS
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x235 build/default/production/main.o
 
-.debug_line       0x000000       0x199e
+.debug_line       0x000000       0x19b6
  *(.debug_line)
- .debug_line      0x000000       0x199e build/default/production/main.o
+ .debug_line      0x000000       0x19b6 build/default/production/main.o
 
 .debug_frame      0x000000        0x3b4
  *(.debug_frame)
@@ -1610,8 +1610,8 @@ __c30_signature
  .nbss              0x0838          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x0838                  _errno
 
-.text             0x000d90       0x13d8
- .text            0x000d90       0x13d8 build/default/production/main.o
+.text             0x000d90       0x13f6
+ .text            0x000d90       0x13f6 build/default/production/main.o
                   0x000d90                  _DelayuSec
                   0x000da8                  _Delay
                   0x000dc4                  _i2c1_init
@@ -1669,7 +1669,7 @@ __c30_signature
                   0x001d9c                  _waitUntil
                   0x001dc8                  _loadBalls
                   0x001dea                  _shootBalls
-                  0x001e12                  _main
+                  0x001e10                  _main
 
-.dinit            0x002168         0x1c
- .dinit           0x002168         0x1c data_init
+.dinit            0x002186         0x1c
+ .dinit           0x002186         0x1c data_init

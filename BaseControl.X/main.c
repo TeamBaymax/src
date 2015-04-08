@@ -28,7 +28,7 @@ char flag;
 int main(void)
 {
     
-    period = locating;
+    period =locating;
     state = search;
 
     vision_setup();
@@ -157,6 +157,7 @@ int main(void)
                         openloopDist(5, FORWARD, flag);
                         loadBalls(6);
                         openloopDist(20.0, REVERSE,flag);
+                        openloopTurn(90.0,LEFT,flag);
                         period = scoring;
                         state = search;
                         break;
@@ -173,38 +174,43 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, flag); //modify
-                        if(status == 1)
+                        status = circleSearch(LEFT, flag);
+                        if(flag) // found beacon
                             state = aligntheta;
                         break;
 
-                    case aligntheta: // align to goal
+                    case aligntheta:
                         status = alignTheta(flag);
-                        if(status==1)
-                            state = aligndist;
-                        if(status = LOSTBEACON)
+                        if (status == LOSTBEACON) // lost beacon
                             state = search;
+                        else if(status == 1) // aligned
+                            state = aligndist;
                         break;
 
-                    case aligndist: // go get the right distance away
+                    case aligndist:
                         status = alignDist(33.5, flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == LOSTBEACON)
+                        else if(status == LOSTBEACON) // error state
                             state = search;
-                        else if(status = 1) // reached desired distance
+                        else if(status == 1) // reached desired distance
                             state = shoot;
                         break;
 
                     case shoot:
                         spinShooter();
-                        Delay(500);
+                        Delay(800);
                         shootBalls(6);
                         stopShooter();
-                        Delay(500);
+                        Delay(1200);
                         openloopTurn(90,LEFT,flag);
                         period = loading;
                         state = search;
+                        break;
+
+                    case halt:
+                        stop();
+                        break;
 
                     default:
                         state = search;

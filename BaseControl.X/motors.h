@@ -160,9 +160,9 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        Delay(300); // experiment with this timing, it's probably wrong
+        Delay(500); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        Delay(300);
+        Delay(500);
     }
     else
     {
