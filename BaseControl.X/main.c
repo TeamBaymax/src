@@ -130,7 +130,7 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, flag);
+                        status = searchGarage(LEFT, flag);
                         if(flag) // found beacon
                             state = aligntheta;
                         break;
@@ -175,7 +175,7 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, flag);
+                        status = searchGoal(LEFT, flag);
                         spinShooter();
                         if(flag) // found beacon
                             state = aligntheta;
