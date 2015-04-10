@@ -120,10 +120,10 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90              0x15ae          0x2085  (8325)
-.dinit                      0x233e                0x1c            0x2a  (42)
+.text                        0xd90              0x15c0          0x20a0  (8352)
+.dinit                      0x2350                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x3207  (12807) 79%
+                     Total program memory used (bytes):         0x3222  (12834) 79%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -305,9 +305,9 @@ External Symbols in Program Memory (by address):
                   0x001e72                  _waitUntil
                   0x001e9e                  _loadBalls
                   0x001ec0                  _shootBalls
-                  0x001ee6                  _searchGarage
-                  0x001f44                  _searchGoal
-                  0x001fa2                  _main
+                  0x001ee8                  _searchGarage
+                  0x001f46                  _searchGoal
+                  0x001fa4                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -386,7 +386,7 @@ External Symbols in Program Memory (by name):
                   0x000c34                  _ldexpf
                   0x001e9e                  _loadBalls
                   0x000c78                  _logf
-                  0x001fa2                  _main
+                  0x001fa4                  _main
                   0x00172e                  _mono_vision
                   0x001902                  _motorsSetup
                   0x001bd8                  _moveServo
@@ -395,8 +395,8 @@ External Symbols in Program Memory (by name):
                   0x00058e                  _powf
                   0x000e3e                  _reset_i2c1_bus
                   0x001086                  _reset_i2c2_bus
-                  0x001ee6                  _searchGarage
-                  0x001f44                  _searchGoal
+                  0x001ee8                  _searchGarage
+                  0x001f46                  _searchGoal
                   0x001486                  _see_beacon
                   0x000e70                  _send_i2c1_byte
                   0x0010b8                  _send_i2c2_byte
@@ -596,18 +596,18 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x31d3
+.debug_info       0x000000       0x31c9
  *(.debug_info)
- .debug_info      0x000000       0x31d3 build/default/production/main.o
+ .debug_info      0x000000       0x31c9 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x24a
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x24a build/default/production/main.o
 
-.debug_line       0x000000       0x1b52
+.debug_line       0x000000       0x1b7a
  *(.debug_line)
- .debug_line      0x000000       0x1b52 build/default/production/main.o
+ .debug_line      0x000000       0x1b7a build/default/production/main.o
 
 .debug_frame      0x000000        0x404
  *(.debug_frame)
@@ -1623,8 +1623,8 @@ __c30_signature
  .nbss              0x083a          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x083a                  _errno
 
-.text             0x000d90       0x15ae
- .text            0x000d90       0x15ae build/default/production/main.o
+.text             0x000d90       0x15c0
+ .text            0x000d90       0x15c0 build/default/production/main.o
                   0x000d90                  _DelayuSec
                   0x000da8                  _Delay
                   0x000dc4                  _i2c1_init
@@ -1685,9 +1685,9 @@ __c30_signature
                   0x001e72                  _waitUntil
                   0x001e9e                  _loadBalls
                   0x001ec0                  _shootBalls
-                  0x001ee6                  _searchGarage
-                  0x001f44                  _searchGoal
-                  0x001fa2                  _main
+                  0x001ee8                  _searchGarage
+                  0x001f46                  _searchGoal
+                  0x001fa4                  _main
 
-.dinit            0x00233e         0x1c
- .dinit           0x00233e         0x1c data_init
+.dinit            0x002350         0x1c
+ .dinit           0x002350         0x1c data_init

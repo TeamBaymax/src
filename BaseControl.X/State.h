@@ -179,13 +179,23 @@ loadBalls(int n){
     }
 }
 
-shootBalls(int n){
+char shootBalls(char flag){
     //spinShooter();
-    int i = 0;
-    for(i=0; i<n; i++)
+    if(balls > 0) // we still have balls in the hopper
     {
-        advanceBall();
-        balls--;
+        if(flag){
+            // we see the beacon
+            advanceBall(); // shoot a ball
+            balls--;
+            return 0; // not finished
+        }
+        else{
+            return LOSTBEACON;
+        }
+    }
+    else
+    {
+        return 1; // finished
     }
     //stopShooter();
 

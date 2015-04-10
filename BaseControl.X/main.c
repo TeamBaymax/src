@@ -208,11 +208,17 @@ int main(void)
                         break;
 
                     case shoot:
-                        shootBalls(6);
-                        stopShooter();
-                        openloopTurn(90,LEFT,flag);
-                        //period = loading;
-                        state = search;
+                        status = shootBalls(flag);
+                        if(status == LOSTBEACON)
+                        {
+                            state = search; // look for another goal
+                        }
+                        else if(status == 1) // finished shooting
+                        {
+                            stopShooter();
+                            period = loading;
+                            state = search;
+                        }                        
                         break;
 
                     case halt:
