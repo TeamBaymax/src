@@ -8,6 +8,7 @@
 #ifndef STATE_H
 #define	STATE_H
 
+#include <p24F16KA301.h>
 #include "vision.h"
 #include "motors.h"
 #include "game_timer.h"
@@ -31,6 +32,7 @@ typedef enum{
     collect,//aligncollect, gocollect, collect,          //collecting
     //searchgoal, aligngoal, distgoal,
     shoot,                //scoring
+    aimturret,
     end,                         //end states - end: gets out of dispensing zone
     halt
 } State;
@@ -48,11 +50,13 @@ Period period;
 char circleSearch(char dir, char flag){
     if(flag)
     {
+        PR3 = 500;
         stop();
         return 1;
     }
     else
     {
+        PR3 = 313;
         startTurn(dir);
         return 0;
     }
@@ -125,6 +129,29 @@ char alignDist(float r_set, char flag){
     }
 }
 
+char aim(float window, char flag)
+{
+    char status;
+    if(flag)
+    {
+        theta_window = window; // reduce the windo
+        PR3 = 1200; // slow down motors
+        status = alignTheta(flag);
+        if(status == 1) // aligned
+        {
+            theta_window = 3.0*PI/180.0; // open up window
+            PR3 = 500; // speed up motors again
+        }
+        return status;
+    }
+    else
+    {
+        theta_window = 3.0*PI/180.0; // open up window
+        PR3 = 500; // speed up motors again
+        return LOSTBEACON;
+    }
+}
+
 char openloopDist(float r_set, char direction, char flag){
     straight(r_set, direction);
     return 1;
@@ -162,6 +189,32 @@ shootBalls(int n){
     }
     //stopShooter();
 
+}
+
+char searchGarage(char direction, char flag)
+{
+    char status = circleSearch(direction, flag);
+    if(flag) // found beacon
+    {
+        if(getAngle() > 270.0 || getAngle() < 30.0){ // in range of the garage
+            return 1; // return found garage
+        }else{
+            return 0; // keep looking
+        }
+    }
+}
+
+char searchGoal(char direction, char flag)
+{
+    char status = circleSearch(direction, flag);
+    if(flag) // found beacon
+    {
+        if(getAngle() < 270.0 && getAngle() > 30.0){ // out of range of the garage
+            return 1; // return found a goal
+        }else{
+            return 0; // keep looking
+        }
+    }
 }
 
 #endif	/* STATE_H */

@@ -17,6 +17,7 @@
 
 volatile int step_counter;
 volatile int step_max;
+volatile int angle_counter; // 152 steps = 90 deg
 volatile char shooter_on;
 
 void _ISR _T3Interrupt(void)
@@ -24,6 +25,25 @@ void _ISR _T3Interrupt(void)
     _T3IF = 0; // clear interrupt flag
     step_counter++;
 
+    if(_LATA1 != _LATA2 && _LATA2 == RIGHT){    //turning right
+        angle_counter--;
+    }
+    else if(_LATA1 != _LATA2 && _LATA2 == LEFT){
+        angle_counter++;
+    }
+
+    if(angle_counter == 608){angle_counter = 0;} //608 steps = 360 deg
+
+}
+
+float getAngle()
+{
+    return angle_counter/608.0;
+}
+
+void setAngle(float angle)
+{
+    angle_counter = angle*608.0;
 }
 
 /*void initialize(){
@@ -49,7 +69,7 @@ void motorsSetup()
     T3CONbits.TON = 1;      //Enable
     T3CONbits.TCS = 0;      //Set source to Internal Clock
     T3CONbits.TCKPS = 0b10; //Prescale: 1/64
-    PR3 = 625;//5000;       //Set Period so freq = 100 Hz
+    PR3 = 500;//5000;       //Set Period so freq = 100 Hz
     TMR3 = 0;
     _T3IE = 1;              //Enable Interrupt
     _T3IF = 0;              //Clear Interrupt flag

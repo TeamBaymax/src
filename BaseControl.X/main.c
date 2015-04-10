@@ -28,7 +28,7 @@ char flag;
 int main(void)
 {
     
-    period =locating;
+    period = scoring;
     state = search;
 
     vision_setup();
@@ -103,7 +103,7 @@ int main(void)
                         if(status == 1){
                             
                             state = searchgarage;
-/*up to here works*/    }
+                        }
                         break;
 
                     case searchgarage:
@@ -140,6 +140,7 @@ int main(void)
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
+                            setAngle(0.0); // reset garage angle memory
                             state = aligndist;
                         break;
 
@@ -175,6 +176,7 @@ int main(void)
                 switch(state){
                     case search:
                         status = circleSearch(LEFT, flag);
+                        spinShooter();
                         if(flag) // found beacon
                             state = aligntheta;
                         break;
@@ -194,17 +196,22 @@ int main(void)
                         else if(status == LOSTBEACON) // error state
                             state = search;
                         else if(status == 1) // reached desired distance
+                            state = aimturret;
+                        break;
+
+                    case aimturret:
+                        status = aim(0.5*PI/180.0,flag);
+                        if(status==LOSTBEACON)
+                            state = search;
+                        else if(status ==1)
                             state = shoot;
                         break;
 
                     case shoot:
-                        spinShooter();
-                        Delay(800);
                         shootBalls(6);
                         stopShooter();
-                        Delay(1200);
                         openloopTurn(90,LEFT,flag);
-                        period = loading;
+                        //period = loading;
                         state = search;
                         break;
 
