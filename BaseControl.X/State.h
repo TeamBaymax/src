@@ -56,7 +56,7 @@ char circleSearch(char dir, char flag){
     }
     else
     {
-        PR3 = 313;
+        PR3 = 500;
         startTurn(dir);
         return 0;
     }
@@ -203,27 +203,37 @@ char shootBalls(char flag){
 
 char searchGarage(char direction, char flag)
 {
-    char status = circleSearch(direction, flag);
+
     if(flag) // found beacon
     {
-        if(getAngle() > 270.0 || getAngle() < 30.0){ // in range of the garage
+        if(getAngle() > 330.0 || getAngle() < 30.0){ // in range of the garage
+            PR3 = 500;
+            stop();
             return 1; // return found garage
-        }else{
-            return 0; // keep looking
-        }
+        }else return 0;
+    }else{
+    PR3 = 500;
+    startTurn(direction);
+    return 0;
     }
 }
 
 char searchGoal(char direction, char flag)
 {
-    char status = circleSearch(direction, flag);
+
     if(flag) // found beacon
     {
-        if(getAngle() < 270.0 && getAngle() > 30.0){ // out of range of the garage
-            return 1; // return found a goal
-        }else{
-            return 0; // keep looking
+        if(getAngle() < 330.0 && getAngle() > 30.0){ // in range of the goals
+            stop();
+            return 1; // return found garage
         }
+        else
+        {
+            return 0; //keep going
+        }
+    }else{
+    startTurn(direction);
+    return 0;
     }
 }
 

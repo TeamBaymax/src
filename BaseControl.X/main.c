@@ -28,7 +28,7 @@ char flag;
 int main(void)
 {
     
-    period = scoring;
+    period = loading;
     state = search;
 
     vision_setup();
@@ -52,10 +52,10 @@ int main(void)
             flag = see_beacon(&theta, &r);
          
          // I2C Debug
-//          debug_2_ints(x1,y1);
-//          debug_2_ints(x2,y2);
-//          debug_float(r);
-//          debug_float(theta);
+          debug_2_ints(x1,y1);
+          debug_2_ints(x2,y2);
+          debug_float(r);
+          debug_float(getAngle());
       
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
@@ -130,8 +130,9 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-                        status = searchGarage(LEFT, flag);
-                        if(flag) // found beacon
+                        //status = searchGarage(LEFT, flag);
+                        status = circleSearch(LEFT,flag);
+                        if(status == 1) // found beacon
                             state = aligntheta;
                         break;
 
@@ -140,7 +141,7 @@ int main(void)
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
-                            setAngle(0.0); // reset garage angle memory
+                            resetAngle(); // reset garage angle memory
                             state = aligndist;
                         break;
 
@@ -175,9 +176,10 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-                        status = searchGoal(LEFT, flag);
+                        //status = searchGoal(LEFT, flag);
+                        status = circleSearch(LEFT,flag);
                         spinShooter();
-                        if(flag) // found beacon
+                        if(status == 1) // found beacon
                             state = aligntheta;
                         break;
 

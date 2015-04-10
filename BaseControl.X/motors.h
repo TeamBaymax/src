@@ -38,12 +38,12 @@ void _ISR _T3Interrupt(void)
 
 float getAngle()
 {
-    return angle_counter/608.0;
+    return angle_counter*0.5954;
 }
 
-void setAngle(float angle)
+void resetAngle()
 {
-    angle_counter = angle*608.0;
+    angle_counter = 0.0;
 }
 
 /*void initialize(){
