@@ -1,4 +1,4 @@
-Microchip Technology Inc, vXêÇ
+Microchip Technology Inc, vXêv
 
 Tool Name:
   c:\program files (x86)\microchip\xc16\v1.21\bin\bin\..\bin/elf-ld.exe
@@ -121,21 +121,21 @@ Program Memory  [Origin = 0x200, Length = 0x29fe]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb8a          0x114f  (4431)
-.text                        0xd8a              0x15ec          0x20e2  (8418)
-.dinit                      0x2376                0x1c            0x2a  (42)
+.text                        0xd8a              0x1578          0x2034  (8244)
+.dinit                      0x2302                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x325b  (12891) 79%
+                     Total program memory used (bytes):         0x31ad  (12717) 78%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x2e  (46)
-.ndata                       0x82e                   0             0xc  (12)
-.nbss                        0x83a                   0             0x2  (2)
+.nbss                        0x800                   0            0x2c  (44)
+.ndata                       0x82c                   0             0xc  (12)
+.nbss                        0x838                   0             0x2  (2)
 
-                        Total data memory used (bytes):           0x3c  (60) 2%
+                        Total data memory used (bytes):           0x3a  (58) 2%
 
 
 Dynamic Memory Usage
@@ -143,9 +143,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x83c                               0x7c4  (1988)
+stack                        0x83a                               0x7c6  (1990)
 
-                        Maximum dynamic memory (bytes):          0x7c4  (1988)
+                        Maximum dynamic memory (bytes):          0x7c6  (1990)
 
 
 External Symbols in Data Memory (by address):
@@ -168,34 +168,32 @@ External Symbols in Data Memory (by address):
                     0x0824                  _state
                     0x0826                  _period
                     0x0828                  _initial_r
-                    0x082c                  _flag
-                    0x082e                  _arduinoAddress
-                    0x082f                  _IR1sensorAddress
-                    0x0830                  _IR2sensorAddress
-                    0x0832                  _r_window
-                    0x0836                  _theta_window
+                    0x082c                  _arduinoAddress
+                    0x082d                  _IR1sensorAddress
+                    0x082e                  _IR2sensorAddress
+                    0x0830                  _r_window
+                    0x0834                  _theta_window
 
 External Symbols in Data Memory (by name):
 
-                    0x082f                  _IR1sensorAddress
-                    0x0830                  _IR2sensorAddress
+                    0x082d                  _IR1sensorAddress
+                    0x082e                  _IR2sensorAddress
                     0x0818                  _angle_counter
-                    0x082e                  _arduinoAddress
+                    0x082c                  _arduinoAddress
                     0x0822                  _balls
                     0x0800                  _beacon
-                    0x082c                  _flag
                     0x081c                  _game_timer
                     0x0828                  _initial_r
                     0x0826                  _period
                     0x080e                  _r
-                    0x0832                  _r_window
+                    0x0830                  _r_window
                     0x0820                  _round
                     0x081a                  _shooter_on
                     0x0824                  _state
                     0x0814                  _step_counter
                     0x0816                  _step_max
                     0x080a                  _theta
-                    0x0836                  _theta_window
+                    0x0834                  _theta_window
                     0x0812                  _timeToReadVision
                     0x0802                  _x1
                     0x0804                  _x2
@@ -596,9 +594,9 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x3105
+.debug_info       0x000000       0x30e6
  *(.debug_info)
- .debug_info      0x000000       0x3105 build/default/production/main.o
+ .debug_info      0x000000       0x30e6 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x26e
@@ -624,10 +622,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x52d
+                  0x000000        0x524
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x52d build/default/production/main.o
+                  0x000000        0x524 build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1589,8 +1587,8 @@ __c30_signature
  __c30_signature
                   0x00039c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
 
-.nbss               0x0800         0x2e
- .nbss              0x0800         0x2e build/default/production/main.o
+.nbss               0x0800         0x2c
+ .nbss              0x0800         0x2c build/default/production/main.o
                     0x0800                  _beacon
                     0x0802                  _x1
                     0x0804                  _x2
@@ -1609,22 +1607,21 @@ __c30_signature
                     0x0824                  _state
                     0x0826                  _period
                     0x0828                  _initial_r
-                    0x082c                  _flag
 
-.ndata              0x082e          0xc
- .ndata             0x082e          0xc build/default/production/main.o
-                    0x082e                  _arduinoAddress
-                    0x082f                  _IR1sensorAddress
-                    0x0830                  _IR2sensorAddress
-                    0x0832                  _r_window
-                    0x0836                  _theta_window
+.ndata              0x082c          0xc
+ .ndata             0x082c          0xc build/default/production/main.o
+                    0x082c                  _arduinoAddress
+                    0x082d                  _IR1sensorAddress
+                    0x082e                  _IR2sensorAddress
+                    0x0830                  _r_window
+                    0x0834                  _theta_window
 
-.nbss               0x083a          0x2
- .nbss              0x083a          0x2 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(errno.eo)
-                    0x083a                  _errno
+.nbss               0x0838          0x2
+ .nbss              0x0838          0x2 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(errno.eo)
+                    0x0838                  _errno
 
-.text             0x000d8a       0x15ec
- .text            0x000d8a       0x15ec build/default/production/main.o
+.text             0x000d8a       0x1578
+ .text            0x000d8a       0x1578 build/default/production/main.o
                   0x000d8a                  _DelayuSec
                   0x000da2                  _Delay
                   0x000dbe                  _i2c1_init
@@ -1689,5 +1686,5 @@ __c30_signature
                   0x001f14                  _searchGoal
                   0x001f70                  _main
 
-.dinit            0x002376         0x1c
- .dinit           0x002376         0x1c data_init
+.dinit            0x002302         0x1c
+ .dinit           0x002302         0x1c data_init

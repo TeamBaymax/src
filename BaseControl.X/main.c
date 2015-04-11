@@ -24,7 +24,6 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 
 
 float initial_r;
-char flag;
 int main(void)
 {
     Period period = locating;
@@ -49,7 +48,7 @@ int main(void)
     {
         if(timeToReadVision) // Refresh Vision Data
         {
-            flag = see_beacon(&theta, &r);
+            vision_flag = see_beacon(&theta, &r);
 
          // I2C Debug
 //          debug_2_ints(x1,y1);
@@ -75,8 +74,8 @@ int main(void)
                 switch(state){
 
                     case search:
-                        status = circleSearch(LEFT, flag);
-                        if(flag) // found beacon
+                        status = circleSearch(LEFT, vision_flag);
+                        if(vision_flag) // found beacon
                             //if(game_timer > 5.0) // we have missed the first light
                                 //period = loading;
                                 //this kills the process
@@ -84,7 +83,7 @@ int main(void)
                         break;
 
                     case aligntheta:
-                        status = alignTheta(flag);
+                        status = alignTheta(vision_flag);
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
@@ -92,14 +91,14 @@ int main(void)
                         break;
 
                     case aligndist:
-                        status = alignDist(33.5, flag);
+                        status = alignDist(33.5, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
                         else if(status == LOSTBEACON){ // error state
-                            openloopTurn(90.0, LEFT, flag);
+                            openloopTurn(90.0, LEFT, vision_flag);
                             state = searchgarage; // this is a total hack
                         }else if(status == 1){ // reached desired distance
-                            openloopTurn(90.0, LEFT, flag);
+                            openloopTurn(90.0, LEFT, vision_flag);
                             state = wait;
                         }
                         break;
@@ -111,12 +110,12 @@ int main(void)
                         break;
 
                     case searchgarage:
-                        if(flag){ // we can see the beacon right away
+                        if(vision_flag){ // we can see the beacon right away
                             state = aligntheta;
                             period = loading;
                         }else{ // we cannot see the beacon
-                            openloopDist(3.0,REVERSE,flag);
-                            openloopTurn(10.0,LEFT,flag);
+                            openloopDist(3.0,REVERSE,vision_flag);
+                            openloopTurn(10.0,LEFT,vision_flag);
                         }
                          break;
 
@@ -135,13 +134,13 @@ int main(void)
                 switch(state){
                     case search:
                         status = circleSearch(LEFT, vision_flag);
-                        //status = searchGarage(LEFT, flag);
+                        //status = searchGarage(LEFT, vision_flag);
                         if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
                     case aligntheta:
-                        status = alignTheta(flag);
+                        status = alignTheta(vision_flag);
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
@@ -150,7 +149,7 @@ int main(void)
                         break;
 
                     case aligndist:
-                        status = alignDist(15.0, flag);
+                        status = alignDist(15.0, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
                         else if(status == LOSTBEACON) // error state
@@ -160,10 +159,10 @@ int main(void)
                         break;
 
                     case collect:
-                        openloopDist(5, FORWARD, flag);
+                        openloopDist(5, FORWARD, vision_flag);
                         loadBalls(6);
-                        openloopDist(20.0, REVERSE,flag);
-                        openloopTurn(90.0,LEFT,flag);
+                        openloopDist(20.0, REVERSE,vision_flag);
+                        openloopTurn(90.0,LEFT,vision_flag);
                         period = scoring;
                         state = search;
                         break;
@@ -181,14 +180,14 @@ int main(void)
                 switch(state){
                     case search:
                         status = circleSearch(LEFT, vision_flag);
-                        //status = searchGoal(LEFT, flag);
+                        //status = searchGoal(LEFT, vision_flag);
                         spinShooter();
                         if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
                     case aligntheta:
-                        status = alignTheta(flag);
+                        status = alignTheta(vision_flag);
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
@@ -196,7 +195,7 @@ int main(void)
                         break;
 
                     case aligndist:
-                        status = alignDist(33.5, flag);
+                        status = alignDist(33.5, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
                         else if(status == LOSTBEACON) // error state
@@ -221,7 +220,7 @@ int main(void)
                         }
                         else if(status == 1) // finished shooting
                         {
-                            openloopTurn(90.0,LEFT,flag);
+                            openloopTurn(90.0,LEFT,vision_flag);
                             stopShooter();
                             period = loading;
                             state = search;
@@ -243,19 +242,19 @@ int main(void)
             case finishing:
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, flag); //modify
+                        status = circleSearch(LEFT, vision_flag); //modify
                         if(status == 1)
                             state = aligntheta;
                         break;
 
                     case aligntheta: // align to goal
-                        status = alignTheta(flag);
+                        status = alignTheta(vision_flag);
                         if(status==1)
                             state = aligndist;
                         break;
 
                     case aligndist: // go get the right distance away
-                        status = alignDist(33.5, flag);
+                        status = alignDist(33.5, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
                         else if(status == LOSTBEACON)
