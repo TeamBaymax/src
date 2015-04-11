@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   vision.h
  * Author: James
  *
@@ -90,9 +90,9 @@ char see_beacon(float* thetaptr, float* rptr)
     x1 = y1 = x2 = y2 = 0;
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);
-    
+
     char flag;
-    
+
     if(x1 == 0 || x2 == 0)
     {
         // in error

@@ -27,7 +27,7 @@ float initial_r;
 char flag;
 int main(void)
 {
-    
+
     period = locating;
     state = search;
 
@@ -42,7 +42,7 @@ int main(void)
     _TRISB0 = 0;
     _TRISB12 = 0;
     _TRISA6 = 0;
-    
+
     theta_window = 3.0*PI/180.0;
 
     while(1)
@@ -50,13 +50,13 @@ int main(void)
         if(timeToReadVision) // Refresh Vision Data
         {
             flag = see_beacon(&theta, &r);
-         
+
          // I2C Debug
 //          debug_2_ints(x1,y1);
 //          debug_2_ints(x2,y2);
 //          debug_float(r);
 //          debug_float(getAngle());
-      
+
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
 
@@ -119,7 +119,7 @@ int main(void)
                             openloopTurn(10.0,LEFT,flag);
                         }
                          break;
-                         
+
                     case halt:
                         stop();
                         break;
@@ -275,9 +275,9 @@ int main(void)
               break;
             } // period case structure
         // </editor-fold>
-        
+
     }
-     
+
 } // int main()
 
 

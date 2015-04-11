@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   State.h
  * Author: Emily
  *

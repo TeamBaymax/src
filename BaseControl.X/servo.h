@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   servo.h
  * Author: gary
  *
@@ -17,7 +17,7 @@ volatile int balls;
 
 /**
  * the stepper utilizes timer 2, which is the timer used for the game timer.
- * In order to move the servo the 
+ * In order to move the servo the
  */
 void servoSetup()
 {
