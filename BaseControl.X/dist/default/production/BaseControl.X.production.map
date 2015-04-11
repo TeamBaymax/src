@@ -1,4 +1,4 @@
-Microchip Technology Inc, vHáa
+Microchip Technology Inc, vXêÇ
 
 Tool Name:
   c:\program files (x86)\microchip\xc16\v1.21\bin\bin\..\bin/elf-ld.exe
@@ -121,10 +121,10 @@ Program Memory  [Origin = 0x200, Length = 0x29fe]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb8a          0x114f  (4431)
-.text                        0xd8a              0x15e0          0x20d0  (8400)
-.dinit                      0x236a                0x1c            0x2a  (42)
+.text                        0xd8a              0x15ec          0x20e2  (8418)
+.dinit                      0x2376                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x3249  (12873) 79%
+                     Total program memory used (bytes):         0x325b  (12891) 79%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
@@ -279,36 +279,36 @@ External Symbols in Program Memory (by address):
                   0x001426                  __T1Interrupt
                   0x001444                  _vision_setup
                   0x00147a                  _see_beacon
-                  0x001520                  _stereo_vision
-                  0x001720                  _mono_vision
-                  0x001858                  __T3Interrupt
-                  0x0018bc                  _getAngle
-                  0x0018d8                  _resetAngle
-                  0x0018e2                  _motorsSetup
-                  0x00195c                  _startDrive
-                  0x001980                  _startTurn
-                  0x0019a4                  _stop
-                  0x0019b0                  _straight
-                  0x0019f0                  _turn
-                  0x001a30                  _spinShooter
-                  0x001a3e                  _stopShooter
-                  0x001a4c                  _advanceBall
-                  0x001a6c                  __T2Interrupt
-                  0x001b54                  _game_time_setup
-                  0x001b7e                  _servoSetup
-                  0x001baa                  _moveServo
-                  0x001c12                  _circleSearch
-                  0x001c3a                  _alignTheta
-                  0x001ca4                  _alignDist
-                  0x001dc4                  _aim
-                  0x001e10                  _openloopDist
-                  0x001e2a                  _openloopTurn
-                  0x001e44                  _waitUntil
-                  0x001e70                  _loadBalls
-                  0x001e92                  _shootBalls
-                  0x001eba                  _searchGarage
-                  0x001f1e                  _searchGoal
-                  0x001f7a                  _main
+                  0x001516                  _stereo_vision
+                  0x001716                  _mono_vision
+                  0x00184e                  __T3Interrupt
+                  0x0018b2                  _getAngle
+                  0x0018ce                  _resetAngle
+                  0x0018d8                  _motorsSetup
+                  0x001952                  _startDrive
+                  0x001976                  _startTurn
+                  0x00199a                  _stop
+                  0x0019a6                  _straight
+                  0x0019e6                  _turn
+                  0x001a26                  _spinShooter
+                  0x001a34                  _stopShooter
+                  0x001a42                  _advanceBall
+                  0x001a62                  __T2Interrupt
+                  0x001b4a                  _game_time_setup
+                  0x001b74                  _servoSetup
+                  0x001ba0                  _moveServo
+                  0x001c08                  _circleSearch
+                  0x001c30                  _alignTheta
+                  0x001c9a                  _alignDist
+                  0x001dba                  _aim
+                  0x001e06                  _openloopDist
+                  0x001e20                  _openloopTurn
+                  0x001e3a                  _waitUntil
+                  0x001e66                  _loadBalls
+                  0x001e88                  _shootBalls
+                  0x001eb0                  _searchGarage
+                  0x001f14                  _searchGoal
+                  0x001f70                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -324,8 +324,8 @@ External Symbols in Program Memory (by name):
                   0x0011b8                  _I2C2write4bytes
                   0x0002a4                  __DefaultInterrupt
                   0x001426                  __T1Interrupt
-                  0x001a6c                  __T2Interrupt
-                  0x001858                  __T3Interrupt
+                  0x001a62                  __T2Interrupt
+                  0x00184e                  __T3Interrupt
                   0x0002aa                  ___addsf3
                   0x00036c                  ___divsf3
                   0x0003f0                  ___eqsf2
@@ -357,19 +357,19 @@ External Symbols in Program Memory (by name):
                   0x000226                  __psv_init
                   0x000200                  __resetPRI
                   0x00074e                  __sincosf
-                  0x001a4c                  _advanceBall
-                  0x001dc4                  _aim
-                  0x001ca4                  _alignDist
-                  0x001c3a                  _alignTheta
+                  0x001a42                  _advanceBall
+                  0x001dba                  _aim
+                  0x001c9a                  _alignDist
+                  0x001c30                  _alignTheta
                   0x000364                  _asinf
-                  0x001c12                  _circleSearch
+                  0x001c08                  _circleSearch
                   0x000368                  _cosf
                   0x001246                  _debug_2_ints
                   0x00127e                  _debug_float
                   0x0009c6                  _expf
                   0x000b8c                  _fmodf
-                  0x001b54                  _game_time_setup
-                  0x0018bc                  _getAngle
+                  0x001b4a                  _game_time_setup
+                  0x0018b2                  _getAngle
                   0x000dbe                  _i2c1_init
                   0x000ec8                  _i2c1_read
                   0x000ef8                  _i2c1_read_ack
@@ -385,38 +385,38 @@ External Symbols in Program Memory (by name):
                   0x001368                  _ir2_init
                   0x0013ce                  _ir2_request
                   0x000c2e                  _ldexpf
-                  0x001e70                  _loadBalls
+                  0x001e66                  _loadBalls
                   0x000c72                  _logf
-                  0x001f7a                  _main
-                  0x001720                  _mono_vision
-                  0x0018e2                  _motorsSetup
-                  0x001baa                  _moveServo
-                  0x001e10                  _openloopDist
-                  0x001e2a                  _openloopTurn
+                  0x001f70                  _main
+                  0x001716                  _mono_vision
+                  0x0018d8                  _motorsSetup
+                  0x001ba0                  _moveServo
+                  0x001e06                  _openloopDist
+                  0x001e20                  _openloopTurn
                   0x000588                  _powf
-                  0x0018d8                  _resetAngle
+                  0x0018ce                  _resetAngle
                   0x000e38                  _reset_i2c1_bus
                   0x001080                  _reset_i2c2_bus
-                  0x001eba                  _searchGarage
-                  0x001f1e                  _searchGoal
+                  0x001eb0                  _searchGarage
+                  0x001f14                  _searchGoal
                   0x00147a                  _see_beacon
                   0x000e6a                  _send_i2c1_byte
                   0x0010b2                  _send_i2c2_byte
-                  0x001b7e                  _servoSetup
-                  0x001e92                  _shootBalls
+                  0x001b74                  _servoSetup
+                  0x001e88                  _shootBalls
                   0x000820                  _sinf
-                  0x001a30                  _spinShooter
+                  0x001a26                  _spinShooter
                   0x000d20                  _sqrtf
-                  0x00195c                  _startDrive
-                  0x001980                  _startTurn
-                  0x001520                  _stereo_vision
-                  0x0019a4                  _stop
-                  0x001a3e                  _stopShooter
-                  0x0019b0                  _straight
+                  0x001952                  _startDrive
+                  0x001976                  _startTurn
+                  0x001516                  _stereo_vision
+                  0x00199a                  _stop
+                  0x001a34                  _stopShooter
+                  0x0019a6                  _straight
                   0x000824                  _tanf
-                  0x0019f0                  _turn
+                  0x0019e6                  _turn
                   0x001444                  _vision_setup
-                  0x001e44                  _waitUntil
+                  0x001e3a                  _waitUntil
 
 Memory Configuration
 
@@ -596,18 +596,18 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x30c7
+.debug_info       0x000000       0x3105
  *(.debug_info)
- .debug_info      0x000000       0x30c7 build/default/production/main.o
+ .debug_info      0x000000       0x3105 build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x26e
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x26e build/default/production/main.o
 
-.debug_line       0x000000       0x1bd2
+.debug_line       0x000000       0x1bba
  *(.debug_line)
- .debug_line      0x000000       0x1bd2 build/default/production/main.o
+ .debug_line      0x000000       0x1bba build/default/production/main.o
 
 .debug_frame      0x000000        0x404
  *(.debug_frame)
@@ -653,8 +653,8 @@ __FDS
                   0x00001c          0x4 LONG 0x2a4 DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2a4 DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2a4 DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x1a6c DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x1858 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x1a62 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000024          0x4 LONG 0x184e DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x2a4 DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x2a4 DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002a          0x4 LONG 0x2a4 DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -781,8 +781,8 @@ __FDS
                   0x00011c          0x4 LONG 0x2a4 DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x2a4 DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2a4 DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000122          0x4 LONG 0x1a6c DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x1858 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000122          0x4 LONG 0x1a62 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000124          0x4 LONG 0x184e DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x2a4 DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x2a4 DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012a          0x4 LONG 0x2a4 DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1512,82 +1512,82 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000018        0x2a9
+                  0x000018        0x2b8
  .debug_pubtypes
-                  0x000018        0x2a9 build/default/production/main.o
+                  0x000018        0x2b8 build/default/production/main.o
 
 __c30_signature
-                  0x0002c2         0xd2
+                  0x0002d0         0xd2
  __c30_signature
-                  0x0002c2          0x6 build/default/production/main.o
+                  0x0002d0          0x6 build/default/production/main.o
  __c30_signature
-                  0x0002c8          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x0002d6          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0002ce          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x0002dc          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0002d4          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(addsf3.eo)
+                  0x0002e2          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(addsf3.eo)
  __c30_signature
-                  0x0002da          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(asinf.eo)
+                  0x0002e8          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(asinf.eo)
  __c30_signature
-                  0x0002e0          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(cosf.eo)
+                  0x0002ee          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(cosf.eo)
  __c30_signature
-                  0x0002e6          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(divsf3.eo)
+                  0x0002f4          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(divsf3.eo)
  __c30_signature
-                  0x0002ec          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(feqltle.eo)
+                  0x0002fa          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(feqltle.eo)
  __c30_signature
-                  0x0002f2          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fgtge.eo)
+                  0x000300          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fgtge.eo)
  __c30_signature
-                  0x0002f8          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
+                  0x000306          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fixsfsi.eo)
  __c30_signature
-                  0x0002fe          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
+                  0x00030c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
  __c30_signature
-                  0x000304          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
+                  0x000312          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatsisf.eo)
  __c30_signature
-                  0x00030a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
+                  0x000318          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatunsisf.eo)
  __c30_signature
-                  0x000310          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fpack.eo)
+                  0x00031e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fpack.eo)
  __c30_signature
-                  0x000316          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x000324          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(funpack.eo)
  __c30_signature
-                  0x00031c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+                  0x00032a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(funpack2.eo)
  __c30_signature
-                  0x000322          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x000330          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(futil.eo)
  __c30_signature
-                  0x000328          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+                  0x000336          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
  __c30_signature
-                  0x00032e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(powf.eo)
+                  0x00033c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(powf.eo)
  __c30_signature
-                  0x000334          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sincosf.eo)
+                  0x000342          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sincosf.eo)
  __c30_signature
-                  0x00033a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sinf.eo)
+                  0x000348          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sinf.eo)
  __c30_signature
-                  0x000340          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(tanf.eo)
+                  0x00034e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(tanf.eo)
  __c30_signature
-                  0x000346          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(_frexpf.eo)
+                  0x000354          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(_frexpf.eo)
  __c30_signature
-                  0x00034c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(asinacosf.eo)
+                  0x00035a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(asinacosf.eo)
  __c30_signature
-                  0x000352          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(errno.eo)
+                  0x000360          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(errno.eo)
  __c30_signature
-                  0x000358          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(expf.eo)
+                  0x000366          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(expf.eo)
  __c30_signature
-                  0x00035e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fchop.eo)
+                  0x00036c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fchop.eo)
  __c30_signature
-                  0x000364          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fcompare.eo)
+                  0x000372          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fcompare.eo)
  __c30_signature
-                  0x00036a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
+                  0x000378          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatdisf.eo)
  __c30_signature
-                  0x000370          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
+                  0x00037e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(floatundisf.eo)
  __c30_signature
-                  0x000376          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fmodf.eo)
+                  0x000384          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fmodf.eo)
  __c30_signature
-                  0x00037c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fmodrem.eo)
+                  0x00038a          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(fmodrem.eo)
  __c30_signature
-                  0x000382          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(ldexpf.eo)
+                  0x000390          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(ldexpf.eo)
  __c30_signature
-                  0x000388          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(logf.eo)
+                  0x000396          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(logf.eo)
  __c30_signature
-                  0x00038e          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
+                  0x00039c          0x6 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
 
 .nbss               0x0800         0x2e
  .nbss              0x0800         0x2e build/default/production/main.o
@@ -1623,8 +1623,8 @@ __c30_signature
  .nbss              0x083a          0x2 c:/program files (x86)/microchip/xc16/v1.21/bin/bin/../../lib\libm-elf.a(errno.eo)
                     0x083a                  _errno
 
-.text             0x000d8a       0x15e0
- .text            0x000d8a       0x15e0 build/default/production/main.o
+.text             0x000d8a       0x15ec
+ .text            0x000d8a       0x15ec build/default/production/main.o
                   0x000d8a                  _DelayuSec
                   0x000da2                  _Delay
                   0x000dbe                  _i2c1_init
@@ -1658,36 +1658,36 @@ __c30_signature
                   0x001426                  __T1Interrupt
                   0x001444                  _vision_setup
                   0x00147a                  _see_beacon
-                  0x001520                  _stereo_vision
-                  0x001720                  _mono_vision
-                  0x001858                  __T3Interrupt
-                  0x0018bc                  _getAngle
-                  0x0018d8                  _resetAngle
-                  0x0018e2                  _motorsSetup
-                  0x00195c                  _startDrive
-                  0x001980                  _startTurn
-                  0x0019a4                  _stop
-                  0x0019b0                  _straight
-                  0x0019f0                  _turn
-                  0x001a30                  _spinShooter
-                  0x001a3e                  _stopShooter
-                  0x001a4c                  _advanceBall
-                  0x001a6c                  __T2Interrupt
-                  0x001b54                  _game_time_setup
-                  0x001b7e                  _servoSetup
-                  0x001baa                  _moveServo
-                  0x001c12                  _circleSearch
-                  0x001c3a                  _alignTheta
-                  0x001ca4                  _alignDist
-                  0x001dc4                  _aim
-                  0x001e10                  _openloopDist
-                  0x001e2a                  _openloopTurn
-                  0x001e44                  _waitUntil
-                  0x001e70                  _loadBalls
-                  0x001e92                  _shootBalls
-                  0x001eba                  _searchGarage
-                  0x001f1e                  _searchGoal
-                  0x001f7a                  _main
+                  0x001516                  _stereo_vision
+                  0x001716                  _mono_vision
+                  0x00184e                  __T3Interrupt
+                  0x0018b2                  _getAngle
+                  0x0018ce                  _resetAngle
+                  0x0018d8                  _motorsSetup
+                  0x001952                  _startDrive
+                  0x001976                  _startTurn
+                  0x00199a                  _stop
+                  0x0019a6                  _straight
+                  0x0019e6                  _turn
+                  0x001a26                  _spinShooter
+                  0x001a34                  _stopShooter
+                  0x001a42                  _advanceBall
+                  0x001a62                  __T2Interrupt
+                  0x001b4a                  _game_time_setup
+                  0x001b74                  _servoSetup
+                  0x001ba0                  _moveServo
+                  0x001c08                  _circleSearch
+                  0x001c30                  _alignTheta
+                  0x001c9a                  _alignDist
+                  0x001dba                  _aim
+                  0x001e06                  _openloopDist
+                  0x001e20                  _openloopTurn
+                  0x001e3a                  _waitUntil
+                  0x001e66                  _loadBalls
+                  0x001e88                  _shootBalls
+                  0x001eb0                  _searchGarage
+                  0x001f14                  _searchGoal
+                  0x001f70                  _main
 
-.dinit            0x00236a         0x1c
- .dinit           0x00236a         0x1c data_init
+.dinit            0x002376         0x1c
+ .dinit           0x002376         0x1c data_init

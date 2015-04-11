@@ -47,7 +47,7 @@ typedef enum{
 State state;
 Period period;
 
-char circleSearch(char dir, char flag){
+char circleSearch(char dir, VisionFlag flag){
     if(flag)
     {
         PR3 = 500;
@@ -63,7 +63,7 @@ char circleSearch(char dir, char flag){
 
 }
 
-char alignTheta(char flag){
+char alignTheta(VisionFlag flag){
     if(flag)
     {
         if(theta > 1.0*theta_window)
@@ -89,7 +89,7 @@ char alignTheta(char flag){
 
 }
 
-char alignDist(float r_set, char flag){
+char alignDist(float r_set, VisionFlag flag){
     if(flag)
     {
         if(theta > 2.0*theta_window || theta < -2.0*theta_window)
@@ -129,7 +129,7 @@ char alignDist(float r_set, char flag){
     }
 }
 
-char aim(float window, char flag)
+char aim(float window, VisionFlag flag)
 {
     char status;
     if(flag)
@@ -152,12 +152,14 @@ char aim(float window, char flag)
     }
 }
 
-char openloopDist(float r_set, char direction, char flag){
+
+char openloopDist(float r_set, char direction, VisionFlag flag){
+
     straight(r_set, direction);
     return 1;
 }
 
-char openloopTurn(float theta_set, char direction, char flag){
+char openloopTurn(float theta_set, char direction, VisionFlag flag){
     turn(theta_set, direction);
     return 1;
 }
@@ -179,7 +181,7 @@ loadBalls(int n){
     }
 }
 
-char shootBalls(char flag){
+char shootBalls(VisionFlag flag){
     //spinShooter();
     if(balls > 0) // we still have balls in the hopper
     {
@@ -201,7 +203,7 @@ char shootBalls(char flag){
 
 }
 
-char searchGarage(char direction, char flag)
+char searchGarage(char direction, VisionFlag flag)
 {
 
     if(flag) // found beacon
@@ -218,7 +220,7 @@ char searchGarage(char direction, char flag)
     }
 }
 
-char searchGoal(char direction, char flag)
+char searchGoal(char direction, VisionFlag flag)
 {
 
     if(flag) // found beacon

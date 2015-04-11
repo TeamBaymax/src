@@ -27,9 +27,9 @@ float initial_r;
 char flag;
 int main(void)
 {
-
-    period = locating;
-    state = search;
+    Period period = locating;
+    State state = search;
+    VisionFlag vision_flag;
 
     vision_setup();
     motorsSetup();
@@ -134,9 +134,9 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
+                        status = circleSearch(LEFT, vision_flag);
                         //status = searchGarage(LEFT, flag);
-                        status = circleSearch(LEFT,flag);
-                        if(status == 1) // found beacon
+                        if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
@@ -180,10 +180,10 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
+                        status = circleSearch(LEFT, vision_flag);
                         //status = searchGoal(LEFT, flag);
-                        status = circleSearch(LEFT,flag);
                         spinShooter();
-                        if(status == 1) // found beacon
+                        if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
@@ -206,7 +206,7 @@ int main(void)
                         break;
 
                     case aimturret:
-                        status = aim(0.5*PI/180.0,flag);
+                        status = aim(0.5*PI/180.0,vision_flag);
                         if(status==LOSTBEACON)
                             state = search;
                         else if(status ==1)
@@ -214,7 +214,7 @@ int main(void)
                         break;
 
                     case shoot:
-                        status = shootBalls(flag);
+                        status = shootBalls(vision_flag);
                         if(status == LOSTBEACON)
                         {
                             state = search; // look for another goal
@@ -225,7 +225,7 @@ int main(void)
                             stopShooter();
                             period = loading;
                             state = search;
-                        }
+                        }                        
                         break;
 
                     case halt:
