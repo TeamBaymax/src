@@ -24,14 +24,10 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 int main(void)
 {
     
-<<<<<<< HEAD
+
     Period period = locating;
     State state = search;
     VisionFlag vision_flag;
-=======
-    period = loading;
-    state = search;
->>>>>>> master
 
     vision_setup();
     motorsSetup();
@@ -130,14 +126,10 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-<<<<<<< HEAD
+
                         status = circleSearch(LEFT, vision_flag);
-                        if(vision_flag) // found beacon
-=======
                         //status = searchGarage(LEFT, flag);
-                        status = circleSearch(LEFT,flag);
-                        if(status == 1) // found beacon
->>>>>>> master
+                        if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
@@ -181,15 +173,10 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-<<<<<<< HEAD
                         status = circleSearch(LEFT, vision_flag);
-                        if(vision_flag) // found beacon
-=======
                         //status = searchGoal(LEFT, flag);
-                        status = circleSearch(LEFT,flag);
                         spinShooter();
-                        if(status == 1) // found beacon
->>>>>>> master
+                        if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
 
@@ -212,7 +199,7 @@ int main(void)
                         break;
 
                     case aimturret:
-                        status = aim(0.5*PI/180.0,flag);
+                        status = aim(0.5*PI/180.0,vision_flag);
                         if(status==LOSTBEACON)
                             state = search;
                         else if(status ==1)
@@ -220,17 +207,7 @@ int main(void)
                         break;
 
                     case shoot:
-<<<<<<< HEAD
-                        spinShooter();
-                        Delay(800);
-                        shootBalls(6);
-                        stopShooter();
-                        Delay(1200);
-                        openloopTurn(90,LEFT,vision_flag);
-                        period = loading;
-                        state = search;
-=======
-                        status = shootBalls(flag);
+                        status = shootBalls(vision_flag);
                         if(status == LOSTBEACON)
                         {
                             state = search; // look for another goal
@@ -241,7 +218,6 @@ int main(void)
                             period = loading;
                             state = search;
                         }                        
->>>>>>> master
                         break;
 
                     case halt:

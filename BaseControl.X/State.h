@@ -126,10 +126,8 @@ char alignDist(float r_set, VisionFlag flag){
     }
 }
 
-<<<<<<< HEAD
-char openloopDist(float r_set, char direction, VisionFlag flag){
-=======
-char aim(float window, char flag)
+
+char aim(float window, VisionFlag flag)
 {
     char status;
     if(flag)
@@ -152,8 +150,7 @@ char aim(float window, char flag)
     }
 }
 
-char openloopDist(float r_set, char direction, char flag){
->>>>>>> master
+char openloopDist(float r_set, char direction, VisionFlag flag){
     straight(r_set, direction);
     return 1;
 }
