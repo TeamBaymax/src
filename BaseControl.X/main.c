@@ -24,9 +24,14 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 int main(void)
 {
     
+<<<<<<< HEAD
     Period period = locating;
     State state = search;
     VisionFlag vision_flag;
+=======
+    period = loading;
+    state = search;
+>>>>>>> master
 
     vision_setup();
     motorsSetup();
@@ -49,10 +54,10 @@ int main(void)
             vision_flag = see_beacon(&theta, &r);
          
          // I2C Debug
-//          debug_2_ints(x1,y1);
-//          debug_2_ints(x2,y2);
-//          debug_float(r);
-//          debug_float(theta);
+          debug_2_ints(x1,y1);
+          debug_2_ints(x2,y2);
+          debug_float(r);
+          debug_float(getAngle());
       
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
@@ -98,7 +103,7 @@ int main(void)
                         openloopTurn(90.0, RIGHT, vision_flag);
                         if(game_timer > 5.0){                          
                             state = searchgarage;
-/*up to here works*/    }
+                        }
                         break;
 
                     case searchgarage:
@@ -125,8 +130,14 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
+<<<<<<< HEAD
                         status = circleSearch(LEFT, vision_flag);
                         if(vision_flag) // found beacon
+=======
+                        //status = searchGarage(LEFT, flag);
+                        status = circleSearch(LEFT,flag);
+                        if(status == 1) // found beacon
+>>>>>>> master
                             state = aligntheta;
                         break;
 
@@ -135,6 +146,7 @@ int main(void)
                         if (status == LOSTBEACON) // lost beacon
                             state = search;
                         else if(status == 1) // aligned
+                            resetAngle(); // reset garage angle memory
                             state = aligndist;
                         break;
 
@@ -169,8 +181,15 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
+<<<<<<< HEAD
                         status = circleSearch(LEFT, vision_flag);
                         if(vision_flag) // found beacon
+=======
+                        //status = searchGoal(LEFT, flag);
+                        status = circleSearch(LEFT,flag);
+                        spinShooter();
+                        if(status == 1) // found beacon
+>>>>>>> master
                             state = aligntheta;
                         break;
 
@@ -189,10 +208,19 @@ int main(void)
                         else if(status == LOSTBEACON) // error state
                             state = search;
                         else if(status == 1) // reached desired distance
+                            state = aimturret;
+                        break;
+
+                    case aimturret:
+                        status = aim(0.5*PI/180.0,flag);
+                        if(status==LOSTBEACON)
+                            state = search;
+                        else if(status ==1)
                             state = shoot;
                         break;
 
                     case shoot:
+<<<<<<< HEAD
                         spinShooter();
                         Delay(800);
                         shootBalls(6);
@@ -201,6 +229,19 @@ int main(void)
                         openloopTurn(90,LEFT,vision_flag);
                         period = loading;
                         state = search;
+=======
+                        status = shootBalls(flag);
+                        if(status == LOSTBEACON)
+                        {
+                            state = search; // look for another goal
+                        }
+                        else if(status == 1) // finished shooting
+                        {
+                            stopShooter();
+                            period = loading;
+                            state = search;
+                        }                        
+>>>>>>> master
                         break;
 
                     case halt:

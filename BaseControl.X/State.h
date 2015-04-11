@@ -8,6 +8,7 @@
 #ifndef STATE_H
 #define	STATE_H
 
+#include <p24F16KA301.h>
 #include "vision.h"
 #include "motors.h"
 #include "game_timer.h"
@@ -31,6 +32,7 @@ typedef enum{
     collect,//aligncollect, gocollect, collect,          //collecting
     //searchgoal, aligngoal, distgoal,
     shoot,                //scoring
+    aimturret,
     end,                         //end states - end: gets out of dispensing zone
     halt
 } State;
@@ -45,11 +47,13 @@ typedef enum{
 char circleSearch(char dir, VisionFlag flag){
     if(flag)
     {
+        PR3 = 500;
         stop();
         return 1;
     }
     else
     {
+        PR3 = 500;
         startTurn(dir);
         return 0;
     }
@@ -122,7 +126,34 @@ char alignDist(float r_set, VisionFlag flag){
     }
 }
 
+<<<<<<< HEAD
 char openloopDist(float r_set, char direction, VisionFlag flag){
+=======
+char aim(float window, char flag)
+{
+    char status;
+    if(flag)
+    {
+        theta_window = window; // reduce the windo
+        PR3 = 1200; // slow down motors
+        status = alignTheta(flag);
+        if(status == 1) // aligned
+        {
+            theta_window = 3.0*PI/180.0; // open up window
+            PR3 = 500; // speed up motors again
+        }
+        return status;
+    }
+    else
+    {
+        theta_window = 3.0*PI/180.0; // open up window
+        PR3 = 500; // speed up motors again
+        return LOSTBEACON;
+    }
+}
+
+char openloopDist(float r_set, char direction, char flag){
+>>>>>>> master
     straight(r_set, direction);
     return 1;
 }
@@ -141,16 +172,62 @@ loadBalls(int n){
     }
 }
 
-shootBalls(int n){
+char shootBalls(char flag){
     //spinShooter();
-    int i = 0;
-    for(i=0; i<n; i++)
+    if(balls > 0) // we still have balls in the hopper
     {
-        advanceBall();
-        balls--;
+        if(flag){
+            // we see the beacon
+            advanceBall(); // shoot a ball
+            balls--;
+            return 0; // not finished
+        }
+        else{
+            return LOSTBEACON;
+        }
+    }
+    else
+    {
+        return 1; // finished
     }
     //stopShooter();
 
+}
+
+char searchGarage(char direction, char flag)
+{
+
+    if(flag) // found beacon
+    {
+        if(getAngle() > 330.0 || getAngle() < 30.0){ // in range of the garage
+            PR3 = 500;
+            stop();
+            return 1; // return found garage
+        }else return 0;
+    }else{
+    PR3 = 500;
+    startTurn(direction);
+    return 0;
+    }
+}
+
+char searchGoal(char direction, char flag)
+{
+
+    if(flag) // found beacon
+    {
+        if(getAngle() < 330.0 && getAngle() > 30.0){ // in range of the goals
+            stop();
+            return 1; // return found garage
+        }
+        else
+        {
+            return 0; //keep going
+        }
+    }else{
+    startTurn(direction);
+    return 0;
+    }
 }
 
 #endif	/* STATE_H */

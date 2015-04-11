@@ -120,21 +120,21 @@ Program Memory  [Origin = 0x200, Length = 0x2a00]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xb90          0x1158  (4440)
-.text                        0xd90              0x13f6          0x1df1  (7665)
-.dinit                      0x2186                0x1c            0x2a  (42)
+.text                        0xd90              0x15d0          0x20b8  (8376)
+.dinit                      0x2360                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0x2f73  (12147) 75%
+                     Total program memory used (bytes):         0x323a  (12858) 79%
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x2c  (44)
-.ndata                       0x82c                   0             0xc  (12)
-.nbss                        0x838                   0             0x2  (2)
+.nbss                        0x800                   0            0x2e  (46)
+.ndata                       0x82e                   0             0xc  (12)
+.nbss                        0x83a                   0             0x2  (2)
 
-                        Total data memory used (bytes):           0x3a  (58) 2%
+                        Total data memory used (bytes):           0x3c  (60) 2%
 
 
 Dynamic Memory Usage
@@ -142,9 +142,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x83a                               0x7c6  (1990)
+stack                        0x83c                               0x7c4  (1988)
 
-                        Maximum dynamic memory (bytes):          0x7c6  (1990)
+                        Maximum dynamic memory (bytes):          0x7c4  (1988)
 
 
 External Symbols in Data Memory (by address):
@@ -159,40 +159,42 @@ External Symbols in Data Memory (by address):
                     0x0812                  _timeToReadVision
                     0x0814                  _step_counter
                     0x0816                  _step_max
-                    0x0818                  _shooter_on
-                    0x081a                  _game_timer
-                    0x081e                  _round
-                    0x0820                  _balls
-                    0x0822                  _state
-                    0x0824                  _period
-                    0x0826                  _initial_r
-                    0x082a                  _flag
-                    0x082c                  _arduinoAddress
-                    0x082d                  _IR1sensorAddress
-                    0x082e                  _IR2sensorAddress
-                    0x0830                  _r_window
-                    0x0834                  _theta_window
+                    0x0818                  _angle_counter
+                    0x081a                  _shooter_on
+                    0x081c                  _game_timer
+                    0x0820                  _round
+                    0x0822                  _balls
+                    0x0824                  _state
+                    0x0826                  _period
+                    0x0828                  _initial_r
+                    0x082c                  _flag
+                    0x082e                  _arduinoAddress
+                    0x082f                  _IR1sensorAddress
+                    0x0830                  _IR2sensorAddress
+                    0x0832                  _r_window
+                    0x0836                  _theta_window
 
 External Symbols in Data Memory (by name):
 
-                    0x082d                  _IR1sensorAddress
-                    0x082e                  _IR2sensorAddress
-                    0x082c                  _arduinoAddress
-                    0x0820                  _balls
+                    0x082f                  _IR1sensorAddress
+                    0x0830                  _IR2sensorAddress
+                    0x0818                  _angle_counter
+                    0x082e                  _arduinoAddress
+                    0x0822                  _balls
                     0x0800                  _beacon
-                    0x082a                  _flag
-                    0x081a                  _game_timer
-                    0x0826                  _initial_r
-                    0x0824                  _period
+                    0x082c                  _flag
+                    0x081c                  _game_timer
+                    0x0828                  _initial_r
+                    0x0826                  _period
                     0x080e                  _r
-                    0x0830                  _r_window
-                    0x081e                  _round
-                    0x0818                  _shooter_on
-                    0x0822                  _state
+                    0x0832                  _r_window
+                    0x0820                  _round
+                    0x081a                  _shooter_on
+                    0x0824                  _state
                     0x0814                  _step_counter
                     0x0816                  _step_max
                     0x080a                  _theta
-                    0x0834                  _theta_window
+                    0x0836                  _theta_window
                     0x0812                  _timeToReadVision
                     0x0802                  _x1
                     0x0804                  _x2
@@ -203,19 +205,19 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init
                   0x00023c                  __data_init_standard
+                  0x00023c                  __data_init
                   0x0002aa                  __DefaultInterrupt
                   0x0002ae                  ___subsf3
                   0x0002b0                  ___addsf3
                   0x00036a                  _asinf
                   0x00036e                  _cosf
                   0x000372                  ___divsf3
+                  0x0003f6                  ___ltsf2
                   0x0003f6                  ___lesf2
                   0x0003f6                  ___eqsf2
-                  0x0003f6                  ___ltsf2
-                  0x0003fa                  ___gtsf2
                   0x0003fa                  ___gesf2
+                  0x0003fa                  ___gtsf2
                   0x0003fe                  ___fixsfsi
                   0x000440                  ___fixunssfsi
                   0x000476                  ___floatsisf
@@ -279,28 +281,33 @@ External Symbols in Program Memory (by address):
                   0x00152e                  _stereo_vision
                   0x00172e                  _mono_vision
                   0x001866                  __T3Interrupt
-                  0x001880                  _motorsSetup
-                  0x0018fc                  _startDrive
-                  0x001920                  _startTurn
-                  0x001944                  _stop
-                  0x001950                  _straight
-                  0x001990                  _turn
-                  0x0019d0                  _spinShooter
-                  0x0019e0                  _stopShooter
-                  0x0019f0                  _advanceBall
-                  0x001a10                  __T2Interrupt
-                  0x001afe                  _game_time_setup
-                  0x001b2a                  _servoSetup
-                  0x001b56                  _moveServo
-                  0x001bbe                  _circleSearch
-                  0x001bde                  _alignTheta
-                  0x001c48                  _alignDist
-                  0x001d68                  _openloopDist
-                  0x001d82                  _openloopTurn
-                  0x001d9c                  _waitUntil
-                  0x001dc8                  _loadBalls
-                  0x001dea                  _shootBalls
-                  0x001e10                  _main
+                  0x0018ca                  _getAngle
+                  0x0018e6                  _resetAngle
+                  0x0018f0                  _motorsSetup
+                  0x00196c                  _startDrive
+                  0x001990                  _startTurn
+                  0x0019b4                  _stop
+                  0x0019c0                  _straight
+                  0x001a00                  _turn
+                  0x001a40                  _spinShooter
+                  0x001a50                  _stopShooter
+                  0x001a60                  _advanceBall
+                  0x001a80                  __T2Interrupt
+                  0x001b6e                  _game_time_setup
+                  0x001b9a                  _servoSetup
+                  0x001bc6                  _moveServo
+                  0x001c2e                  _circleSearch
+                  0x001c56                  _alignTheta
+                  0x001cc0                  _alignDist
+                  0x001de0                  _aim
+                  0x001e2c                  _openloopDist
+                  0x001e46                  _openloopTurn
+                  0x001e60                  _waitUntil
+                  0x001e8c                  _loadBalls
+                  0x001eae                  _shootBalls
+                  0x001ed6                  _searchGarage
+                  0x001f3a                  _searchGoal
+                  0x001f96                  _main
 
 External Symbols in Program Memory (by name):
 
@@ -316,7 +323,7 @@ External Symbols in Program Memory (by name):
                   0x0011be                  _I2C2write4bytes
                   0x0002aa                  __DefaultInterrupt
                   0x00142c                  __T1Interrupt
-                  0x001a10                  __T2Interrupt
+                  0x001a80                  __T2Interrupt
                   0x001866                  __T3Interrupt
                   0x0002b0                  ___addsf3
                   0x000372                  ___divsf3
@@ -349,17 +356,19 @@ External Symbols in Program Memory (by name):
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
                   0x000754                  __sincosf
-                  0x0019f0                  _advanceBall
-                  0x001c48                  _alignDist
-                  0x001bde                  _alignTheta
+                  0x001a60                  _advanceBall
+                  0x001de0                  _aim
+                  0x001cc0                  _alignDist
+                  0x001c56                  _alignTheta
                   0x00036a                  _asinf
-                  0x001bbe                  _circleSearch
+                  0x001c2e                  _circleSearch
                   0x00036e                  _cosf
                   0x00124c                  _debug_2_ints
                   0x001284                  _debug_float
                   0x0009cc                  _expf
                   0x000b92                  _fmodf
-                  0x001afe                  _game_time_setup
+                  0x001b6e                  _game_time_setup
+                  0x0018ca                  _getAngle
                   0x000dc4                  _i2c1_init
                   0x000ece                  _i2c1_read
                   0x000efe                  _i2c1_read_ack
@@ -375,35 +384,38 @@ External Symbols in Program Memory (by name):
                   0x00136e                  _ir2_init
                   0x0013d4                  _ir2_request
                   0x000c34                  _ldexpf
-                  0x001dc8                  _loadBalls
+                  0x001e8c                  _loadBalls
                   0x000c78                  _logf
-                  0x001e10                  _main
+                  0x001f96                  _main
                   0x00172e                  _mono_vision
-                  0x001880                  _motorsSetup
-                  0x001b56                  _moveServo
-                  0x001d68                  _openloopDist
-                  0x001d82                  _openloopTurn
+                  0x0018f0                  _motorsSetup
+                  0x001bc6                  _moveServo
+                  0x001e2c                  _openloopDist
+                  0x001e46                  _openloopTurn
                   0x00058e                  _powf
+                  0x0018e6                  _resetAngle
                   0x000e3e                  _reset_i2c1_bus
                   0x001086                  _reset_i2c2_bus
+                  0x001ed6                  _searchGarage
+                  0x001f3a                  _searchGoal
                   0x001486                  _see_beacon
                   0x000e70                  _send_i2c1_byte
                   0x0010b8                  _send_i2c2_byte
-                  0x001b2a                  _servoSetup
-                  0x001dea                  _shootBalls
+                  0x001b9a                  _servoSetup
+                  0x001eae                  _shootBalls
                   0x000826                  _sinf
-                  0x0019d0                  _spinShooter
+                  0x001a40                  _spinShooter
                   0x000d26                  _sqrtf
-                  0x0018fc                  _startDrive
-                  0x001920                  _startTurn
+                  0x00196c                  _startDrive
+                  0x001990                  _startTurn
                   0x00152e                  _stereo_vision
-                  0x001944                  _stop
-                  0x0019e0                  _stopShooter
-                  0x001950                  _straight
+                  0x0019b4                  _stop
+                  0x001a50                  _stopShooter
+                  0x0019c0                  _straight
                   0x00082a                  _tanf
-                  0x001990                  _turn
+                  0x001a00                  _turn
                   0x00144c                  _vision_setup
-                  0x001d9c                  _waitUntil
+                  0x001e60                  _waitUntil
 
 Memory Configuration
 
@@ -584,26 +596,26 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x307e
+.debug_info       0x000000       0x319f
  *(.debug_info)
- .debug_info      0x000000       0x307e build/default/production/main.o
+ .debug_info      0x000000       0x319f build/default/production/main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x235
+.debug_abbrev     0x000000        0x24a
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x235 build/default/production/main.o
+ .debug_abbrev    0x000000        0x24a build/default/production/main.o
 
-.debug_line       0x000000       0x19b6
+.debug_line       0x000000       0x1bca
  *(.debug_line)
- .debug_line      0x000000       0x19b6 build/default/production/main.o
+ .debug_line      0x000000       0x1bca build/default/production/main.o
 
-.debug_frame      0x000000        0x3b4
+.debug_frame      0x000000        0x404
  *(.debug_frame)
- .debug_frame     0x000000        0x3b4 build/default/production/main.o
+ .debug_frame     0x000000        0x404 build/default/production/main.o
 
-.debug_str        0x000000        0x20e
+.debug_str        0x000000        0x21c
  *(.debug_str)
- .debug_str       0x000000        0x20e build/default/production/main.o
+ .debug_str       0x000000        0x21c build/default/production/main.o
 
 .debug_loc
  *(.debug_loc)
@@ -612,10 +624,10 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x4d7
+                  0x000000        0x52d
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x4d7 build/default/production/main.o
+                  0x000000        0x52d build/default/production/main.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -641,7 +653,7 @@ __FDS
                   0x00001c          0x4 LONG 0x2aa DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00001e          0x4 LONG 0x2aa DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000020          0x4 LONG 0x2aa DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x1a10 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000022          0x4 LONG 0x1a80 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000024          0x4 LONG 0x1866 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x2aa DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x2aa DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -769,7 +781,7 @@ __FDS
                   0x00011c          0x4 LONG 0x2aa DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
                   0x00011e          0x4 LONG 0x2aa DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000120          0x4 LONG 0x2aa DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000122          0x4 LONG 0x1a10 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x000122          0x4 LONG 0x1a80 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000124          0x4 LONG 0x1866 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x2aa DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x2aa DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
@@ -1577,8 +1589,8 @@ __c30_signature
  __c30_signature
                   0x0003ac          0x6 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(sqrtf.eo)
 
-.nbss               0x0800         0x2c
- .nbss              0x0800         0x2c build/default/production/main.o
+.nbss               0x0800         0x2e
+ .nbss              0x0800         0x2e build/default/production/main.o
                     0x0800                  _beacon
                     0x0802                  _x1
                     0x0804                  _x2
@@ -1589,29 +1601,30 @@ __c30_signature
                     0x0812                  _timeToReadVision
                     0x0814                  _step_counter
                     0x0816                  _step_max
-                    0x0818                  _shooter_on
-                    0x081a                  _game_timer
-                    0x081e                  _round
-                    0x0820                  _balls
-                    0x0822                  _state
-                    0x0824                  _period
-                    0x0826                  _initial_r
-                    0x082a                  _flag
+                    0x0818                  _angle_counter
+                    0x081a                  _shooter_on
+                    0x081c                  _game_timer
+                    0x0820                  _round
+                    0x0822                  _balls
+                    0x0824                  _state
+                    0x0826                  _period
+                    0x0828                  _initial_r
+                    0x082c                  _flag
 
-.ndata              0x082c          0xc
- .ndata             0x082c          0xc build/default/production/main.o
-                    0x082c                  _arduinoAddress
-                    0x082d                  _IR1sensorAddress
-                    0x082e                  _IR2sensorAddress
-                    0x0830                  _r_window
-                    0x0834                  _theta_window
+.ndata              0x082e          0xc
+ .ndata             0x082e          0xc build/default/production/main.o
+                    0x082e                  _arduinoAddress
+                    0x082f                  _IR1sensorAddress
+                    0x0830                  _IR2sensorAddress
+                    0x0832                  _r_window
+                    0x0836                  _theta_window
 
-.nbss               0x0838          0x2
- .nbss              0x0838          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
-                    0x0838                  _errno
+.nbss               0x083a          0x2
+ .nbss              0x083a          0x2 c:/program files (x86)/microchip/xc16/v1.24/bin/bin/../../lib\libm-elf.a(errno.eo)
+                    0x083a                  _errno
 
-.text             0x000d90       0x13f6
- .text            0x000d90       0x13f6 build/default/production/main.o
+.text             0x000d90       0x15d0
+ .text            0x000d90       0x15d0 build/default/production/main.o
                   0x000d90                  _DelayuSec
                   0x000da8                  _Delay
                   0x000dc4                  _i2c1_init
@@ -1648,28 +1661,33 @@ __c30_signature
                   0x00152e                  _stereo_vision
                   0x00172e                  _mono_vision
                   0x001866                  __T3Interrupt
-                  0x001880                  _motorsSetup
-                  0x0018fc                  _startDrive
-                  0x001920                  _startTurn
-                  0x001944                  _stop
-                  0x001950                  _straight
-                  0x001990                  _turn
-                  0x0019d0                  _spinShooter
-                  0x0019e0                  _stopShooter
-                  0x0019f0                  _advanceBall
-                  0x001a10                  __T2Interrupt
-                  0x001afe                  _game_time_setup
-                  0x001b2a                  _servoSetup
-                  0x001b56                  _moveServo
-                  0x001bbe                  _circleSearch
-                  0x001bde                  _alignTheta
-                  0x001c48                  _alignDist
-                  0x001d68                  _openloopDist
-                  0x001d82                  _openloopTurn
-                  0x001d9c                  _waitUntil
-                  0x001dc8                  _loadBalls
-                  0x001dea                  _shootBalls
-                  0x001e10                  _main
+                  0x0018ca                  _getAngle
+                  0x0018e6                  _resetAngle
+                  0x0018f0                  _motorsSetup
+                  0x00196c                  _startDrive
+                  0x001990                  _startTurn
+                  0x0019b4                  _stop
+                  0x0019c0                  _straight
+                  0x001a00                  _turn
+                  0x001a40                  _spinShooter
+                  0x001a50                  _stopShooter
+                  0x001a60                  _advanceBall
+                  0x001a80                  __T2Interrupt
+                  0x001b6e                  _game_time_setup
+                  0x001b9a                  _servoSetup
+                  0x001bc6                  _moveServo
+                  0x001c2e                  _circleSearch
+                  0x001c56                  _alignTheta
+                  0x001cc0                  _alignDist
+                  0x001de0                  _aim
+                  0x001e2c                  _openloopDist
+                  0x001e46                  _openloopTurn
+                  0x001e60                  _waitUntil
+                  0x001e8c                  _loadBalls
+                  0x001eae                  _shootBalls
+                  0x001ed6                  _searchGarage
+                  0x001f3a                  _searchGoal
+                  0x001f96                  _main
 
-.dinit            0x002186         0x1c
- .dinit           0x002186         0x1c data_init
+.dinit            0x002360         0x1c
+ .dinit           0x002360         0x1c data_init

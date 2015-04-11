@@ -32,11 +32,11 @@ void servoSetup()
 
 void moveServo()
 {
-    OC2R = 16;                      //Set Dutycycle 0.05*PR2
+    OC2R = 34;                      //Set Dutycycle 0.05*PR2
     float time = game_timer;
     while(game_timer < time + 0.5)
         ;
-    OC2R = 31;                      //Set Duty
+    OC2R = 16;                      //Set Duty
     while(game_timer < time + 1.0)
         ;
     OC2R = 0;                       //off
