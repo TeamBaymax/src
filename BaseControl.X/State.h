@@ -44,10 +44,7 @@ typedef enum{
     finishing,//lsat 5 seconds of game - no goals active, get away from walls and garage
 } Period;
 
-State state;
-Period period;
-
-char circleSearch(char dir, char flag){
+char circleSearch(char dir, VisionFlag flag){
     if(flag)
     {
         PR3 = 500;
@@ -63,7 +60,7 @@ char circleSearch(char dir, char flag){
 
 }
 
-char alignTheta(char flag){
+char alignTheta(VisionFlag flag){
     if(flag)
     {
         if(theta > 1.0*theta_window)
@@ -89,7 +86,7 @@ char alignTheta(char flag){
 
 }
 
-char alignDist(float r_set, char flag){
+char alignDist(float r_set, VisionFlag flag){
     if(flag)
     {
         if(theta > 2.0*theta_window || theta < -2.0*theta_window)
@@ -129,6 +126,9 @@ char alignDist(float r_set, char flag){
     }
 }
 
+<<<<<<< HEAD
+char openloopDist(float r_set, char direction, VisionFlag flag){
+=======
 char aim(float window, char flag)
 {
     char status;
@@ -153,21 +153,14 @@ char aim(float window, char flag)
 }
 
 char openloopDist(float r_set, char direction, char flag){
+>>>>>>> master
     straight(r_set, direction);
     return 1;
 }
 
-char openloopTurn(float theta_set, char direction, char flag){
+char openloopTurn(float theta_set, char direction, VisionFlag flag){
     turn(theta_set, direction);
     return 1;
-}
-
-char waitUntil(float time){
-    if(game_timer > time)
-    {
-        return 1;
-    }
-    else return 0;
 }
 
 loadBalls(int n){
