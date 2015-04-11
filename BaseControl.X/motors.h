@@ -117,8 +117,8 @@ void startTurn(unsigned int direction){
 
 void stop(){
     T3CONbits.TON = 0;           //disable Timer3
-    _RA1 = 0;
-    _RA2 = 0;
+    LATAbits.LATA1 = 0;
+    LATAbits.LATA2 = 0;
 }
 
 // Straight line - distance [inches], direction forward = 0, reverse = 1
@@ -180,9 +180,9 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        Delay(500); // experiment with this timing, it's probably wrong
+        Delay(350); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        Delay(500);
+        Delay(350);
     }
     else
     {

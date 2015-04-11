@@ -38,13 +38,6 @@ volatile float theta_window = 3.0*PI/180.0; // error allowed when aligning theta
 
 char timeToReadVision;
 
-typedef enum{
-    neither_cam = 0, // beginning of game, locating garage and orienting self
-    one_cam = 1,  // getting new balls
-    two_cams = 2,  // finding goals and shooting
-    error = 255, //both cameras are not working
-} VisionFlag;
-
 /**
  * Interupt for throtling the use of the I2C bus to read the IR cammeras. The
  * see_beacon() shoulc only be called when timeToReadVision is true.
@@ -90,7 +83,7 @@ void vision_setup()
  * @param r a pointer to the returned distance measurement (inches)
  * @return 0 if unable to see.  1 if using only one camera, 2 if using both, 255 if in error
  */
-VisionFlag see_beacon(float* thetaptr, float* rptr)
+char see_beacon(float* thetaptr, float* rptr)
 {
     timeToReadVision = 0;
 
@@ -98,26 +91,30 @@ VisionFlag see_beacon(float* thetaptr, float* rptr)
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);
     
+    char flag;
+    
     if(x1 == 0 || x2 == 0)
     {
         // in error
-        return error;
+        flag = 255;
     }
     else if(x1 < 1023 && x2 < 1023) // seeing with both eyes
     {
         stereo_vision(x1, x2, thetaptr, rptr);
-        return two_cams;
+        flag = 2;
     }
     else if(x1 < 1023 || x2 < 1023) // seeing with one eye
     {
         mono_vision(x1,y1,x2,y2,thetaptr,rptr);
-        return one_cam;
+        flag = 1;
     }
     else
     {
         // not seeing
-        return neither_cam;
+        flag = 0;
     }
+    return flag;
+
 }
 
 void stereo_vision(int x1, int x2, float* theta, float* r)
