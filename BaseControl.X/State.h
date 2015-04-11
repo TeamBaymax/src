@@ -50,13 +50,11 @@ Period period;
 char circleSearch(char dir, VisionFlag flag){
     if(flag)
     {
-        PR3 = 500;
         stop();
         return 1;
     }
     else
     {
-        PR3 = 500;
         startTurn(dir);
         return 0;
     }
@@ -135,7 +133,7 @@ char aim(float window, VisionFlag flag)
     if(flag)
     {
         theta_window = window; // reduce the windo
-        PR3 = 1500; // slow down motors
+        PR3 = 1700; // slow down motors
         status = alignTheta(flag);
         if(status == 1) // aligned
         {
@@ -221,7 +219,7 @@ char searchGoal(char direction, VisionFlag flag, float course_angle)
 {
     char out = 0;
     startTurn(direction);
-    if(flag == one_cam || flag == two_cams) // found beacon
+    if(flag == two_cams) // found beacon
     {
         if(course_angle < 315.0 && course_angle > 45.0){ // in range of the goals
             stop();

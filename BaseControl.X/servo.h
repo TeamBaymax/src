@@ -37,7 +37,7 @@ void moveServo()
     while(game_timer < time + 0.35)
         ;
     OC2R = 22;                      //Set Duty
-    while(game_timer < time + 0.7)
+    while(game_timer < time + 0.8)
         ;
     OC2R = 0;                       //off
 }

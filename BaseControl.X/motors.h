@@ -38,7 +38,7 @@ void _ISR _T3Interrupt(void)
 
 float getAngle()
 {
-    return angle_counter*0.5954;
+    return angle_counter*0.5921;
 }
 
 void resetAngle()
@@ -180,9 +180,9 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        Delay(250); // experiment with this timing, it's probably wrong
+        Delay(150); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        Delay(250);
+        Delay(200);
     }
     else
     {

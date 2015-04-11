@@ -12,16 +12,17 @@
 
 float game_timer; // global variable that is the game time in seconds
 char round; // the current round of the game 0 is the first 15 seconds, 1-3 are the scoring rounds
+char last_round;
 
 void _ISR _T2Interrupt(void){
     _T2IF = 0; // clear interrupt flag
     game_timer = game_timer + 0.02;
 
-    if(game_timer >= 15.0 && game_timer <= 45.0)
+    if(game_timer >= 10.0 && game_timer <= 40.0)
         round = 1;
-    if(game_timer >= 45.0 && game_timer <= 75.0)
+    if(game_timer >= 40.0 && game_timer <= 70.0)
         round = 2;
-    if(game_timer >= 75.0 && game_timer <= 105.0)
+    if(game_timer >= 70.0 && game_timer <= 100.0)
         round = 3;
 }
 
@@ -38,8 +39,20 @@ void game_time_setup()
 
     game_timer = 0.0;
     round = 0;
+    last_round = 0;
 }
 
+char getcurrentQuadrant(float course_angle)
+{
+    char goal = 0;
+    if(course_angle > 55.0 && course_angle < 145.0)
+        goal = 0b100;
+    if(course_angle > 145.0 && course_angle < 205.0)
+        goal = 0b010;
+    if(course_angle > 205.0 && course_angle < 305.0)
+        goal = 0b001;
+    return goal;
+}
 
 
 #endif	/* GAMETIMER_H */

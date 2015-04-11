@@ -26,6 +26,9 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 float initial_r;
 int main(void)
 {
+
+    char current_active_goal = 0b000;
+    char used_goals = 0b000;
     Period period = locating;
     State state = search;
     VisionFlag vision_flag;
@@ -44,7 +47,7 @@ int main(void)
     _TRISA6 = 0;
 
     theta_window = 3.0*PI/180.0;
-
+    char current_quadrant = 0b000;
     while(1)
     {
         course_angle = getAngle();
@@ -61,10 +64,10 @@ int main(void)
 
         char status;
 
-        if(game_timer > 105.0){ // game is over
+        if(game_timer > 100.0){ // game is over
             period = finishing;
             state = search;
-            stopShooter();
+            //stopShooter();
         }
 
         switch(period){
@@ -134,7 +137,10 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-                        status = searchGarage(LEFT, vision_flag, course_angle);
+                        if(course_angle > 180.0)
+                            status = searchGarage(LEFT, vision_flag, course_angle);
+                        else
+                            status = searchGarage(RIGHT, vision_flag, course_angle);
                         if(status == 1){
                                 state = aligntheta;
                         }
@@ -165,12 +171,16 @@ int main(void)
                         {
                             openloopDist(5, FORWARD, vision_flag);
                             retractServo();
-                            loadBalls(6);
-                            openloopDist(20.0, REVERSE,vision_flag);
-                            status = alignDist(33.5, vision_flag);
-                            //openloopTurn(90.0,LEFT,vision_flag);
-                            period = scoring;
-                            state = search;
+                            if(game_timer > 10.0)
+                            {
+                                loadBalls(6);
+                                openloopDist(11.0, REVERSE,vision_flag);
+                                status = alignDist(16.0, vision_flag);
+                                //openloopTurn(90.0,LEFT,vision_flag);
+                                current_quadrant = getcurrentQuadrant(course_angle);
+                                period = scoring;
+                                state = search;
+                            }
                         }
                         break;
                      break;
@@ -186,7 +196,27 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-                        status = searchGoal(LEFT, vision_flag, course_angle);
+                        if(last_round != round)
+                        {
+                            used_goals = current_active_goal | used_goals;
+                            last_round = round;
+                        }
+                        if(current_quadrant & 0b001) // looking at goal three
+                            status = searchGoal(RIGHT, vision_flag, course_angle);
+                        else if(current_quadrant & 0b100) // looking at goal one
+                            status = searchGoal(LEFT, vision_flag, course_angle);
+                        else if(current_quadrant & 0b010){ // looking at goal two
+                            if(used_goals & 0b001) // if goal three has been used
+                                status = searchGoal(RIGHT, vision_flag, course_angle);
+                            else
+                                status = searchGoal(LEFT, vision_flag, course_angle);
+                        }else
+                        {
+                            if(used_goals & 0b100) // right goal has been used
+                                status = searchGoal(RIGHT, vision_flag, course_angle);
+                            else
+                                status = searchGoal(LEFT, vision_flag, course_angle);
+                        }
                         spinShooter();
                         if(status == 0)
                         {
@@ -222,13 +252,17 @@ int main(void)
                         if(status==LOSTBEACON)
                             state = search;
                         else if(status ==1)
+                        {
+                            current_active_goal = getcurrentQuadrant(course_angle);
                             state = shoot;
+                        }
                         break;
 
                     case shoot:
                         status = shootBalls(vision_flag);
                         if(status == LOSTBEACON)
                         {
+                            current_quadrant = getcurrentQuadrant(course_angle);
                             state = search; // look for another goal
                         }
                         else if(status == 1) // finished shooting
@@ -276,6 +310,9 @@ int main(void)
                             state = end;
                         break;
                     case end:
+                        startTurn(RIGHT);
+                        balls = 15;
+                        advanceBall();
                         break;
                 }
                 break;
