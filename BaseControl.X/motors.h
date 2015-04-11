@@ -33,7 +33,7 @@ void _ISR _T3Interrupt(void)
     }
 
     if(angle_counter == 608){angle_counter = 0;} //608 steps = 360 deg
-
+    else if(angle_counter == -1){angle_counter = 607;}
 }
 
 float getAngle()
@@ -43,7 +43,7 @@ float getAngle()
 
 void resetAngle()
 {
-    angle_counter = 0.0;
+    angle_counter = 0;
 }
 
 /*void initialize(){
@@ -180,9 +180,9 @@ void advanceBall()
     if(shooter_on)
     {
         LATBbits.LATB12 = 1;
-        Delay(350); // experiment with this timing, it's probably wrong
+        Delay(250); // experiment with this timing, it's probably wrong
         LATBbits.LATB12 = 0;
-        Delay(350);
+        Delay(250);
     }
     else
     {

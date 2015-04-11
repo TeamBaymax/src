@@ -34,6 +34,7 @@ int main(void)
     motorsSetup();
     game_time_setup();
     servoSetup();
+    float course_angle;
 
     _TRISA1 = 0; // I know this is redundant, but it doesn't work otherwise
     _TRISA2 = 0;
@@ -46,16 +47,15 @@ int main(void)
 
     while(1)
     {
+        course_angle = getAngle();
         if(timeToReadVision) // Refresh Vision Data
         {
             vision_flag = see_beacon(&theta, &r);
-
          // I2C Debug
 //          debug_2_ints(x1,y1);
 //          debug_2_ints(x2,y2);
 //          debug_float(r);
-//          debug_float(getAngle());
-
+//          debug_float(course_angle);
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
 
@@ -111,6 +111,7 @@ int main(void)
 
                     case searchgarage:
                         if(vision_flag){ // we can see the beacon right away
+                            resetAngle();
                             state = aligntheta;
                             period = loading;
                         }else{ // we cannot see the beacon
@@ -133,10 +134,10 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, vision_flag);
-                        //status = searchGarage(LEFT, vision_flag);
-                        if(vision_flag) // found beacon
-                            state = aligntheta;
+                        status = searchGarage(LEFT, vision_flag, course_angle);
+                        if(status == 1){
+                                state = aligntheta;
+                        }
                         break;
 
                     case aligntheta:
@@ -149,7 +150,7 @@ int main(void)
                         break;
 
                     case aligndist:
-                        status = alignDist(15.0, vision_flag);
+                        status = alignDist(16.0, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
                         else if(status == LOSTBEACON) // error state
@@ -159,12 +160,18 @@ int main(void)
                         break;
 
                     case collect:
-                        openloopDist(5, FORWARD, vision_flag);
-                        loadBalls(6);
-                        openloopDist(20.0, REVERSE,vision_flag);
-                        openloopTurn(90.0,LEFT,vision_flag);
-                        period = scoring;
-                        state = search;
+                        status = alignDist(16.0, vision_flag);
+                        if(status == 1) // redundant check
+                        {
+                            openloopDist(5, FORWARD, vision_flag);
+                            retractServo();
+                            loadBalls(6);
+                            openloopDist(20.0, REVERSE,vision_flag);
+                            status = alignDist(33.5, vision_flag);
+                            //openloopTurn(90.0,LEFT,vision_flag);
+                            period = scoring;
+                            state = search;
+                        }
                         break;
                      break;
 
@@ -179,11 +186,17 @@ int main(void)
             case scoring: // finding goals and shooting
                 switch(state){
                     case search:
-                        status = circleSearch(LEFT, vision_flag);
-                        //status = searchGoal(LEFT, vision_flag);
+                        status = searchGoal(LEFT, vision_flag, course_angle);
                         spinShooter();
-                        if(vision_flag) // found beacon
+                        if(status == 0)
+                        {
+                            period = scoring;
+                            state = search;
+                        }
+                        if(status == 1) // if we see a goal
+                        {
                             state = aligntheta;
+                        }
                         break;
 
                     case aligntheta:
@@ -220,7 +233,7 @@ int main(void)
                         }
                         else if(status == 1) // finished shooting
                         {
-                            openloopTurn(90.0,LEFT,vision_flag);
+                            //openloopTurn(90.0,LEFT,vision_flag);
                             stopShooter();
                             period = loading;
                             state = search;

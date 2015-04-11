@@ -135,7 +135,7 @@ char aim(float window, VisionFlag flag)
     if(flag)
     {
         theta_window = window; // reduce the windo
-        PR3 = 1200; // slow down motors
+        PR3 = 1500; // slow down motors
         status = alignTheta(flag);
         if(status == 1) // aligned
         {
@@ -203,40 +203,32 @@ char shootBalls(VisionFlag flag){
 
 }
 
-char searchGarage(char direction, VisionFlag flag)
+char searchGarage(char direction, VisionFlag flag, float course_angle)
 {
-
+    char out = 0;
+    startTurn(direction);
     if(flag) // found beacon
     {
-        if(getAngle() > 330.0 || getAngle() < 30.0){ // in range of the garage
-            PR3 = 500;
+        if(course_angle > 315.0 || course_angle < 45.0){ // in range of the garage
             stop();
-            return 1; // return found garage
-        }else return 0;
-    }else{
-    PR3 = 500;
-    startTurn(direction);
-    return 0;
+            out = 1; // return found garage
+        }
     }
+    return out;
 }
 
-char searchGoal(char direction, VisionFlag flag)
+char searchGoal(char direction, VisionFlag flag, float course_angle)
 {
-
-    if(flag) // found beacon
-    {
-        if(getAngle() < 330.0 && getAngle() > 30.0){ // in range of the goals
-            stop();
-            return 1; // return found garage
-        }
-        else
-        {
-            return 0; //keep going
-        }
-    }else{
+    char out = 0;
     startTurn(direction);
-    return 0;
+    if(flag == one_cam || flag == two_cams) // found beacon
+    {
+        if(course_angle < 315.0 && course_angle > 45.0){ // in range of the goals
+            stop();
+            out =  1; // return found goal
+        }
     }
+    return out;
 }
 
 #endif	/* STATE_H */

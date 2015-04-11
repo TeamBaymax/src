@@ -26,7 +26,7 @@ void servoSetup()
     OC2CON1bits.OCTSEL = 0b000;     //Select Timer2 to be timer source
     OC2CON1bits.OCM = 0b110;        //Select Edge-Aligned PWM mode
     OC2CON2bits.SYNCSEL = 0b01100;  //Select Timer2 as synchronization source
-    OC2R = 16;
+    OC2R = 20;
     OC2R = 0;
 }
 
@@ -34,12 +34,19 @@ void moveServo()
 {
     OC2R = 37;                      //Set Dutycycle 0.05*PR2
     float time = game_timer;
-    while(game_timer < time + 0.5)
+    while(game_timer < time + 0.35)
         ;
-    OC2R = 16;                      //Set Duty
-    while(game_timer < time + 1.0)
+    OC2R = 22;                      //Set Duty
+    while(game_timer < time + 0.7)
         ;
     OC2R = 0;                       //off
+}
+
+void retractServo()
+{
+    OC2R = 22;
+    Delay(200);
+    OC2R = 0;
 }
 
 
