@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   vision.h
  * Author: James
  *
@@ -97,7 +97,7 @@ VisionFlag see_beacon(float* thetaptr, float* rptr)
     x1 = y1 = x2 = y2 = 0;
     ir1_request(&x1, &y1);
     ir2_request(&x2, &y2);
-    
+
     if(x1 == 0 || x2 == 0)
     {
         // in error
@@ -170,4 +170,3 @@ void mono_vision(float x1, float y1,float x2, float y2, float* theta, float* r)
 
 
 #endif	/* VISION_H */
-

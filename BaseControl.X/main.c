@@ -20,11 +20,12 @@ _FOSCSEL(FNOSC_FRC); //8 MHz
 //_FOSCSEL(FNOSC_LPRC); //31 kHz
 //_FOSCSEL(FNOSC_LPFRC); //500 kHz subdivided
 
-//float initial_r;
+
+
+
+float initial_r;
 int main(void)
 {
-    
-
     Period period = locating;
     State state = search;
     VisionFlag vision_flag;
@@ -40,7 +41,7 @@ int main(void)
     _TRISB0 = 0;
     _TRISB12 = 0;
     _TRISA6 = 0;
-    
+
     theta_window = 3.0*PI/180.0;
 
     while(1)
@@ -48,22 +49,23 @@ int main(void)
         if(timeToReadVision) // Refresh Vision Data
         {
             vision_flag = see_beacon(&theta, &r);
-         
+
          // I2C Debug
-          debug_2_ints(x1,y1);
-          debug_2_ints(x2,y2);
-          debug_float(r);
-          debug_float(getAngle());
-      
+//          debug_2_ints(x1,y1);
+//          debug_2_ints(x2,y2);
+//          debug_float(r);
+//          debug_float(getAngle());
+
         }
         // <editor-fold defaultstate="expanded" desc="State Machine">
 
         char status;
 
-//        if(game_timer > 100.0){ // game is over
-//            period = finishing;
-//            state = search;
-//        }
+        if(game_timer > 105.0){ // game is over
+            period = finishing;
+            state = search;
+            stopShooter();
+        }
 
         switch(period){
 
@@ -74,6 +76,9 @@ int main(void)
                     case search:
                         status = circleSearch(LEFT, vision_flag);
                         if(vision_flag) // found beacon
+                            //if(game_timer > 5.0) // we have missed the first light
+                                //period = loading;
+                                //this kills the process
                             state = aligntheta;
                         break;
 
@@ -89,15 +94,17 @@ int main(void)
                         status = alignDist(33.5, vision_flag);
                         if(status == OUTOFWINDOW) // traveled out of window
                             state = aligntheta;
-                        else if(status == LOSTBEACON) // error state
-                            state = search;
-                        else if(status == 1) // reached desired distance
+                        else if(status == LOSTBEACON){ // error state
+                            openloopTurn(90.0, LEFT, vision_flag);
+                            state = searchgarage; // this is a total hack
+                        }else if(status == 1){ // reached desired distance
+                            openloopTurn(90.0, LEFT, vision_flag);
                             state = wait;
+                        }
                         break;
 
                     case wait:
-                        openloopTurn(90.0, RIGHT, vision_flag);
-                        if(game_timer > 5.0){                          
+                        if(game_timer > 5.0){
                             state = searchgarage;
                         }
                         break;
@@ -108,10 +115,10 @@ int main(void)
                             period = loading;
                         }else{ // we cannot see the beacon
                             openloopDist(3.0,REVERSE,vision_flag);
-                            openloopTurn(10.0,RIGHT,vision_flag);
+                            openloopTurn(10.0,LEFT,vision_flag);
                         }
                          break;
-                         
+
                     case halt:
                         stop();
                         break;
@@ -126,9 +133,8 @@ int main(void)
             case loading: // loading new balls
                 switch(state){
                     case search:
-
                         status = circleSearch(LEFT, vision_flag);
-                        //status = searchGarage(LEFT, flag);
+                        //status = searchGarage(LEFT, vision_flag);
                         if(vision_flag) // found beacon
                             state = aligntheta;
                         break;
@@ -174,7 +180,7 @@ int main(void)
                 switch(state){
                     case search:
                         status = circleSearch(LEFT, vision_flag);
-                        //status = searchGoal(LEFT, flag);
+                        //status = searchGoal(LEFT, vision_flag);
                         spinShooter();
                         if(vision_flag) // found beacon
                             state = aligntheta;
@@ -214,6 +220,7 @@ int main(void)
                         }
                         else if(status == 1) // finished shooting
                         {
+                            openloopTurn(90.0,LEFT,vision_flag);
                             stopShooter();
                             period = loading;
                             state = search;
@@ -267,9 +274,9 @@ int main(void)
               break;
             } // period case structure
         // </editor-fold>
-        
+
     }
-     
+
 } // int main()
 
 

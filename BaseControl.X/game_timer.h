@@ -17,11 +17,11 @@ void _ISR _T2Interrupt(void){
     _T2IF = 0; // clear interrupt flag
     game_timer = game_timer + 0.02;
 
-    if(game_timer >= 10.0 && game_timer <= 40.0)
+    if(game_timer >= 15.0 && game_timer <= 45.0)
         round = 1;
-    if(game_timer >= 40.0 && game_timer <= 70.0)
+    if(game_timer >= 45.0 && game_timer <= 75.0)
         round = 2;
-    if(game_timer >= 70.0 && game_timer <= 100.0)
+    if(game_timer >= 75.0 && game_timer <= 105.0)
         round = 3;
 }
 

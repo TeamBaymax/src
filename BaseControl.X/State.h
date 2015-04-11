@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   State.h
  * Author: Emily
  *
@@ -43,6 +43,9 @@ typedef enum{
     scoring,  // finding goals and shooting
     finishing,//lsat 5 seconds of game - no goals active, get away from walls and garage
 } Period;
+
+State state;
+Period period;
 
 char circleSearch(char dir, VisionFlag flag){
     if(flag)
@@ -126,7 +129,6 @@ char alignDist(float r_set, VisionFlag flag){
     }
 }
 
-
 char aim(float window, VisionFlag flag)
 {
     char status;
@@ -150,7 +152,9 @@ char aim(float window, VisionFlag flag)
     }
 }
 
+
 char openloopDist(float r_set, char direction, VisionFlag flag){
+
     straight(r_set, direction);
     return 1;
 }
@@ -158,6 +162,14 @@ char openloopDist(float r_set, char direction, VisionFlag flag){
 char openloopTurn(float theta_set, char direction, VisionFlag flag){
     turn(theta_set, direction);
     return 1;
+}
+
+char waitUntil(float time){
+    if(game_timer > time)
+    {
+        return 1;
+    }
+    else return 0;
 }
 
 loadBalls(int n){
@@ -169,7 +181,7 @@ loadBalls(int n){
     }
 }
 
-char shootBalls(char flag){
+char shootBalls(VisionFlag flag){
     //spinShooter();
     if(balls > 0) // we still have balls in the hopper
     {
@@ -191,7 +203,7 @@ char shootBalls(char flag){
 
 }
 
-char searchGarage(char direction, char flag)
+char searchGarage(char direction, VisionFlag flag)
 {
 
     if(flag) // found beacon
@@ -208,7 +220,7 @@ char searchGarage(char direction, char flag)
     }
 }
 
-char searchGoal(char direction, char flag)
+char searchGoal(char direction, VisionFlag flag)
 {
 
     if(flag) // found beacon
